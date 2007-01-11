@@ -4,7 +4,6 @@
 
 #include "global.h"
 #include "Particle.h"
-//#include "CollectionElement.h"
 
 // Class Face is an element cell of 3D ball entire surface
 
