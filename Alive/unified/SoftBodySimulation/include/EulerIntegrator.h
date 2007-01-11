@@ -10,7 +10,7 @@ public:
 	virtual ~EulerIntegrator();
 
 	virtual void AccumulateForces();   // accumulate forces acted on 
-	virtual void Derivatives(float);
+	virtual void Derivatives(float, float);
 };
 
 #endif /* EULERINTEGRATOR_H */

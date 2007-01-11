@@ -10,6 +10,7 @@ public:
 	~MidpointIntegrator();
 
 	virtual void AccumulateForces();
+	virtual void Derivatives(float deltaT, float k);
 
 protected:
 	void PressureForces();     // pressure  

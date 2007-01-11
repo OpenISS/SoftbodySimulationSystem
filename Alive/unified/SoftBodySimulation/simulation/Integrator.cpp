@@ -19,7 +19,7 @@ void Integrator::integrate(float deltaT, bool drag, float xDrag, float yDrag)
 	mDragY = yDrag;
 
 	AccumulateForces();   // accumulate forces acted on 
-	Derivatives(deltaT);
+	Derivatives(deltaT, 1.0);
 }
 
 void Integrator::AccumulateForces()   // accumulate forces acted on 

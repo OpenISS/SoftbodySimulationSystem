@@ -28,7 +28,7 @@ protected:
 	virtual void SpringForces();       // spring forces 
  
 	virtual void AccumulateForces();   // accumulate forces acted on 
-	virtual void Derivatives(float) = 0;   // Differential computation
+	virtual void Derivatives(float, float) = 0;   // Differential computation
 
 	virtual void GravityForce();
 	virtual void DragForce();

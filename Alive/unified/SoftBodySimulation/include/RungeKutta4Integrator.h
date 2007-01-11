@@ -10,6 +10,9 @@ public:
 	~RungeKutta4Integrator();
 
 //	virtual void integrate();
+
+	virtual void Derivatives(float deltaT, float k);
+
 };
 
 #endif /* RUNGEKUTTA4INTEGRATOR_H */

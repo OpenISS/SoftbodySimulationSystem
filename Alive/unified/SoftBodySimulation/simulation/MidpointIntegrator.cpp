@@ -21,3 +21,10 @@ void MidpointIntegrator::AccumulateForces()   // accumulate forces acted on
 void MidpointIntegrator::PressureForces()
 {
 }
+
+
+void MidpointIntegrator::Derivatives(float deltaT, float k)
+{
+	EulerIntegrator::Derivatives(deltaT, 0.5);
+	EulerIntegrator::Derivatives(deltaT, 1.0);
+}
