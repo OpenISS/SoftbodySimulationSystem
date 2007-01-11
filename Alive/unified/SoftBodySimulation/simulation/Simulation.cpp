@@ -1,0 +1,432 @@
+
+/********************************************************************************
+ *                                                                              *
+ *  A demo 3D ball of multi-layers with deformation under non-uniform factors.  *
+ *  The deformation reaction under those non-distributed influences is well     * 
+ *  observed                                                                    *                                                                                 
+ *                                                                              *                                                
+ *  Version V1.01                                                               *
+ *  Copyright by Miao Song                                                      *
+ *                                                                              *
+ ********************************************************************************/
+
+
+
+
+#include <GL/glui.h>
+//using namespace std;
+
+#include "Simulation.h"
+          // radium spring damping constant
+#define MOUSE_KS 15.0f		// mouse spring constant
+#define MOUSE_KD 15.0f		// mouse damping constant
+#define MOUSE_REST 2.0f		// mouse rest lenth
+
+int   main_window;
+int   wireframe = 0;
+int   segments = 8;
+
+int NUMP=2;
+int NUMS=1;
+
+
+float Mass1 =   10.0f, Mass2 =   1.0f;
+float Ks1   =700.0f, Ks2   = 100.0f;
+float Kd1   =  20.0f, Kd2   =  1.0f;
+float Rad1  =   1.0f, Rad2  =   4.0f; 
+float Press1 = 10.0f, Press2=  500.0f; //(orignal press2=50;)
+
+
+//int PosX=0;
+//int PosY=0;
+
+
+Object3D ThreeDInner(Mass1, Ks1, Kd1,  Press1);   //	Creat a ball object globally
+//Ball outer(Mass2, Ks2, Kd2, Rad2, Press2);
+
+//Ball OneD(Mass1, Ks1, Kd1);
+
+//Spring OneDSpring[1];
+//Particle OneDPoint[2];
+
+Object1D object1D;
+
+
+ViewSpace  box;                              // Creat a viewer space
+
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+void Reshape(int width, int height)
+{
+	glViewport(0, 0, width, height);  // Define GL View Port rectangle
+	glMatrixMode(GL_PROJECTION);
+	gluPerspective(50.,float(Width)/float(Height), 1., 100.);
+	glLoadIdentity();
+    glMatrixMode(GL_MODELVIEW);
+	glutPostRedisplay(); 
+}
+		
+void Display(void)
+{
+	    glClearColor(0.0, 0.0, 0.0, 0.0);  // Initialize
+		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+
+		glEnable(GL_DEPTH_TEST);
+		
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
+
+		gluPerspective(50,float(Width)/float(Height), 1, 100.);
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
+ 		gluLookAt(2,0,5,0,0,0,0,1,0);  // Camera difinition
+
+		object1D.Draw();
+/*
+		glPushMatrix();
+	glBegin(GL_LINES); // the draw of inner circle
+		for(int i=0 ; i<NUMS; i++)
+		{
+			glColor3f(1.0,1.0,1.0);
+		glVertex2f(OneDSpring[i].sp1->r->x,OneDSpring[i].sp1->r->y);
+		glVertex2f(OneDSpring[i].sp2->r->x,OneDSpring[i].sp2->r->y);
+		}
+	glEnd();
+	glPointSize(8);
+	glBegin(GL_POINTS);
+	//	glVertex2f(OneDPoint[OneDSpring[0].sp1->r->x,OneDPoint[OneDSpring[0].sp1]->r->y);
+	//	glVertex2f(OneDPoint[OneDSpring[0].sp2]->r->x,OneDPoint[OneDSpring[0].sp2]->r->y);
+
+		//glVertex2f(OneDPoint[0].r->x,OneDPoint[0].r->y);
+		//glVertex2f(OneDPoint[1].r->x,OneDPoint[1].r->y);
+
+		glVertex2f(OneDSpring[0].sp1->r->x,OneDSpring[0].sp1->r->y);
+		glVertex2f(OneDSpring[0].sp2->r->x,OneDSpring[0].sp2->r->y);
+	
+	glEnd();
+		glPopMatrix();
+*/
+
+
+	/*	glPushMatrix();
+
+		glRotatef(xMouse, 0.0, 1.0, 1.0);
+
+        glEnable(GL_BLEND);                                // transparent
+  	    glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);  // transparent
+        ThreeDInner.Rotated();      // Rotate about X-axis, Y-axis, and/or Z-axis 
+		
+	//	 
+	//	
+ 		ThreeDInner.Draw();         // Draw the ball object
+        glPopMatrix();
+		
+		glColor4f(0,0,1,1);
+	//	outer.Draw();
+		box.Draw();           // Draw the view box space 
+
+		glPointSize(4);
+		glLineWidth(3);
+	
+
+		glPushMatrix();
+		//glTranslatef(0,1.67,0);
+		glScalef(1.4,1.4,1.4);	   
+		glPopMatrix();*/
+	//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+	
+	if(mousedown)
+	{
+	  glColor3f(1,0,1);
+	  glBegin(GL_LINES);
+		glVertex2f(xMouse,yMouse);
+//   	   	glVertex2f(OneDPoint[closest_i].r->x,OneDPoint[closest_i].r->y);
+   	   	glVertex2f(object1D.OneDPoint[closest_i].r->x,object1D.OneDPoint[closest_i].r->y);
+      glEnd();
+	}     
+
+		glutSwapBuffers(); 
+}
+
+//===================================================================================
+
+
+// when mouse is clicked 
+
+void Mouse(int button, int state, int x, int y)
+{
+    ThreeDInner.Mouse(button, state, x, y);
+
+	if (button == GLUT_LEFT_BUTTON)
+	{
+		if (state == GLUT_DOWN)
+		{
+			mousedown = 1;
+
+			xMouse = SCRSIZE * 2.0 * ((float)x/(float)Width - 0.5);
+			yMouse = -SCRSIZE * 2.0 * ((float)y/(float)Height - 0.5);
+
+		}
+		else if (state == GLUT_UP)
+		{
+
+	       	mousedown = 0;
+	  	}
+     }
+}
+
+
+// when mouse is moving
+
+void Motion(int x, int y)
+{
+    ThreeDInner.Motion(x, y);
+
+		if (mousedown)
+	{
+		xMouse = SCRSIZE * 2.0 * ((float)x/(float)Width - 0.5);
+		yMouse = -SCRSIZE * 2.0 * ((float)y/(float)Height - 0.5);
+		glutPostRedisplay();
+ 	}
+}
+
+
+
+// when a rotation Key is pressed
+
+void Keyboard(unsigned char key, int x, int y)
+{     
+	ThreeDInner.Keyboard(key, x, y);		
+}
+
+// when a moving direction Key is pressed
+
+void SpecialKeys(int key, int x, int y)
+{
+	ThreeDInner.SpecialKeys(key, x, y);	
+}
+
+
+float time;
+int actualtime(0);
+float dt=0.001;
+int deltatime(0);
+//==================================================================================
+
+void AccumulateForces(void)
+{
+	int i;    // runing index
+
+   	float inner_x1,inner_x2,inner_y1,inner_y2;	// points inner_p1, inner_p2 on the inner circle
+  
+    float inner_rd12;			            	// length of inner_p1, inner_p2
+
+    float inner_vx12,inner_vy12;    // speed difference vx1-vx2, vy1-vy2 on inner ring  
+	// 
+
+    float inner_Fx,inner_Fy;		            // force vector
+
+   	float radium_Fx, radium_Fy;                 // force vector
+	float shear_left_Fx, shear_left_Fy;         // force vector  
+    float shear_right_Fx, shear_right_Fy;       // force vector  
+
+	float f;				        // external force 
+	float inner_volume=0.0;           // inner circle inner_volume
+	float outer_volume=0.0;		    // outer circle outer_volume 
+	float inner_p_accu;             // pressure force accumulation 
+	float outer_p_accu;         	// pressure force accumulation
+	float inertia_time=0.0;         // time escaped
+
+	// Gravity force computation
+	
+	for(i=0; i<NUMP; i++)
+	{    
+	  object1D.OneDPoint[i].f->x = 0;//40*sin(25*i);
+           
+
+    // OneDSpring[i].fx = 0.0;
+	 object1D.OneDPoint[i].f->y = (object1D.OneDPoint[i].mass)*GY;     
+     
+	
+//	    when mouse is clicked (mouse spring) 
+		if(i==closest_i)		// closest point on outer ring 
+		if(mousedown)			// if user clicked
+		{
+			inner_x1 = object1D.OneDPoint[ i ].r->x;		// get points X-coord
+			inner_y1 = object1D.OneDPoint[ i ].r->y;        // get points Y-coord
+			inner_x2 = xMouse;                      // get Mouse  X-coord
+			inner_y2 = yMouse;                      // get Mouse  Y-coord
+
+			inner_rd12=sqrt((inner_x1-inner_x2)*(inner_x1-inner_x2)
+				        +(inner_y1-inner_y2)*(inner_y1-inner_y2)); // distance
+
+			f=(inner_rd12-MOUSE_REST)*MOUSE_KS+(object1D.OneDPoint[i].v->x*(inner_x1-inner_x2)
+				+object1D.OneDPoint[i].v->y*(inner_y1-inner_y2))*MOUSE_KD/inner_rd12;
+
+			// calculate spring force
+			inner_Fx = ((inner_x1 - inner_x2) / inner_rd12 ) * f;
+			inner_Fy = ((inner_y1 - inner_y2) / inner_rd12 ) * f;
+
+			// accumulate gravity + hooke forces
+			object1D.OneDPoint[i].f->x -= inner_Fx; // from the closet point to the Mouse point
+			object1D.OneDPoint[i].f->y -= inner_Fy;
+
+			}
+	}
+
+	// Three parts for computing the spring forces on all the points
+	
+	
+	 for(i=0; i<NUMS; i++)  // Part #1, tangent spring force constribution 
+	 {
+	
+  /*  inner_x1 = OneDSpring[ inner_springs[i].head ].px;
+	inner_y1 = OneDSpring[ inner_springs[i].head ].py;
+	inner_x2 = OneDSpring[ inner_springs[i].tail ].px;
+	inner_y2 = OneDSpring[ inner_springs[i].tail ].py;
+    */
+
+		 
+	inner_x1 = object1D.OneDSpring[i].sp1->r->x;
+	inner_y1 = object1D.OneDSpring[i].sp1->r->y;
+	inner_x2 = object1D.OneDSpring[i].sp2->r->x;
+	inner_y2 = object1D.OneDSpring[i].sp2->r->y;
+     
+    
+
+    inner_rd12 = sqrt((inner_x1-inner_x2)*(inner_x1-inner_x2)
+		         +(inner_y1-inner_y2)*(inner_y1-inner_y2));	 // distance on inner
+ 
+
+ 
+	if(inner_rd12!=0) // spring force on points of inner ring
+	{
+	 inner_vx12=object1D.OneDSpring[i].sp1->v->x - object1D.OneDSpring[i].sp2->v->x;
+	 inner_vy12=object1D.OneDSpring[i].sp1->v->y - object1D.OneDSpring[i].sp2->v->y;
+
+	f=(inner_rd12-object1D.OneDSpring[i].restLen)*KS
+	 +(inner_vx12*(inner_x1-inner_x2)+inner_vy12*(inner_y1-inner_y2))*KD/inner_rd12;
+
+	inner_Fx=((inner_x1-inner_x2)/inner_rd12)*f;
+	inner_Fy=((inner_y1-inner_y2)/inner_rd12)*f;
+
+
+	object1D.OneDSpring[i].sp1->f->x-=inner_Fx;
+	object1D.OneDSpring[i].sp1->f->y-=inner_Fy;
+
+	object1D.OneDSpring[i].sp2->f->x+=inner_Fx;
+	object1D.OneDSpring[i].sp2->f->y+=inner_Fy;
+
+	}
+
+
+
+/*
+// Calculate normal vectors to springs 
+	inner_springs[i].nx =  -(inner_y1 - inner_y2) / inner_rd12;  // Normal X-vector 
+	inner_springs[i].ny =  +(inner_x1 - inner_x2) / inner_rd12;  // Normal Y-vector
+*/	
+}
+
+}
+
+
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+/***********************
+ * Euler Integrator *
+ ***********************/
+ 
+void Euler_Integrator()
+{ 
+	for(int i=0; i<NUMP; i++)	
+	{
+		object1D.OneDPoint[i].v->x += (object1D.OneDPoint[i].f->x/object1D.OneDPoint[i].mass) * DT;				// Change in velocity is added to the velocity.
+											
+	object1D.OneDPoint[i].v->y += (object1D.OneDPoint[i].f->y/object1D.OneDPoint[i].mass) * DT;	
+		
+ object1D.OneDPoint[i].r->x +=  object1D.OneDPoint[i].v->x * DT;  											// Change in position is velocity times the change in time
+
+object1D.OneDPoint[i].r->y +=  object1D.OneDPoint[i].v->y * DT;
+	}
+}
+
+
+void Idle()
+{
+	
+
+//	xMouse+=2;
+//	yMouse+=2;
+
+//	ThreeDInner.AccumulateForces();
+//	ThreeDInner.Derivatives(DT);
+//  outer.AccumulateForces();
+ // outer.Derivatives(DT);
+
+	object1D.Update(DT);
+
+	AccumulateForces();
+	Euler_Integrator();
+	
+  if (ThreeDInner.getPressure()<PRESSURE)
+  {
+      ThreeDInner.setPressure(PRESSURE);
+//	  outer.setPressure(PRESSURE);
+	  
+	  ThreeDInner.setPressure(ThreeDInner.getPressure()+PRESSURE/300.0f);
+  }
+
+  glutPostRedisplay();
+}
+
+void motion (int mx, int my)
+{
+   // Normalize mouse coordinates.
+   xMouse = double(mx) ;
+   yMouse = double(my) ;
+   glutPostRedisplay();
+}
+
+
+//======================================================================================
+
+//	Function main()
+ 
+
+int main(void)
+{
+    
+	glutInitWindowPosition(200, 200); 
+	glutInitWindowSize( Width, Height);
+	glutInitDisplayMode(GLUT_DOUBLE|GLUT_RGB);
+    main_window = glutCreateWindow("A Simulation Ball - Miao Song"); 
+
+    ThreeDInner.SetObject(); 
+//	CreateOneD();
+ //   outer.SetBall();	
+
+	glutReshapeFunc(Reshape);
+    
+
+	glutPassiveMotionFunc(motion);
+ //   glutIdleFunc(Idle);
+	glutDisplayFunc(Display);
+
+	glutMouseFunc(Mouse);
+	glutMotionFunc(Motion);
+	glutKeyboardFunc(Keyboard);
+	glutSpecialFunc(SpecialKeys);
+
+	GLUI *glui = GLUI_Master.create_glui( "GLUI" );
+
+	new GLUI_Checkbox( glui, "Wireframe", &wireframe );
+	(new GLUI_Spinner( glui, "Segments:", &segments ))
+		->set_int_limits( 3, 60 ); 
+   
+	glui->set_main_gfx_window( main_window );
+	GLUI_Master.set_glutIdleFunc( Idle ); 
+
+	glutMainLoop(); 	
+
+	return 0;
+}
