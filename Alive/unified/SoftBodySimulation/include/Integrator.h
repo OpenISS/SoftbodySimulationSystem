@@ -12,11 +12,16 @@ class Integrator
 protected:
 	Object* object;
 
+	bool dragExists;
+	float mDragX;
+	float mDragY;
+
 public:
 	Integrator(Object&);
 	virtual ~Integrator();
 
-	virtual void integrate(float);
+//	virtual void integrate(float);
+	virtual void integrate(float, bool drag = false, float xDrag = 0, float yDrag = 0);
 
 protected:
 	virtual void ExternalForces();     // gravity force

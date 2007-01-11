@@ -44,7 +44,7 @@ public:
 	int GetNumberOfSprings() { return NUMS; }
 
 	virtual void Draw() = 0; 
-	virtual void Update(float);
+	virtual void Update(float, bool = false, float = 0, float = 0);
 
 	virtual void SetObject();           // Then, make the Object3D object
 

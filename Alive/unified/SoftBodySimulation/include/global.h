@@ -30,6 +30,13 @@ using namespace std;
 
 #define SCRSIZE 9	        // screen size factor
 
+
+          // radium spring damping constant
+#define MOUSE_KS 15.0f		// mouse spring constant
+#define MOUSE_KD 15.0f		// mouse damping constant
+#define MOUSE_REST 2.0f		// mouse rest lenth
+
+
 // Mouse variables
 extern int mousedown;                // for GLUT_LEFT_BUTTON, GLUT_RIGHT_BUTTON
 extern float xMouse, yMouse, zMouse;    // for mouse point r(x,y,z) 

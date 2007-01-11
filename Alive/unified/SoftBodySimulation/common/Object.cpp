@@ -7,10 +7,12 @@ Object::Object()
 {
 	NUMP = 2;
 	NUMS = 1;
+	integrator = NULL;
 }
 
 Object::~Object()
 {
+	delete integrator;
 }
 
 //==========================================================================  
@@ -64,7 +66,7 @@ void Object::SetTriPlanes()    // set triangle faces on side surfaces
 void Object::SetObject()
 {
 	cout<<"set points"<<endl;
-	integrator = new EulerIntegrator(*this);
+//	integrator = new EulerIntegrator(*this);
 	SetParticles();         // create point Object3D
  
 
@@ -81,10 +83,10 @@ void Object::SetObject()
 //#############################################################################
 
 
-void Object::Update(float deltaT)
+void Object::Update(float deltaT, bool drag, float xDrag, float yDrag)
 {
 	if(integrator == NULL)
 		integrator = new EulerIntegrator(*this);
 
-	integrator->integrate(deltaT);
+	integrator->integrate(deltaT, drag, xDrag, yDrag);
 }

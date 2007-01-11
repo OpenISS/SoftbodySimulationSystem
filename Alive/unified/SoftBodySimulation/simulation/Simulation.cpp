@@ -13,14 +13,10 @@
 
 
 
-#include <GL/glui.h>
+//#include <GL/glui.h>
 //using namespace std;
 
 #include "Simulation.h"
-          // radium spring damping constant
-#define MOUSE_KS 15.0f		// mouse spring constant
-#define MOUSE_KD 15.0f		// mouse damping constant
-#define MOUSE_REST 2.0f		// mouse rest lenth
 
 int   main_window;
 int   wireframe = 0;
@@ -240,13 +236,14 @@ void AccumulateForces(void)
 	// Gravity force computation
 	
 	for(i=0; i<NUMP; i++)
-	{    
+	{ 
+		/*
 	  object1D.OneDPoint[i].f->x = 0;//40*sin(25*i);
            
 
     // OneDSpring[i].fx = 0.0;
 	 object1D.OneDPoint[i].f->y = (object1D.OneDPoint[i].mass)*GY;     
-     
+     */
 	
 //	    when mouse is clicked (mouse spring) 
 		if(i==closest_i)		// closest point on outer ring 
@@ -276,15 +273,15 @@ void AccumulateForces(void)
 
 	// Three parts for computing the spring forces on all the points
 	
-	
+	/*
 	 for(i=0; i<NUMS; i++)  // Part #1, tangent spring force constribution 
 	 {
 	
-  /*  inner_x1 = OneDSpring[ inner_springs[i].head ].px;
+  / *  inner_x1 = OneDSpring[ inner_springs[i].head ].px;
 	inner_y1 = OneDSpring[ inner_springs[i].head ].py;
 	inner_x2 = OneDSpring[ inner_springs[i].tail ].px;
 	inner_y2 = OneDSpring[ inner_springs[i].tail ].py;
-    */
+    * /
 
 		 
 	inner_x1 = object1D.OneDSpring[i].sp1->r->x;
@@ -326,7 +323,7 @@ void AccumulateForces(void)
 	inner_springs[i].nx =  -(inner_y1 - inner_y2) / inner_rd12;  // Normal X-vector 
 	inner_springs[i].ny =  +(inner_x1 - inner_x2) / inner_rd12;  // Normal Y-vector
 */	
-}
+//}
 
 }
 
@@ -335,7 +332,7 @@ void AccumulateForces(void)
 /***********************
  * Euler Integrator *
  ***********************/
- 
+ /*
 void Euler_Integrator()
 { 
 	for(int i=0; i<NUMP; i++)	
@@ -349,7 +346,7 @@ void Euler_Integrator()
 object1D.OneDPoint[i].r->y +=  object1D.OneDPoint[i].v->y * DT;
 	}
 }
-
+*/
 
 void Idle()
 {
@@ -363,10 +360,14 @@ void Idle()
 //  outer.AccumulateForces();
  // outer.Derivatives(DT);
 
-	object1D.Update(DT);
 
-	AccumulateForces();
-	Euler_Integrator();
+//	AccumulateForces();
+//	Euler_Integrator();
+
+	//object1D.Update(DT, false, xMouse, yMouse);
+	object1D.Update(DT, mousedown != 0, xMouse, yMouse);
+	
+
 	
   if (ThreeDInner.getPressure()<PRESSURE)
   {
@@ -409,14 +410,14 @@ int main(void)
     
 
 	glutPassiveMotionFunc(motion);
- //   glutIdleFunc(Idle);
+    glutIdleFunc(Idle);
 	glutDisplayFunc(Display);
 
 	glutMouseFunc(Mouse);
 	glutMotionFunc(Motion);
 	glutKeyboardFunc(Keyboard);
 	glutSpecialFunc(SpecialKeys);
-
+/*
 	GLUI *glui = GLUI_Master.create_glui( "GLUI" );
 
 	new GLUI_Checkbox( glui, "Wireframe", &wireframe );
@@ -425,7 +426,7 @@ int main(void)
    
 	glui->set_main_gfx_window( main_window );
 	GLUI_Master.set_glutIdleFunc( Idle ); 
-
+*/
 	glutMainLoop(); 	
 
 	return 0;
