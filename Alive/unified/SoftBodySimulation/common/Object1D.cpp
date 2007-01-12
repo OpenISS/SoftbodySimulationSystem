@@ -24,8 +24,8 @@ void Object1D::Draw()
 			for(int i = 0 ; i < NUMS; i++)
 			{
 				glColor3f(1.0,1.0,1.0);
-				glVertex2f(OneDSpring[i].sp1->r->x,OneDSpring[i].sp1->r->y);
-				glVertex2f(OneDSpring[i].sp2->r->x,OneDSpring[i].sp2->r->y);
+				glVertex2f(inner_springs[i].sp1->r->x,inner_springs[i].sp1->r->y);
+				glVertex2f(inner_springs[i].sp2->r->x,inner_springs[i].sp2->r->y);
 			}
 		glEnd();
 		glPointSize(8);
@@ -36,8 +36,8 @@ void Object1D::Draw()
 			//glVertex2f(OneDPoint[0].r->x,OneDPoint[0].r->y);
 			//glVertex2f(OneDPoint[1].r->x,OneDPoint[1].r->y);
 
-			glVertex2f(OneDSpring[0].sp1->r->x,OneDSpring[0].sp1->r->y);
-			glVertex2f(OneDSpring[0].sp2->r->x,OneDSpring[0].sp2->r->y);
+			glVertex2f(inner_springs[0].sp1->r->x,inner_springs[0].sp1->r->y);
+			glVertex2f(inner_springs[0].sp2->r->x,inner_springs[0].sp2->r->y);
 		
 		glEnd();
 	glPopMatrix();
@@ -48,19 +48,19 @@ void Object1D::Draw()
 void Object1D::Add_Tangent_Spring(int index, int head, int tail)
 {
 
-   	OneDSpring[index].sp1=&OneDPoint[head];
-	OneDSpring[index].sp2=&OneDPoint[tail];
-	OneDSpring[index].setRestLen();
-	cout<<"restLen"<<OneDSpring[index].restLen<<endl;;
+   	inner_springs[index].sp1=&inner_points[head];
+	inner_springs[index].sp2=&inner_points[tail];
+	inner_springs[index].setRestLen();
+	cout<<"restLen"<<inner_springs[index].restLen<<endl;;
 }
 
 void Object1D::CreateOneD()
 {
 	 for(int i=0; i<2; i++)		// create NUMP points into 2D circle 
 	 {
-	   OneDPoint[i].r->x += PosX ;   // inner X coordiation
-	   OneDPoint[i].r->y += PosY;   // inner Y coordiation
-	   OneDPoint[i].mass = 2.0*Mass2;
+	   inner_points[i].r->x += PosX ;   // inner X coordiation
+	   inner_points[i].r->y += PosY;   // inner Y coordiation
+	   inner_points[i].mass = 2.0*Mass2;
 		 		 
 		PosY+=2;
 	

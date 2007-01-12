@@ -23,8 +23,10 @@ public:
 		norm = new Vector(0,0,0);
 		dr = new Vector(0,0,0);
 		dv = new Vector(0,0,0);
-		f = NULL;
-		v = NULL;
+//		f = NULL;
+//		v = NULL;
+		f = new Vector(0,0,0);
+		v = new Vector(0,0,0);
 	}
 
 	Particle ()
@@ -48,8 +50,8 @@ public:
 	}
 	
 	void ClearForce(void);   // reset forces at a Particle 		
-void AccumuForce(Vector const &);
-friend ostream& operator<<(ostream& os, const Particle& c);
+	void AccumuForce(Vector const &);
+	friend ostream& operator<<(ostream& os, const Particle& c);
 
 	
 

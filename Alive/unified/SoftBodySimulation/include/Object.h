@@ -30,9 +30,12 @@ protected:
 
 	Integrator* integrator;
 
+
 public:
-	Spring OneDSpring[1];
-	Particle OneDPoint[2];
+	Spring inner_springs[12];
+	Particle inner_points[12];
+//	Spring OneDSpring[1];
+//	Particle OneDPoint[2];
 
 
 public:

@@ -53,10 +53,10 @@ void Integrator::ExternalForces()
 //	for(i=0; i<NUMP; i++)
 	for(i=0; i<object->GetNumberOfParticles(); i++)
 	{    
-	  object->OneDPoint[i].f->x = 0;//40*sin(25*i);
+	  object->inner_points[i].f->x = 0;//40*sin(25*i);
 
     // OneDSpring[i].fx = 0.0;
-	 object->OneDPoint[i].f->y = (object->OneDPoint[i].mass)*GY;     
+	 object->inner_points[i].f->y = (object->inner_points[i].mass)*GY;     
      
 	
 //	    when mouse is clicked (mouse spring) 
@@ -65,24 +65,24 @@ void Integrator::ExternalForces()
 
 		if(dragExists)			// if user clicked
 		{
-			inner_x1 = object->OneDPoint[ i ].r->x;		// get points X-coord
-			inner_y1 = object->OneDPoint[ i ].r->y;        // get points Y-coord
+			inner_x1 = object->inner_points[ i ].r->x;		// get points X-coord
+			inner_y1 = object->inner_points[ i ].r->y;        // get points Y-coord
 			inner_x2 = mDragX;                      // get Mouse  X-coord
 			inner_y2 = mDragY;                      // get Mouse  Y-coord
 
 			inner_rd12=sqrt((inner_x1-inner_x2)*(inner_x1-inner_x2)
 				        +(inner_y1-inner_y2)*(inner_y1-inner_y2)); // distance
 
-			f=(inner_rd12-MOUSE_REST)*MOUSE_KS+(object->OneDPoint[i].v->x*(inner_x1-inner_x2)
-				+object->OneDPoint[i].v->y*(inner_y1-inner_y2))*MOUSE_KD/inner_rd12;
+			f=(inner_rd12-MOUSE_REST)*MOUSE_KS+(object->inner_points[i].v->x*(inner_x1-inner_x2)
+				+object->inner_points[i].v->y*(inner_y1-inner_y2))*MOUSE_KD/inner_rd12;
 
 			// calculate spring force
 			inner_Fx = ((inner_x1 - inner_x2) / inner_rd12 ) * f;
 			inner_Fy = ((inner_y1 - inner_y2) / inner_rd12 ) * f;
 
 			// accumulate gravity + hooke forces
-			object->OneDPoint[i].f->x -= inner_Fx; // from the closet point to the Mouse point
-			object->OneDPoint[i].f->y -= inner_Fy;
+			object->inner_points[i].f->x -= inner_Fx; // from the closet point to the Mouse point
+			object->inner_points[i].f->y -= inner_Fy;
 
 		}
 	}
@@ -125,10 +125,10 @@ void Integrator::SpringForces()
 		*/
 
 			 
-		inner_x1 = object->OneDSpring[i].sp1->r->x;
-		inner_y1 = object->OneDSpring[i].sp1->r->y;
-		inner_x2 = object->OneDSpring[i].sp2->r->x;
-		inner_y2 = object->OneDSpring[i].sp2->r->y;
+		inner_x1 = object->inner_springs[i].sp1->r->x;
+		inner_y1 = object->inner_springs[i].sp1->r->y;
+		inner_x2 = object->inner_springs[i].sp2->r->x;
+		inner_y2 = object->inner_springs[i].sp2->r->y;
      
     
 
@@ -139,21 +139,21 @@ void Integrator::SpringForces()
  
 		if(inner_rd12!=0) // spring force on points of inner ring
 		{
-			 inner_vx12=object->OneDSpring[i].sp1->v->x - object->OneDSpring[i].sp2->v->x;
-			 inner_vy12=object->OneDSpring[i].sp1->v->y - object->OneDSpring[i].sp2->v->y;
+			 inner_vx12=object->inner_springs[i].sp1->v->x - object->inner_springs[i].sp2->v->x;
+			 inner_vy12=object->inner_springs[i].sp1->v->y - object->inner_springs[i].sp2->v->y;
 
-			f=(inner_rd12-object->OneDSpring[i].restLen)*KS
+			f=(inner_rd12-object->inner_springs[i].restLen)*KS
 			 +(inner_vx12*(inner_x1-inner_x2)+inner_vy12*(inner_y1-inner_y2))*KD/inner_rd12;
 
 			inner_Fx=((inner_x1-inner_x2)/inner_rd12)*f;
 			inner_Fy=((inner_y1-inner_y2)/inner_rd12)*f;
 
 
-			object->OneDSpring[i].sp1->f->x-=inner_Fx;
-			object->OneDSpring[i].sp1->f->y-=inner_Fy;
+			object->inner_springs[i].sp1->f->x-=inner_Fx;
+			object->inner_springs[i].sp1->f->y-=inner_Fy;
 
-			object->OneDSpring[i].sp2->f->x+=inner_Fx;
-			object->OneDSpring[i].sp2->f->y+=inner_Fy;
+			object->inner_springs[i].sp2->f->x+=inner_Fx;
+			object->inner_springs[i].sp2->f->y+=inner_Fy;
 
 		}
 

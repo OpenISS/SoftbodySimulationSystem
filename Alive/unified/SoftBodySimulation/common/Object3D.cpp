@@ -29,7 +29,7 @@ vector<Face> t_Face;
 void Object3D::SetParticles(void) // [M+2][N] array for M*N+2 Points 
 {
 	double a;
-	int nt=0, ntold;
+	int nt=0/*, ntold*/;
 	int i;
   
  

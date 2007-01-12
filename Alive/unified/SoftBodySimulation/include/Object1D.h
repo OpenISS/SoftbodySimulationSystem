@@ -11,7 +11,7 @@ public:
 
 	virtual void Draw();
 
-	
+
 private:	
 	void Add_Tangent_Spring(int index, int head, int tail);
 	void CreateOneD();
