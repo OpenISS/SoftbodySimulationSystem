@@ -74,7 +74,7 @@ void Object::SetObject()
 
 //SetNormals();
  
-// SetTriPlanes();      // set triangle faces on side surfaces
+// SetTriPlanes();      // set triangle faces on side sur                                                                                                       faces
 //	SetSprings();   // set springs on horizontal planes, connect points
  //iteration();  
  /*  Object3DParticles=t_Object3DParticles;

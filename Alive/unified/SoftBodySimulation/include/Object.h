@@ -32,8 +32,12 @@ protected:
 
 
 public:
-	Spring inner_springs[12];
-	Particle inner_points[12];
+	Spring inner_springs[40];
+	Particle inner_points[40];
+
+	Spring outer_springs[40];     // for point springs on outer circle
+	Particle outer_points[40];  // for outer circle Particles + 1 mouse Particle
+	
 //	Spring OneDSpring[1];
 //	Particle OneDPoint[2];
 

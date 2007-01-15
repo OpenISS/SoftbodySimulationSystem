@@ -78,7 +78,8 @@ void Display(void)
 		glLoadIdentity();
  		gluLookAt(2,0,5,0,0,0,0,1,0);  // Camera difinition
 
-		object1D.Draw();
+		glPointSize(8);
+		//object1D.Draw();
 		object2D.Draw();
 
 		/*	glPushMatrix();
@@ -199,7 +200,7 @@ void Idle()
 //	Euler_Integrator();
 
 	//object1D.Update(DT, false, xMouse, yMouse);
-	object1D.Update(DT, mousedown != 0, xMouse, yMouse);
+	//object1D.Update(DT, mousedown != 0, xMouse, yMouse);
 	object2D.Update(DT, mousedown != 0, xMouse, yMouse);
 
 	

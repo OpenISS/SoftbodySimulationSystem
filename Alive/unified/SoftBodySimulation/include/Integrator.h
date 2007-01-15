@@ -26,6 +26,7 @@ public:
 protected:
 	virtual void ExternalForces();     // gravity force
 	virtual void SpringForces();       // spring forces 
+	virtual void PressureForces();     // pressure  
  
 	virtual void AccumulateForces();   // accumulate forces acted on 
 	virtual void Derivatives(float, float) = 0;   // Differential computation

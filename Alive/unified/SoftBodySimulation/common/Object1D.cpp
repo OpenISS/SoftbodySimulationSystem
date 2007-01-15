@@ -28,7 +28,6 @@ void Object1D::Draw()
 				glVertex2f(inner_springs[i].sp2->r->x,inner_springs[i].sp2->r->y);
 			}
 		glEnd();
-		glPointSize(8);
 		glBegin(GL_POINTS);
 		//	glVertex2f(OneDPoint[OneDSpring[0].sp1->r->x,OneDPoint[OneDSpring[0].sp1]->r->y);
 		//	glVertex2f(OneDPoint[OneDSpring[0].sp2]->r->x,OneDPoint[OneDSpring[0].sp2]->r->y);

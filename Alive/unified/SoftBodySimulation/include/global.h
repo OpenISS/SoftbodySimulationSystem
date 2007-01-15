@@ -16,6 +16,10 @@ using namespace std;
 #define KS 300.0f    // Hooke spring constant
 #define KD 20.0f     // Hooke spring damping constant
 
+//#define KS 755.0f    // Hooke spring constant
+//#define KD 35.0f     // Hooke spring damping constant
+
+
 #define PI     3.1416f    // Circle = 2*PI*RADIUS
 #define RADIUS    1.0f    // Ball initial radius	
 

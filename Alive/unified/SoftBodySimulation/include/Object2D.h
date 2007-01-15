@@ -23,7 +23,7 @@ protected:
 	Particle inner_K3[NUMPOINTS];        // K3
 	Particle inner_K4[NUMPOINTS];        // K4
 
-	Particle outer_points[NUMPOINTS+1];  // for outer circle Particles + 1 mouse Particle
+//	Particle outer_points[NUMPOINTS];  // for outer circle Particles + 1 mouse Particle
 	Particle outer_K0[NUMPOINTS];  // K0
 	Particle outer_K1[NUMPOINTS];  // K1
 	Particle outer_K2[NUMPOINTS];  // K2
@@ -33,7 +33,7 @@ protected:
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	//Spring inner_springs[NUMSPRINGS];       // for point springs on inner circle
-	Spring outer_springs[NUMSPRINGS+1];     // for point springs on outer circle
+//	Spring outer_springs[NUMSPRINGS];     // for point springs on outer circle
 
 	Spring radium_springs[NUMSPRINGS];	   // for radium springs between two circles 
 

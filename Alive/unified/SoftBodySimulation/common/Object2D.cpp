@@ -20,7 +20,8 @@ void Object2D::Draw()
 
 
 	glPushMatrix();
-	glBegin(GL_QUADS); // the draw of outer circle
+//	glBegin(GL_QUADS); // the draw of outer circle
+	glBegin(GL_LINES); // the draw of outer circle
 		for(i=0 ; i<NUMS; i++)
 		{
 		glColor3f(0.8,0.4,0.4);
@@ -29,9 +30,11 @@ void Object2D::Draw()
 		glVertex2f(outer_points[outer_springs[i].tail].px,outer_points[outer_springs[i].tail].py);
     	glVertex2f(outer_points[NUMP-outer_springs[i].head+1].px,outer_points[NUMP-outer_springs[i].head+1].py);
 		glVertex2f(outer_points[NUMP-outer_springs[i].tail+1].px,outer_points[NUMP-outer_springs[i].tail+1].py);*/
-/*
-		glVertex2f(outer_springs[i].sp1->x,outer_springs[i].head].py);
-		glVertex2f(outer_springs[i].sp2->x,outer_points[outer_springs[i].tail].py);
+
+		glVertex2f(outer_springs[i].sp1->r->x,outer_springs[i].sp1->r->y);
+		glVertex2f(outer_springs[i].sp2->r->x,outer_springs[i].sp2->r->y);
+
+		/*
     	glVertex2f(outer_points[NUMP-outer_springs[i].head+1].px,outer_points[NUMP-outer_springs[i].head+1].py);
 		glVertex2f(outer_points[NUMP-outer_springs[i].tail+1].px,outer_points[NUMP-outer_springs[i].tail+1].py);*/
 		}
@@ -54,6 +57,7 @@ void Object2D::Draw()
 			glVertex2f(inner_points[NUMP-inner_springs[i].tail+1].px,inner_points[NUMP-inner_springs[i].tail+1].py);*/
 
 			glVertex2f(inner_points[i].r->x,inner_points[i].r->y);
+			glVertex2f(outer_points[i].r->x,outer_points[i].r->y);
 		}
 	glEnd();
 	glPopMatrix();
@@ -213,12 +217,12 @@ void Object2D::CreateRing(void)
 	int i;
 	for(i=0; i<NUMP; i++)		// create NUMP points into 2D circle 
 	{
-		inner_points[i].r->x=RING_RADIUS*cos(i*(2.0*3.1416)/NUMP);   // inner X coordiation
-		inner_points[i].r->y=RING_RADIUS*sin(i*(2.0*3.1416)/NUMP);   // inner Y coordiation
+		inner_points[i].r->x=  RING_RADIUS*cos(i*(2.0*PI)/NUMP);   // inner X coordiation
+		inner_points[i].r->y=  RING_RADIUS*sin(i*(2.0*PI)/NUMP);   // inner Y coordiation
 		inner_points[i].mass = 2.0*MASS;
 				 
-		outer_points[i].r->x=3*RING_RADIUS*cos(i*(2.0*3.1416)/NUMP); // outer point X coordiation
-		outer_points[i].r->y=3*RING_RADIUS*sin(i*(2.0*3.1416)/NUMP); // outer point Y coordiation
+		outer_points[i].r->x=3*RING_RADIUS*cos(i*(2.0*PI)/NUMP); // outer point X coordiation
+		outer_points[i].r->y=3*RING_RADIUS*sin(i*(2.0*PI)/NUMP); // outer point Y coordiation
 		outer_points[i].mass = MASS;
 	}
 

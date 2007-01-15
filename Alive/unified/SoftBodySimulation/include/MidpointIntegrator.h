@@ -12,8 +12,8 @@ public:
 	virtual void AccumulateForces();
 	virtual void Derivatives(float deltaT, float k);
 
-protected:
-	void PressureForces();     // pressure  
+//protected:
+//	void PressureForces();     // pressure  
 };
 
 #endif /* MIDPOINTINTEGRATOR_H */

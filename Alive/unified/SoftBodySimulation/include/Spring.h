@@ -8,7 +8,7 @@
 
 // Linear hooke Spring is built between two space Particles
 
-enum sprint_type { SPRING_RADIUM, SPRING_STRUCTURAL, SPRING_SHEAR };
+enum spring_type { SPRING_RADIUM, SPRING_STRUCTURAL, SPRING_SHEAR };
 
 
 class Spring 
@@ -46,7 +46,7 @@ public:
 
    	int n;			        	// radium spring index
 
-	sprint_type type;
+	spring_type type;
 };
 
 
