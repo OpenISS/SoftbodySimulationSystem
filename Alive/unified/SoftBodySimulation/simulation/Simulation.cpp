@@ -45,7 +45,7 @@ Object3D ThreeDInner(Mass1, Ks1, Kd1,  Press1);   //	Creat a ball object globall
 //Spring OneDSpring[1];
 //Particle OneDPoint[2];
 
-Object1D object1D;
+//Object1D object1D;
 Object2D object2D;
 
 
@@ -109,7 +109,7 @@ void Display(void)
 		glPopMatrix();*/
 	//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 	
-	if(mousedown)
+/*	if(mousedown)
 	{
 	  glColor3f(1,0,1);
 	  glBegin(GL_LINES);
@@ -117,7 +117,7 @@ void Display(void)
 //   	   	glVertex2f(OneDPoint[closest_i].r->x,OneDPoint[closest_i].r->y);
    	   	glVertex2f(object1D.inner_points[closest_i].r->x,object1D.inner_points[closest_i].r->y);
       glEnd();
-	}     
+	}     */
 
 		glutSwapBuffers(); 
 }
@@ -202,6 +202,7 @@ void Idle()
 	//object1D.Update(DT, false, xMouse, yMouse);
 	//object1D.Update(DT, mousedown != 0, xMouse, yMouse);
 	object2D.Update(DT, mousedown != 0, xMouse, yMouse);
+	//object2D.Update(DT, false, xMouse, yMouse);
 
 	
   if (ThreeDInner.getPressure()<PRESSURE)

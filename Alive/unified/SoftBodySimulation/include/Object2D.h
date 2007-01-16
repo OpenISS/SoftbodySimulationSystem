@@ -35,13 +35,13 @@ protected:
 	//Spring inner_springs[NUMSPRINGS];       // for point springs on inner circle
 //	Spring outer_springs[NUMSPRINGS];     // for point springs on outer circle
 
+
+
+public:
 	Spring radium_springs[NUMSPRINGS];	   // for radium springs between two circles 
 
 	Spring shear_springs_left[NUMSPRINGS];  // for shear spring toward left
 	Spring shear_springs_right[NUMSPRINGS]; // for right spring toward right
-
-public:
-
 	Object2D();
 	virtual ~Object2D();
 
@@ -56,8 +56,8 @@ private:
 	void Add_Tangent_Spring(int index, int h, int t);
 //	void Add_Tangent_Spring(int index, Particle* h, Particle* t);
 	void Add_Radium_Spring(int index);
-//	void Add_Shear_Spring(int index, int h, int t );
-	void Add_Shear_Spring(int index, Particle* h, Particle* t);
+	void Add_Shear_Spring(int index, int h, int t );
+//	void Add_Shear_Spring(int index, Particle* h, Particle* t);
 
 	void CreateRing(void);
 };

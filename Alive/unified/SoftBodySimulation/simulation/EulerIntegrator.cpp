@@ -37,5 +37,10 @@ void EulerIntegrator::Derivatives(float deltaT, float k)
 		object->inner_points[i].v->y += k * (object->inner_points[i].f->y/object->inner_points[i].mass) * deltaT;	
 		object->inner_points[i].r->x += k * object->inner_points[i].v->x * deltaT;  											// Change in position is velocity times the change in time
 		object->inner_points[i].r->y += k * object->inner_points[i].v->y * deltaT;
+
+		object->outer_points[i].v->x += k * (object->outer_points[i].f->x/object->outer_points[i].mass) * deltaT;				// Change in velocity is added to the velocity.
+		object->outer_points[i].v->y += k * (object->outer_points[i].f->y/object->outer_points[i].mass) * deltaT;	
+		object->outer_points[i].r->x += k * object->outer_points[i].v->x * deltaT;  											// Change in position is velocity times the change in time
+		object->outer_points[i].r->y += k * object->outer_points[i].v->y * deltaT;
 	}
 }

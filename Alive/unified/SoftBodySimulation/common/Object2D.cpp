@@ -85,15 +85,18 @@ void Object2D::Draw()
 	glPopMatrix();
 
 
-/*	
+	
 glPushMatrix();
 	glBegin(GL_LINES); // the draw of radium lines from inner to outer
 		
 		for(i=0 ; i<NUMS; i++)
 		{
 		glColor3f(0.0,1.0,0.0);
-		glVertex2f(inner_points[inner_springs[i].head].px,inner_points[inner_springs[i].head].py);
-		glVertex2f(outer_points[outer_springs[i].head].px,outer_points[outer_springs[i].head].py);
+	//	glVertex2f(inner_springs[i].sp1->r->x, inner_springs[i].sp1->r->y);
+	//	glVertex2f(outer_springs[i].sp1->r->x, outer_springs[i].sp1->r->y);
+		glVertex2f(radium_springs[i].sp1->r->x, radium_springs[i].sp1->r->y);
+		glVertex2f(radium_springs[i].sp2->r->x, radium_springs[i].sp2->r->y);
+
 		}
 	glEnd();
 	glPopMatrix();
@@ -105,8 +108,12 @@ glPushMatrix();
 		for(i=0 ; i<NUMS; i++)
 		{
 		glColor3f(0.0,1.0,1.0);
-		glVertex2f(inner_points[inner_springs[i].head].px,inner_points[inner_springs[i].head].py);
-		glVertex2f(outer_points[outer_springs[i].tail].px,outer_points[outer_springs[i].tail].py);
+	//	glVertex2f(inner_points[inner_springs[i].head].px,inner_points[inner_springs[i].head].py);
+	//	glVertex2f(outer_points[outer_springs[i].tail].px,outer_points[outer_springs[i].tail].py);
+		glVertex2f(shear_springs_left[i].sp1->r->x,shear_springs_left[i].sp1->r->y);
+		glVertex2f(shear_springs_left[i].sp2->r->x,shear_springs_left[i].sp2->r->y);
+	
+		
 		}
 	glEnd();
 	glPopMatrix();
@@ -119,12 +126,15 @@ glPushMatrix();
 		for(i=0 ; i<NUMS; i++)
 		{
 		glColor3f(0.0,1.0,1.0);
-		glVertex2f(inner_points[inner_springs[i].tail].px,inner_points[inner_springs[i].tail].py);
-		glVertex2f(outer_points[outer_springs[i].head].px,outer_points[outer_springs[i].head].py);
+	//	glVertex2f(inner_points[inner_springs[i].tail].px,inner_points[inner_springs[i].tail].py);
+	//	glVertex2f(outer_points[outer_springs[i].head].px,outer_points[outer_springs[i].head].py);
+		glVertex2f(shear_springs_right[i].sp1->r->x,shear_springs_right[i].sp1->r->y);
+		glVertex2f(shear_springs_right[i].sp2->r->x,shear_springs_right[i].sp2->r->y);
+	
 		}
 	glEnd();
 	glPopMatrix();
-*/		
+		
 }
 
 /* Function of adding a new spring on the inner rings*/
@@ -163,30 +173,44 @@ void Object2D::Add_Tangent_Spring(int index, int h, int t)
 	+(outer_points[h].r->y-outer_points[t].r->y)*(outer_points[h].r->y-outer_points[t].r->y));
 
 
-	//inner_springs[index].setRestLen();
-	//outer_springs[index].setRestLen();
+//	inner_springs[index].setRestLen();
+//	outer_springs[index].setRestLen();
 }
 
 
 void Object2D::Add_Radium_Spring(int index)
 {
-/*    radium_springs[index].n=index; 
+   /* radium_springs[index].n=index; 
 	radium_springs[index].length = 
 		sqrt((outer_points[index].px-inner_points[index].px)
 			*(outer_points[index].px-inner_points[index].px)
 		    +(outer_points[index].py-inner_points[index].py)
-			*(outer_points[index].py-inner_points[index].py));	
-			*/
+			*(outer_points[index].py-inner_points[index].py));*/
+	
+	//radium_springs[index].n=index; 
+
+	radium_springs[index].sp1 = &inner_points[index]; // h, t stand for spring head and tail
+    radium_springs[index].sp2 = &outer_points[index]; // index for spring index on the ring
+	
+	radium_springs[index].restLen=
+		sqrt((outer_points[index].r->x-inner_points[index].r->x)
+			*(outer_points[index].r->x-inner_points[index].r->x)
+		    +(outer_points[index].r->y-inner_points[index].r->y)
+			*(outer_points[index].r->y-inner_points[index].r->y));
+			
 } 
 
 
-//void Object2D::Add_Shear_Spring(int index, int h, int t )
-void Object2D::Add_Shear_Spring(int index, Particle* h, Particle* t )
+void Object2D::Add_Shear_Spring(int index, int h, int t )
+//void Object2D::Add_Shear_Spring(int index, Particle* h, Particle* t )
 {
 //    shear_springs_left[index].head = h;  
 //   shear_springs_right[index].tail = t; 
-    shear_springs_left[index].sp1 = h;  
-   shear_springs_right[index].sp2 = t; 
+    shear_springs_left[index].sp1 = &outer_points[t];;  
+	shear_springs_left[index].sp2 = &inner_points[h];;
+	
+   shear_springs_right[index].sp1 = &outer_points[h]; 
+   shear_springs_right[index].sp2 = &inner_points[t]; 
 
 /*	shear_springs_left[index].length = 
 		sqrt((outer_points[t].px-inner_points[h].px)
@@ -195,20 +219,20 @@ void Object2D::Add_Shear_Spring(int index, Particle* h, Particle* t )
 			*(outer_points[t].py-inner_points[h].py));	
 */
 
-   /*
-	shear_springs_left[index].length = 
+   
+	shear_springs_left[index].restLen = 
 		sqrt((outer_points[t].r->x-inner_points[h].r->x)
 			*(outer_points[t].r->x-inner_points[h].r->x)
 		    +(outer_points[t].r->y-inner_points[h].r->y)
 			*(outer_points[t].r->y-inner_points[h].r->y));	
 
-	shear_springs_right[index].length = 
-		sqrt((outer_points[h].px-inner_points[t].px)
-			*(outer_points[h].px-inner_points[t].px)
-		    +(outer_points[h].py-inner_points[t].py)
-			*(outer_points[h].py-inner_points[t].py));	
+	shear_springs_right[index].restLen = 
+		sqrt((outer_points[h].r->x-inner_points[t].r->x)
+			*(outer_points[h].r->x-inner_points[t].r->x)
+		    +(outer_points[h].r->y-inner_points[t].r->y)
+			*(outer_points[h].r->y-inner_points[t].r->y));	
 
-  */
+  
 } 
 
 /* Create 2 2D-rings (points + springs) */
@@ -230,8 +254,8 @@ void Object2D::CreateRing(void)
 	for(i=0; i<NUMP ;i++)	       // NUMP-1 springs from 1st to the NUMP for outer & inner
 	{  
 		Add_Tangent_Spring(i,i,(i+1) % NUMP); 
-		/*Add_Radium_Spring(i) ;
-		Add_Shear_Spring(i,i,i+1);*/
+		Add_Radium_Spring(i) ;
+		Add_Shear_Spring(i,i,(i+1) % NUMP);
 	}
 /*
 	Add_Tangent_Spring(i,i,1);    // At this monment, i=NUMP, last spring from NUMP - 1st		 

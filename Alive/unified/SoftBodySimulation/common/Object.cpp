@@ -74,7 +74,7 @@ void Object::SetObject()
 
 //SetNormals();
  
-// SetTriPlanes();      // set triangle faces on side sur                                                                                                       faces
+// SetTriPlanes();      // set triangle faces on side surfaces
 //	SetSprings();   // set springs on horizontal planes, connect points
  //iteration();  
  /*  Object3DParticles=t_Object3DParticles;
@@ -89,8 +89,8 @@ void Object::Update(float deltaT, bool drag, float xDrag, float yDrag)
 {
 	if(integrator == NULL)
 //		integrator = new EulerIntegrator(*this);
-//		integrator = new MidpointIntegrator(*this);
-		integrator = new RungeKutta4Integrator(*this);
+		integrator = new MidpointIntegrator(*this);
+//		integrator = new RungeKutta4Integrator(*this);
 
 	integrator->integrate(deltaT, drag, xDrag, yDrag);
 }
