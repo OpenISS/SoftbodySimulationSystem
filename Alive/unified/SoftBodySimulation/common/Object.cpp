@@ -89,8 +89,8 @@ void Object::Update(float deltaT, bool drag, float xDrag, float yDrag)
 {
 	if(integrator == NULL)
 //		integrator = new EulerIntegrator(*this);
-		integrator = new MidpointIntegrator(*this);
-//		integrator = new RungeKutta4Integrator(*this);
+//		integrator = new MidpointIntegrator(*this);
+		integrator = new RungeKutta4Integrator(*this);
 
 	integrator->integrate(deltaT, drag, xDrag, yDrag);
 }

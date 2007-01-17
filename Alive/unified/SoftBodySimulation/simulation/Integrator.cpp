@@ -52,6 +52,9 @@ void Integrator::ExternalForces()
 
     float outer_Fx,outer_Fy;		            // force vector
 
+
+	float radium_Fx, radium_Fy;                 // force vector
+
 	float f;				        // external force 
 
 	// Gravity force computation
@@ -119,16 +122,20 @@ void Integrator::SpringForces()
 	float shear_left_rd12;
 	float shear_right_rd12;
 	
-	float radium_Fx, radium_Fy;                 // force vector
-	float shear_left_Fx, shear_left_Fy;         // force vector  
-    float shear_right_Fx, shear_right_Fy;       // force vector  
+	
 
 
 	float inner_vx12,inner_vy12;    // speed difference vx1-vx2, vy1-vy2 on inner ring  
 	float outer_vx12,outer_vy12; 
+	float radium_vx12, radium_vy12; // on radium springs
+	float shear_left_vx12, shear_left_vy12;   // shear pair
+	float shear_right_vx12, shear_right_vy12;
 
     float inner_Fx,inner_Fy;		            // force vector
 	float outer_Fx,outer_Fy;
+	float radium_Fx, radium_Fy;                 // force vector
+	float shear_left_Fx, shear_left_Fy;         // force vector  
+    float shear_right_Fx, shear_right_Fy;       // force vector  
 
 	float f;				        // external force 
 
@@ -211,7 +218,7 @@ void Integrator::SpringForces()
 		}
 
 
-/*	if(radium_rd12!=0)
+	if(radium_rd12!=0)
 	{
 	radium_vx12=((Object2D*)object)->radium_springs[i].sp1->v->x - ((Object2D*)object)->radium_springs[i].sp2->v->x;
 	radium_vy12=((Object2D*)object)->radium_springs[i].sp1->v->y - ((Object2D*)object)->radium_springs[i].sp2->v->y;
@@ -223,58 +230,68 @@ void Integrator::SpringForces()
 	radium_Fy=((inner_y1-outer_y1)/radium_rd12)*f;
 
 
-	inner_points[inner_springs[i].head].fx-=radium_Fx;
-	inner_points[inner_springs[i].head].fy-=radium_Fy;
+	((Object2D*)object)->radium_springs[i].sp1->f->x-=radium_Fx;
+	((Object2D*)object)->radium_springs[i].sp1->f->y-=radium_Fy;
 
-	outer_points[outer_springs[i].head].fx+=radium_Fx;
-	outer_points[outer_springs[i].head].fy+=radium_Fy; 
+	((Object2D*)object)->radium_springs[i].sp2->f->x+=radium_Fx;
+	((Object2D*)object)->radium_springs[i].sp2->f->y+=radium_Fy;
+
+//	inner_points[inner_springs[i].head].fx-=radium_Fx;
+//	inner_points[inner_springs[i].head].fy-=radium_Fy;
+//	outer_points[outer_springs[i].head].fx+=radium_Fx;
+//	outer_points[outer_springs[i].head].fy+=radium_Fy; 
 	 
 	}
 
 
   //  Part #3 shear spring constribution
 
+
 		if(shear_left_rd12!=0)
 	{
-shear_left_vx12=inner_points[inner_springs[i].head].vx - outer_points[outer_springs[i].tail].vx;
-shear_left_vy12=inner_points[inner_springs[i].head].vy - outer_points[outer_springs[i].tail].vy;
+shear_left_vx12=((Object2D*)object)->shear_springs_left[i].sp1->v->x - ((Object2D*)object)->shear_springs_left[i].sp2->v->x;
+shear_left_vy12=((Object2D*)object)->shear_springs_left[i].sp1->v->y - ((Object2D*)object)->shear_springs_left[i].sp2->v->y;
 
-	f=(shear_left_rd12-shear_springs_left[i].length)*RKS
+	f=(shear_left_rd12-((Object2D*)object)->shear_springs_left[i].restLen)*RKS
 	 +(shear_left_vx12*(inner_x1-outer_x2)+
 	   shear_left_vy12*(inner_y1-outer_y2))*RKD/shear_left_rd12;
 
 	shear_left_Fx=((inner_x1-outer_x2)/shear_left_rd12)*f;
 	shear_left_Fy=((inner_y1-outer_y2)/shear_left_rd12)*f;
 
-	inner_points[inner_springs[i].head].fx-=shear_left_Fx;
-	inner_points[inner_springs[i].head].fy-=shear_left_Fy;
 
-	outer_points[outer_springs[i].tail].fx+=shear_left_Fx;
-	outer_points[outer_springs[i].tail].fy+=shear_left_Fy; 
+	((Object2D*)object)->shear_springs_left[i].sp1->f->x-=shear_left_Fx;
+	((Object2D*)object)->shear_springs_left[i].sp1->f->y-=shear_left_Fy;
+
+	((Object2D*)object)->shear_springs_left[i].sp2->f->x+=shear_left_Fx;
+	((Object2D*)object)->shear_springs_left[i].sp2->f->y+=shear_left_Fy;
+
+
 	 
 	}
-
 
     if(shear_right_rd12!=0)
 	{
-shear_right_vx12=inner_points[inner_springs[i].tail].vx - outer_points[outer_springs[i].head].vx;
-shear_right_vy12=inner_points[inner_springs[i].tail].vy - outer_points[outer_springs[i].head].vy;
+shear_right_vx12=((Object2D*)object)->shear_springs_right[i].sp1->v->x - ((Object2D*)object)->shear_springs_right[i].sp2->v->x;
+shear_right_vy12=((Object2D*)object)->shear_springs_right[i].sp1->v->y - ((Object2D*)object)->shear_springs_right[i].sp2->v->y;
 
-	f=(shear_right_rd12-shear_springs_right[i].length)*RKS
-	 +(shear_right_vx12*(inner_x2-outer_x1)+
-	   shear_right_vy12*(inner_y2-outer_y1))*RKD/shear_right_rd12;
+	f=(shear_right_rd12-((Object2D*)object)->shear_springs_right[i].restLen)*RKS
+	 +(shear_right_vx12*(inner_x1-outer_x2)+
+	   shear_right_vy12*(inner_y1-outer_y2))*RKD/shear_right_rd12;
 
-	shear_right_Fx=((inner_x2-outer_x1)/shear_right_rd12)*f;
-	shear_right_Fy=((inner_y2-outer_y1)/shear_right_rd12)*f;
+	shear_right_Fx=((inner_x1-outer_x2)/shear_right_rd12)*f;
+	shear_right_Fy=((inner_y1-outer_y2)/shear_right_rd12)*f;
 
-	inner_points[inner_springs[i].tail].fx-=shear_right_Fx;
-	inner_points[inner_springs[i].tail].fy-=shear_right_Fy;
 
-	outer_points[outer_springs[i].head].fx+=shear_right_Fx;
-	outer_points[outer_springs[i].head].fy+=shear_right_Fy; 
+	((Object2D*)object)->shear_springs_right[i].sp1->f->x-=shear_right_Fx;
+	((Object2D*)object)->shear_springs_right[i].sp1->f->y-=shear_right_Fy;
+
+	((Object2D*)object)->shear_springs_right[i].sp2->f->x+=shear_right_Fx;
+	((Object2D*)object)->shear_springs_right[i].sp2->f->y+=shear_right_Fy;
+
 	 
 	}
-*/
+
 
 
 

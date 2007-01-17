@@ -206,11 +206,13 @@ void Object2D::Add_Shear_Spring(int index, int h, int t )
 {
 //    shear_springs_left[index].head = h;  
 //   shear_springs_right[index].tail = t; 
-    shear_springs_left[index].sp1 = &outer_points[t];;  
-	shear_springs_left[index].sp2 = &inner_points[h];;
+      
+	shear_springs_left[index].sp1 = &inner_points[h];;
+	shear_springs_left[index].sp2 = &outer_points[t];;
 	
-   shear_springs_right[index].sp1 = &outer_points[h]; 
-   shear_springs_right[index].sp2 = &inner_points[t]; 
+	shear_springs_right[index].sp1 = &inner_points[t];	
+	shear_springs_right[index].sp2 = &outer_points[h]; 
+   
 
 /*	shear_springs_left[index].length = 
 		sqrt((outer_points[t].px-inner_points[h].px)
