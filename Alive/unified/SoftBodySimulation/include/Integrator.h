@@ -11,6 +11,19 @@ class Integrator
 {
 protected:
 	Object* object;
+///	Object* initObject;
+
+	Particle temp_inner_points0[MAX_POINTS_SPRINGS];
+	Particle temp_inner_points1[MAX_POINTS_SPRINGS];
+	Particle temp_inner_points2[MAX_POINTS_SPRINGS];
+	Particle temp_inner_points3[MAX_POINTS_SPRINGS];
+	Particle temp_inner_points4[MAX_POINTS_SPRINGS];
+
+	Particle temp_outer_points0[MAX_POINTS_SPRINGS];
+	Particle temp_outer_points1[MAX_POINTS_SPRINGS];
+	Particle temp_outer_points2[MAX_POINTS_SPRINGS];
+	Particle temp_outer_points3[MAX_POINTS_SPRINGS];
+	Particle temp_outer_points4[MAX_POINTS_SPRINGS];
 
 	bool dragExists;
 	float mDragX;

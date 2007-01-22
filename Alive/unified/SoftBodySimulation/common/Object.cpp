@@ -12,6 +12,14 @@ Object::Object()
 	integrator = NULL;
 }
 
+//Object::Object(Object& objectPartial)
+/*Object::Clone()
+{
+	memcpy(objectPartial.inner_points, this->inner_points, sizeof(Particle) * MAX_POINTS_SPRINGS);
+	memcpy(objectPartial.outer_points, this->outer_points, sizeof(Particle) * MAX_POINTS_SPRINGS);
+}
+*/
+
 Object::~Object()
 {
 	delete integrator;

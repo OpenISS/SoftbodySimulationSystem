@@ -14,10 +14,10 @@ using namespace std;
 #define DT      0.003f    // Delta time in derivatives	
 
 #define KS 300.0f    // Hooke spring constant
-#define KD 20.0f     // Hooke spring damping constant
+#define KD 80.0f     // Hooke spring damping constant
 
 #define RKS 550.0f            // radium spring constant
-#define RKD 50.0f            // radium spring damping constant
+#define RKD 150.0f            // radium spring damping constant
 
 //#define KS 755.0f    // Hooke spring constant
 //#define KD 35.0f     // Hooke spring damping constant

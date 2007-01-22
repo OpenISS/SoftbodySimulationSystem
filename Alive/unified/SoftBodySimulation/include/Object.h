@@ -5,6 +5,9 @@
 #include "Spring.h"
 #include "Particle.h"
 
+#define MAX_POINTS_SPRINGS 40
+
+
 #include "Integrator.h"
 
 #include "global.h"
@@ -32,11 +35,17 @@ protected:
 
 
 public:
-	Spring inner_springs[40];
-	Particle inner_points[40];
-
-	Spring outer_springs[40];     // for point springs on outer circle
-	Particle outer_points[40];  // for outer circle Particles + 1 mouse Particle
+	Spring inner_springs[MAX_POINTS_SPRINGS];
+	Particle inner_points[MAX_POINTS_SPRINGS];
+/*
+	Particle temp_points0[40];
+	Particle temp_points1[40];
+	Particle temp_points2[40];
+	Particle temp_points3[40];
+	Particle temp_points4[40];
+*/
+	Spring outer_springs[MAX_POINTS_SPRINGS];     // for point springs on outer circle
+	Particle outer_points[MAX_POINTS_SPRINGS];  // for outer circle Particles + 1 mouse Particle
 	
 //	Spring OneDSpring[1];
 //	Particle OneDPoint[2];
@@ -44,6 +53,7 @@ public:
 
 public:
 	Object();
+//	Object(Object&);
 	virtual ~Object();
 
 
@@ -52,6 +62,8 @@ public:
 
 	virtual void Draw() = 0; 
 	virtual void Update(float, bool = false, float = 0, float = 0);
+
+	//virtual void Clone(); 
 
 	virtual void SetObject();           // Then, make the Object3D object
 

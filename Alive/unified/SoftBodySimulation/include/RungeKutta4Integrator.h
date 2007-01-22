@@ -11,8 +11,14 @@ public:
 
 //	virtual void integrate();
 
-	virtual void Derivatives(float deltaT, float k);
+//	virtual void Derivatives(float deltaT, float k);
+protected:
+//	void PressureForces();     // pressure 
 
+	void k4(int, float, float);
+	void k3(int, float, float);
+	void k2(int, float, float);
+	void ynew(int, float, float);
 };
 
 #endif /* RUNGEKUTTA4INTEGRATOR_H */

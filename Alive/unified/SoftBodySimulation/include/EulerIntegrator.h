@@ -11,6 +11,12 @@ public:
 
 	virtual void AccumulateForces();   // accumulate forces acted on 
 	virtual void Derivatives(float, float);
+
+
+protected:
+	void k1(int, float, float);
+	void ynew(int, float, float);
+
 };
 
 #endif /* EULERINTEGRATOR_H */

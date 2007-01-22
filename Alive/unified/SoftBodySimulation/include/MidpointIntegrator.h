@@ -10,10 +10,13 @@ public:
 	~MidpointIntegrator();
 
 	virtual void AccumulateForces();
-	virtual void Derivatives(float deltaT, float k);
+//	virtual void Derivatives(float deltaT, float k);
 
-//protected:
-//	void PressureForces();     // pressure  
+protected:
+//	void PressureForces();     // pressure 
+
+	void k2(int, float, float);
+	void ynew(int, float, float);
 };
 
 #endif /* MIDPOINTINTEGRATOR_H */

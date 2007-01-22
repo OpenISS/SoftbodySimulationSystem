@@ -7,10 +7,13 @@
 Integrator::Integrator(Object& object) : dragExists(false)
 {
 	this->object = &object;
+	memcpy(temp_inner_points0, object.inner_points, sizeof(Particle) * MAX_POINTS_SPRINGS);
+	memcpy(temp_outer_points0, object.outer_points, sizeof(Particle) * MAX_POINTS_SPRINGS);
 }
 
 Integrator::~Integrator()
 {
+//	delete this->initObject;
 }
 
 void Integrator::integrate(float deltaT, bool drag, float xDrag, float yDrag)
@@ -21,6 +24,8 @@ void Integrator::integrate(float deltaT, bool drag, float xDrag, float yDrag)
 
 	AccumulateForces();   // accumulate forces acted on 
 	Derivatives(deltaT, 1.0);
+ //   memcpy(temp_inner_points0, object->inner_points, sizeof(Particle) * MAX_POINTS_SPRINGS);
+//	memcpy(temp_outer_points0, object->outer_points, sizeof(Particle) * MAX_POINTS_SPRINGS);
 }
 
 void Integrator::AccumulateForces()   // accumulate forces acted on 
