@@ -18,17 +18,30 @@ Vector& Vector::operator+ (Vector const &K)    // fcn #1 - Vectors addition
 }
 
 
+/*
+Vector& Vector::operator- (const Vector &K, const Vector &N)    // fcn #2 - Vectors subtraction
+{
+	return Vector(K.x - N.x, K.y - N.y, K.z - N.z);
+}
+*/
 
+Vector operator- (const Vector &K, const Vector &N)    // fcn #2 - Vectors subtraction
+{
+	return Vector(K.x - N.x, K.y - N.y, K.z - N.z);
+}
+//*/
 
+/*
 Vector& Vector::operator- (Vector const &K)    // fcn #2 - Vectors subtraction
 {
-	x-=K.x;
+/*	x-=K.x;
 	y-=K.y;
 	z-=K.z;
-	
-	return *this;
+*/	
+/*	return Vector(x - K.x, y - K.y, z - K.z);
+//	return *this;
 }
-
+*/
 
 
 Vector& Vector::operator* (float s)    // fcn #3 - multiply by a scalar (R * s) 

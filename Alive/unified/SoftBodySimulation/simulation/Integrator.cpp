@@ -9,6 +9,8 @@ Integrator::Integrator(Object& object) : dragExists(false)
 	this->object = &object;
 	memcpy(temp_inner_points0, object.inner_points, sizeof(Particle) * MAX_POINTS_SPRINGS);
 	memcpy(temp_outer_points0, object.outer_points, sizeof(Particle) * MAX_POINTS_SPRINGS);
+
+	dim = DIM1D;
 }
 
 Integrator::~Integrator()
@@ -31,9 +33,17 @@ void Integrator::integrate(float deltaT, bool drag, float xDrag, float yDrag)
 void Integrator::AccumulateForces()   // accumulate forces acted on 
 {
 	ExternalForces();
-
 	SpringForces();	
-	PressureForces();
+
+	switch(dim)
+	{
+		case DIM1D:
+			break;
+
+		case DIM2D:
+		case DIM3D:
+			PressureForces();
+	}
 }
 
 
@@ -75,7 +85,7 @@ void Integrator::ExternalForces()
 	 object->outer_points[i].f->x = 0;//40*sin(25*i);
 
     // OneDSpring[i].fx = 0.0;
-	 object->outer_points[i].f->y = 0;//(object->outer_points[i].mass)*GY;     
+	 object->outer_points[i].f->y = 0;//(object->outer_points[i].mass)*GY;
      
 //	    when mouse is clicked (mouse spring) 
 //		if(i==closest_i)		// closest point on outer ring 
@@ -83,24 +93,24 @@ void Integrator::ExternalForces()
 
 		if(dragExists)			// if user clicked
 		{
-			outer_x1 = object->outer_points[ i ].r->x;		// get points X-coord
-			outer_y1 = object->outer_points[ i ].r->y;        // get points Y-coord
-			outer_x2 = mDragX;                      // get Mouse  X-coord
-			outer_y2 = mDragY;                      // get Mouse  Y-coord
+			inner_x1 = object->inner_points[ i ].r->x;		// get points X-coord
+			inner_y1 = object->inner_points[ i ].r->y;        // get points Y-coord
+			inner_x2 = mDragX;                      // get Mouse  X-coord
+			inner_y2 = mDragY;                      // get Mouse  Y-coord
 
-			outer_rd12=sqrt((outer_x1-outer_x2)*(outer_x1-outer_x2)
-				        +(outer_y1-outer_y2)*(outer_y1-outer_y2)); // distance
+			inner_rd12=sqrt((inner_x1-inner_x2)*(inner_x1-inner_x2)
+				        +(inner_y1-inner_y2)*(inner_y1-inner_y2)); // distance
 
-			f=(outer_rd12-MOUSE_REST)*MOUSE_KS+(object->outer_points[i].v->x*(outer_x1-outer_x2)
-				+object->outer_points[i].v->y*(outer_y1-outer_y2))*MOUSE_KD/outer_rd12;
+			f=(inner_rd12-MOUSE_REST)*MOUSE_KS+(object->inner_points[i].v->x*(inner_x1-inner_x2)
+				+object->inner_points[i].v->y*(inner_y1-inner_y2))*MOUSE_KD/inner_rd12;
 
 			// calculate spring force
-			outer_Fx = ((outer_x1 - outer_x2) / outer_rd12 ) * f;
-			outer_Fy = ((outer_y1 - outer_y2) / outer_rd12 ) * f;
+			inner_Fx = ((inner_x1 - inner_x2) / inner_rd12 ) * f;
+			inner_Fy = ((inner_y1 - inner_y2) / inner_rd12 ) * f;
 
 			// accumulate gravity + hooke forces
-			object->outer_points[i].f->x -= outer_Fx; // from the closet point to the Mouse point
-			object->outer_points[i].f->y -= outer_Fy;
+			object->inner_points[i].f->x -= inner_Fx; // from the closet point to the Mouse point
+			object->inner_points[i].f->y -= inner_Fy;
 
 		}
 	}

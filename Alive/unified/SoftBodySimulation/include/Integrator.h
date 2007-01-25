@@ -29,6 +29,8 @@ protected:
 	float mDragX;
 	float mDragY;
 
+	dimensionality dim;
+
 public:
 	Integrator(Object&);
 	virtual ~Integrator();

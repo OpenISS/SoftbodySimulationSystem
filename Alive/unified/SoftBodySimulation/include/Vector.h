@@ -36,7 +36,9 @@ public:
 		 
 	Vector& operator+ (Vector const &);   // #1 fcn - Vector addition
 //    Vector& operator+ (Vector &);   // #1 fcn - Vector addition
-	Vector& operator- (Vector const &);   // #2 fcn - Vector subtraction
+//	Vector& operator- (Vector const &);   // #2 fcn - Vector subtraction
+//	Vector operator- (Vector const &, Vector const &);   // #2 fcn - Vector subtraction
+	friend Vector operator- (const Vector & p, const Vector & q);   // #2 fcn - Vector subtraction
 	Vector& operator* (float);		     // #3 fcn - Vector by a scalar
 //	Vector& operator% (Vector const &);	 // #4 fcn - Vector cross multiply 
 	float  operator* (Vector const &); // #6 fcn - Vector dot multiply
