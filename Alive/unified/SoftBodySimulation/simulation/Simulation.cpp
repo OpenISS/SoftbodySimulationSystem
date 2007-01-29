@@ -28,9 +28,9 @@ int NUMS=1;
 
 float Mass1 =   10.0f, Mass2 =   1.0f;
 float Ks1   =700.0f, Ks2   = 100.0f;
-float Kd1   =  20.0f, Kd2   =  1.0f;
+float Kd1   =  45.0f, Kd2   =  1.0f;
 float Rad1  =   1.0f, Rad2  =   4.0f; 
-float Press1 = 10.0f, Press2=  500.0f; //(orignal press2=50;)
+float Press1 = 10.0f, Press2=  50.0f; //(orignal press2=50;)
 
 
 //int PosX=0;
@@ -77,18 +77,20 @@ void Display(void)
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
  		gluLookAt(2,0,5,0,0,0,0,1,0);  // Camera difinition
+ 
+		glEnable(GL_BLEND);                                // transparent
+  	    glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);  // transparent
 
 		glPointSize(8);
 		object1D.Draw();
 		object2D.Draw();
 
+     
 		/*	glPushMatrix();
 
 		glRotatef(xMouse, 0.0, 1.0, 1.0);
 
-        glEnable(GL_BLEND);                                // transparent
-  	    glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);  // transparent
-        ThreeDInner.Rotated();      // Rotate about X-axis, Y-axis, and/or Z-axis 
+          ThreeDInner.Rotated();      // Rotate about X-axis, Y-axis, and/or Z-axis 
 		
 	//	 
 	//	
@@ -97,7 +99,7 @@ void Display(void)
 		
 		glColor4f(0,0,1,1);
 	//	outer.Draw();
-		box.Draw();           // Draw the view box space 
+	
 
 		glPointSize(4);
 		glLineWidth(3);
@@ -108,7 +110,8 @@ void Display(void)
 		glScalef(1.4,1.4,1.4);	   
 		glPopMatrix();*/
 	//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-	
+	box.Draw();           // Draw the view box space 	
+
 	if(mousedown)
 	{
 	  glColor3f(1,0,1);
@@ -118,6 +121,7 @@ void Display(void)
    	   	glVertex2f(object1D.inner_points[closest_i].r->x,object1D.inner_points[closest_i].r->y);
       glEnd();
 	}     
+
 
 		glutSwapBuffers(); 
 }

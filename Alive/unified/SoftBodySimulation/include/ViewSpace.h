@@ -13,7 +13,7 @@
 class ViewSpace       // constructor
 {
 public:
-/*	ViewSpace()
+	ViewSpace()
 		 {
           spaceVertex[0]= new Vector( LIMIT, -LIMIT,  LIMIT);
           spaceVertex[1]= new Vector( LIMIT, -LIMIT, -LIMIT);
@@ -33,12 +33,12 @@ public:
 			delete spaceVertex[i];
 		}
 	}
-     */
+     
 	  void Rotate(void);
       void Draw(void);
 	   
 public:
-//	Vector* spaceVertex[8];
+	Vector* spaceVertex[8];
 };
 
 

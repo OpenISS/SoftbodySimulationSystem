@@ -45,6 +45,7 @@ protected:
  
 	virtual void AccumulateForces();   // accumulate forces acted on 
 	virtual void Derivatives(float, float) = 0;   // Differential computation
+	virtual void CollisionDetection(int);
 
 	virtual void GravityForce();
 	virtual void DragForce();

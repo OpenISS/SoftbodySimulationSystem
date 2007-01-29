@@ -68,6 +68,7 @@ void EulerIntegrator::Derivatives(float deltaT, float k)
 		*/
 
 		ynew(i, k, deltaT);
+		CollisionDetection(i);
 	}
 }
 

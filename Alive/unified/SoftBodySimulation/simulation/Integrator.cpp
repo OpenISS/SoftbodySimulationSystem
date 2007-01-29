@@ -10,7 +10,7 @@ Integrator::Integrator(Object& object) : dragExists(false)
 	memcpy(temp_inner_points0, object.inner_points, sizeof(Particle) * MAX_POINTS_SPRINGS);
 	memcpy(temp_outer_points0, object.outer_points, sizeof(Particle) * MAX_POINTS_SPRINGS);
 
-	dim = DIM1D;
+	dim = DIM2D;
 }
 
 Integrator::~Integrator()
@@ -29,6 +29,7 @@ void Integrator::integrate(float deltaT, bool drag, float xDrag, float yDrag)
  //   memcpy(temp_inner_points0, object->inner_points, sizeof(Particle) * MAX_POINTS_SPRINGS);
 //	memcpy(temp_outer_points0, object->outer_points, sizeof(Particle) * MAX_POINTS_SPRINGS);
 }
+
 
 void Integrator::AccumulateForces()   // accumulate forces acted on 
 {
@@ -93,24 +94,24 @@ void Integrator::ExternalForces()
 
 		if(dragExists)			// if user clicked
 		{
-			inner_x1 = object->inner_points[ i ].r->x;		// get points X-coord
-			inner_y1 = object->inner_points[ i ].r->y;        // get points Y-coord
-			inner_x2 = mDragX;                      // get Mouse  X-coord
-			inner_y2 = mDragY;                      // get Mouse  Y-coord
+			outer_x1 = object->outer_points[ i ].r->x;		// get points X-coord
+			outer_y1 = object->outer_points[ i ].r->y;        // get points Y-coord
+			outer_x2 = mDragX;                      // get Mouse  X-coord
+			outer_y2 = mDragY;                      // get Mouse  Y-coord
 
-			inner_rd12=sqrt((inner_x1-inner_x2)*(inner_x1-inner_x2)
-				        +(inner_y1-inner_y2)*(inner_y1-inner_y2)); // distance
+			outer_rd12=sqrt((outer_x1-outer_x2)*(outer_x1-outer_x2)
+				        +(outer_y1-outer_y2)*(outer_y1-outer_y2)); // distance
 
-			f=(inner_rd12-MOUSE_REST)*MOUSE_KS+(object->inner_points[i].v->x*(inner_x1-inner_x2)
-				+object->inner_points[i].v->y*(inner_y1-inner_y2))*MOUSE_KD/inner_rd12;
+			f=(outer_rd12-MOUSE_REST)*MOUSE_KS+(object->outer_points[i].v->x*(outer_x1-outer_x2)
+				+object->outer_points[i].v->y*(outer_y1-outer_y2))*MOUSE_KD/outer_rd12;
 
 			// calculate spring force
-			inner_Fx = ((inner_x1 - inner_x2) / inner_rd12 ) * f;
-			inner_Fy = ((inner_y1 - inner_y2) / inner_rd12 ) * f;
+			outer_Fx = ((outer_x1 - outer_x2) / outer_rd12 ) * f;
+			outer_Fy = ((outer_y1 - outer_y2) / outer_rd12 ) * f;
 
 			// accumulate gravity + hooke forces
-			object->inner_points[i].f->x -= inner_Fx; // from the closet point to the Mouse point
-			object->inner_points[i].f->y -= inner_Fy;
+			object->outer_points[i].f->x -= outer_Fx; // from the closet point to the Mouse point
+			object->outer_points[i].f->y -= outer_Fy;
 
 		}
 	}
@@ -161,11 +162,7 @@ void Integrator::SpringForces()
 	 for(i=0; i<object->GetNumberOfSprings(); i++)  // Part #1, tangent spring force constribution 
 	 {
 	
-	  /*  inner_x1 = OneDSpring[ inner_springs[i].head ].px;
-		inner_y1 = OneDSpring[ inner_springs[i].head ].py;
-		inner_x2 = OneDSpring[ inner_springs[i].tail ].px;
-		inner_y2 = OneDSpring[ inner_springs[i].tail ].py;
-		*/
+	 
 
 			 
 		inner_x1 = object->inner_springs[i].sp1->r->x;
@@ -251,10 +248,6 @@ void Integrator::SpringForces()
 	((Object2D*)object)->radium_springs[i].sp2->f->x+=radium_Fx;
 	((Object2D*)object)->radium_springs[i].sp2->f->y+=radium_Fy;
 
-//	inner_points[inner_springs[i].head].fx-=radium_Fx;
-//	inner_points[inner_springs[i].head].fy-=radium_Fy;
-//	outer_points[outer_springs[i].head].fx+=radium_Fx;
-//	outer_points[outer_springs[i].head].fy+=radium_Fy; 
 	 
 	}
 
@@ -326,6 +319,7 @@ shear_right_vy12=((Object2D*)object)->shear_springs_right[i].sp1->v->y - ((Objec
 
 void Integrator::PressureForces()
 {
+	
 	int i;    // runing index
 
    	float inner_x1,inner_x2,inner_y1,inner_y2;	// points inner_p1, inner_p2 on the inner circle
@@ -464,4 +458,152 @@ void Integrator::PressureForces()
 		outer_points[outer_springs[i].tail].fy+=outer_springs[i].ny*outer_p_accu;
 	}
 	*/
+}
+
+void Integrator::CollisionDetection(int i)
+{
+
+
+	// Check #1 - X boundaries
+	if ((object->outer_points[i].r->x + object->outer_points[i].dr->x) < -LIMIT )
+	{
+       object->outer_points[i].dr->x = -LIMIT - object->outer_points[i].r->x;
+	   object->outer_points[i].v->x = - 0.2 * object->outer_points[i].v->x;
+       object->outer_points[i].v->y =   0.9 * object->outer_points[i].v->y;
+     //  object->outer_points[i].v.z =   0.9 * object->outer_points[i].v.z;   
+	}else 
+	if ((object->outer_points[i].r->x + object->outer_points[i].dr->x) > LIMIT )
+	{
+       object->outer_points[i].dr->x = LIMIT - object->outer_points[i].r->x;
+	   object->outer_points[i].v->x = - 0.2 * object->outer_points[i].v->x;
+       object->outer_points[i].v->y =   0.9 * object->outer_points[i].v->y;
+    //   ballpoints[i].v->z =   0.9 * ballpoints[i].v->z;   
+	} 
+
+    object->outer_points[i].r->x  = object->outer_points[i].r->x + object->outer_points[i].dr->x;
+
+	
+	// Check #2 - Y boundaries	
+	if ((object->outer_points[i].r->y + object->outer_points[i].dr->y) < -LIMIT )
+	{
+       object->outer_points[i].dr->y = -LIMIT - object->outer_points[i].r->y;
+	   object->outer_points[i].v->y = - 0.2 * object->outer_points[i].v->y;
+  //     object->outer_points[i].v->z =   0.9 * object->outer_points[i].v->z;
+       object->outer_points[i].v->x =   0.9 * object->outer_points[i].v->x;   
+	}else
+    if ((object->outer_points[i].r->y + object->outer_points[i].dr->y) > LIMIT )
+	{
+       object->outer_points[i].dr->y = LIMIT - object->outer_points[i].r->y;
+	   object->outer_points[i].v->y = - 0.2 * object->outer_points[i].v->y;
+  //     object->outer_points[i].v->z =   0.9 * object->outer_points[i].v->z;
+       object->outer_points[i].v->x =   0.9 * object->outer_points[i].v->x;   
+	}
+
+    object->outer_points[i].r->y  = object->outer_points[i].r->y + object->outer_points[i].dr->y;
+	
+
+	// Check #3 - Z boundary
+		
+ /*   if ((object->outer_points[i].r->z + object->outer_points[i].dr->z) < -LIMIT )
+	{
+       object->outer_points[i].dr->z = -LIMIT - object->outer_points[i].r->z;
+	   object->outer_points[i].v->z = - 0.2 * object->outer_points[i].v->z;
+       object->outer_points[i].v->x =   0.9 * object->outer_points[i].v->x;
+       object->outer_points[i].v->y =   0.9 * object->outer_points[i].v->y;   
+	}else
+    if ((object->outer_points[i].r->z + object->outer_points[i].dr->z) > LIMIT )
+	{
+       object->outer_points[i].dr->z = LIMIT - object->outer_points[i].r->z;
+	   object->outer_points[i].v->z = - 0.2 * object->outer_points[i].v->z;
+       object->outer_points[i].v->x =   0.9 * object->outer_points[i].v->x;
+       object->outer_points[i].v->y =   0.9 * object->outer_points[i].v->y;   
+	}
+
+    object->outer_points[i].r->z  = object->outer_points[i].r->z + object->outer_points[i].dr->z;
+
+*/
+	// Check #4 - Boundary limitations
+
+	if (object->outer_points[i].r->x < -LIMIT) object->outer_points[i].r->x = -LIMIT;
+	if (object->outer_points[i].r->y < -LIMIT) object->outer_points[i].r->y = -LIMIT;
+//	if (object->outer_points[i].r->z < -LIMIT) object->outer_points[i].r->z = -LIMIT;
+
+	if (object->outer_points[i].r->x > LIMIT) object->outer_points[i].r->x = LIMIT;
+	if (object->outer_points[i].r->y > LIMIT) object->outer_points[i].r->y = LIMIT;
+//	if (object->outer_points[i].r->z > LIMIT) object->outer_points[i].r->z = LIMIT;
+
+
+
+	// Check #1 - X boundaries
+	if ((object->inner_points[i].r->x + object->inner_points[i].dr->x) < -LIMIT )
+	{
+       object->inner_points[i].dr->x = -LIMIT - object->inner_points[i].r->x;
+	   object->inner_points[i].v->x = - 0.2 * object->inner_points[i].v->x;
+       object->inner_points[i].v->y =   0.9 * object->inner_points[i].v->y;
+     //  object->inner_points[i].v.z =   0.9 * object->inner_points[i].v.z;   
+	}else 
+	if ((object->inner_points[i].r->x + object->inner_points[i].dr->x) > LIMIT )
+	{
+       object->inner_points[i].dr->x = LIMIT - object->inner_points[i].r->x;
+	   object->inner_points[i].v->x = - 0.2 * object->inner_points[i].v->x;
+       object->inner_points[i].v->y =   0.9 * object->inner_points[i].v->y;
+    //   ballpoints[i].v->z =   0.9 * ballpoints[i].v->z;   
+	} 
+
+    object->inner_points[i].r->x  = object->inner_points[i].r->x + object->inner_points[i].dr->x;
+
+	
+	// Check #2 - Y boundaries	
+	if ((object->inner_points[i].r->y + object->inner_points[i].dr->y) < -LIMIT )
+	{
+       object->inner_points[i].dr->y = -LIMIT - object->inner_points[i].r->y;
+	   object->inner_points[i].v->y = - 0.2 * object->inner_points[i].v->y;
+  //     object->inner_points[i].v->z =   0.9 * object->inner_points[i].v->z;
+       object->inner_points[i].v->x =   0.9 * object->inner_points[i].v->x;   
+	}else
+    if ((object->inner_points[i].r->y + object->inner_points[i].dr->y) > LIMIT )
+	{
+       object->inner_points[i].dr->y = LIMIT - object->inner_points[i].r->y;
+	   object->inner_points[i].v->y = - 0.2 * object->inner_points[i].v->y;
+  //     object->inner_points[i].v->z =   0.9 * object->inner_points[i].v->z;
+       object->inner_points[i].v->x =   0.9 * object->inner_points[i].v->x;   
+	}
+
+    object->inner_points[i].r->y  = object->inner_points[i].r->y + object->inner_points[i].dr->y;
+	
+
+	// Check #3 - Z boundary
+		
+ /*   if ((object->inner_points[i].r->z + object->inner_points[i].dr->z) < -LIMIT )
+	{
+       object->inner_points[i].dr->z = -LIMIT - object->inner_points[i].r->z;
+	   object->inner_points[i].v->z = - 0.2 * object->inner_points[i].v->z;
+       object->inner_points[i].v->x =   0.9 * object->inner_points[i].v->x;
+       object->inner_points[i].v->y =   0.9 * object->inner_points[i].v->y;   
+	}else
+    if ((object->inner_points[i].r->z + object->inner_points[i].dr->z) > LIMIT )
+	{
+       object->inner_points[i].dr->z = LIMIT - object->inner_points[i].r->z;
+	   object->inner_points[i].v->z = - 0.2 * object->inner_points[i].v->z;
+       object->inner_points[i].v->x =   0.9 * object->inner_points[i].v->x;
+       object->inner_points[i].v->y =   0.9 * object->inner_points[i].v->y;   
+	}
+
+    object->inner_points[i].r->z  = object->inner_points[i].r->z + object->inner_points[i].dr->z;
+
+*/
+	// Check #4 - Boundary limitations
+
+	if (object->inner_points[i].r->x < -LIMIT) object->inner_points[i].r->x = -LIMIT;
+	if (object->inner_points[i].r->y < -LIMIT) object->inner_points[i].r->y = -LIMIT;
+//	if (object->inner_points[i].r->z < -LIMIT) object->inner_points[i].r->z = -LIMIT;
+
+	if (object->inner_points[i].r->x > LIMIT) object->inner_points[i].r->x = LIMIT;
+	if (object->inner_points[i].r->y > LIMIT) object->inner_points[i].r->y = LIMIT;
+//	if (object->inner_points[i].r->z > L
+
+
+
+  
+		
 }

@@ -13,23 +13,23 @@ using namespace std;
 
 #define DT      0.003f    // Delta time in derivatives	
 
-#define KS 300.0f    // Hooke spring constant
-#define KD 80.0f     // Hooke spring damping constant
+#define KS 755.0f    // Hooke spring constant
+#define KD 45.0f     // Hooke spring damping constant
 
-#define RKS 550.0f            // radium spring constant
-#define RKD 150.0f            // radium spring damping constant
+#define RKS 120.0f            // radium spring constant
+#define RKD 40.0f            // radium spring damping constant
 
 //#define KS 755.0f    // Hooke spring constant
 //#define KD 35.0f     // Hooke spring damping constant
 
 
 #define PI     3.1416f    // Circle = 2*PI*RADIUS
-#define RADIUS    1.0f    // Ball initial radius	
+#define RADIUS    0.5f    // Ball initial radius	
 
 #define GY        0.0f    // Gravity
 #define WIND      10.0f    // External force, such as wind force
 #define LIMIT     2.0f    // Screen size
-#define PRESSURE 500.0f    // Pressure constant
+#define PRESSURE 40.0f    // Pressure constant
 
 #define Width     500     // Display window width
 #define Height    500     // Display window Height
@@ -42,6 +42,8 @@ using namespace std;
 #define MOUSE_KS 15.0f		// mouse spring constant
 #define MOUSE_KD 15.0f		// mouse damping constant
 #define MOUSE_REST 2.0f		// mouse rest lenth
+
+#define LIMIT     2.0f    // Screen size
 
 // Mouse variables
 extern int mousedown;                // for GLUT_LEFT_BUTTON, GLUT_RIGHT_BUTTON

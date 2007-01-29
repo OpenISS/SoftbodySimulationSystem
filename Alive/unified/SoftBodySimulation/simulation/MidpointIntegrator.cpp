@@ -50,7 +50,7 @@ void MidpointIntegrator::k2(int i, float k, float deltaT)
 
 void MidpointIntegrator::ynew(int i, float k, float deltaT)
 {
-	k1(i, k, deltaT);
+	k2(i, k, deltaT);
 
 	object->inner_points[i].v->x = temp_inner_points0[i].v->x + temp_inner_points2[i].v->x;				// Change in velocity is added to the velocity.
 	object->inner_points[i].v->y = temp_inner_points0[i].v->y + temp_inner_points2[i].v->y;		
