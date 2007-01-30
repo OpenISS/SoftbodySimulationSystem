@@ -3,7 +3,7 @@
 
 #include "Object1D.h"
 
-#define NUMPOINTS   12
+#define NUMPOINTS   20
 #define NUMSPRINGS  NUMPOINTS
 #define DEFAULTPRESSURE 25.0
 #define MASS 1.0f           // point mass on the rings = 5.0

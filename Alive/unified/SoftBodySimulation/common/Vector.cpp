@@ -7,6 +7,11 @@
 
 // Class Vector number functions
 
+Vector operator+ (const Vector &K, const Vector &N)    // fcn #2 - Vectors subtraction
+{
+	return Vector(K.x + N.x, K.y + N.y, K.z + N.z);
+}
+
 Vector& Vector::operator+ (Vector const &K)    // fcn #1 - Vectors addition
 {
 
@@ -17,32 +22,49 @@ Vector& Vector::operator+ (Vector const &K)    // fcn #1 - Vectors addition
 	
 }
 
-
-/*
-Vector& Vector::operator- (const Vector &K, const Vector &N)    // fcn #2 - Vectors subtraction
+Vector& Vector::operator+ (float s)    // fcn #2 - Vectors subtraction
 {
-	return Vector(K.x - N.x, K.y - N.y, K.z - N.z);
+	x+=s;
+	y+=s;
+	z+=s;
+	return *this;
 }
-*/
+//////////////////////////////////////////////////////////////////////
 
 Vector operator- (const Vector &K, const Vector &N)    // fcn #2 - Vectors subtraction
 {
 	return Vector(K.x - N.x, K.y - N.y, K.z - N.z);
 }
-//*/
 
-/*
 Vector& Vector::operator- (Vector const &K)    // fcn #2 - Vectors subtraction
 {
-/*	x-=K.x;
+	x-=K.x;
 	y-=K.y;
 	z-=K.z;
-*/	
-/*	return Vector(x - K.x, y - K.y, z - K.z);
-//	return *this;
+	return *this;
 }
-*/
 
+Vector& Vector::operator- (float s)    // fcn #2 - Vectors subtraction
+{
+	x -= s;
+	y -= s;
+	z -= s;
+	return *this;
+}
+
+//////////////////////////////////////////////////////////////////////////
+Vector operator* (const Vector &K, const Vector &N)    // fcn #2 - Vectors subtraction
+{
+	return Vector(K.x * N.x, K.y * N.y, K.z * N.z);
+}
+
+Vector& Vector::operator* (Vector const &K)    // // fcn #4 - Vectors dot product (R * K)
+{
+	x*=K.x;
+	y*=K.y;
+	z*=K.z;
+	return *this;
+}
 
 Vector& Vector::operator* (float s)    // fcn #3 - multiply by a scalar (R * s) 
 {
@@ -50,45 +72,53 @@ Vector& Vector::operator* (float s)    // fcn #3 - multiply by a scalar (R * s)
 	y *= s;
 	z *= s;
 	return *this;
-	//return new Vector(x*s, y*s, z*s));
+
 }
 
-Vector& Vector::operator / (int k)
+////////////////////////////////////////////////////////////////
+Vector operator/ (const Vector &K, const Vector &N)    // fcn #2 - Vectors subtraction
+{
+	return Vector(K.x / N.x, K.y / N.y, K.z / N.z);
+}
+
+Vector& Vector::operator/ (Vector const &K)    // fcn #2 - Vectors subtraction
+{
+	x/=K.x;
+	y/=K.y;
+	z/=K.z;
+	return *this;
+}
+Vector& Vector::operator / (float k)
 {
 	x/=k;
 	y/=k;
 	z/=k;
 	return *this;
-
-
 }
 
-float Vector::operator* (Vector const &K)      // fcn #4 - Vectors dot product (R * K)
-{
-	return (x*K.x, y*K.y, z*K.z);
-}
+////////////////////////////////////////////////////////
 
-/*
+
 Vector& Vector::operator% (Vector const &K)   // fcn #5 - Vectors cross product (R % K)
 {	
 	return Vector(y*K.z - z*K.y, z*K.x - x*K.z, x*K.y - y*K.x);
 }
-*/
 
-void Vector::operator=(Vector const &K)   // fcn #6 - Vector assign operator
+
+//////////////////////////////////////////////////////////////
+
+Vector& Vector::operator=(Vector const &K)   // fcn #6 - Vector assign operator
 {
-	x = K.x;
-	y = K.y;
-	z = K.z;
+	x=K.x;
+	y=K.y;
+	z=K.z;
+	return *this;
+
 }
 
-/*
-Vector Vector::operator=(Vector const &K)   // fcn #6 - Vector assign operator
-{
-	return Vector(K.x, K.y, K.z);
-}
-*/
-  
+
+
+////////////////////////////////////////////////////////////  
 bool Vector::operator==(Vector const &K)    // fcn #7 - Vector equalization operator
 	  {
 			if(x == K.x)
@@ -98,15 +128,6 @@ bool Vector::operator==(Vector const &K)    // fcn #7 - Vector equalization oper
 
 			return false;
 	  }
-/*
- Vector& Vector operator* (float s, Vector const &v)  // fcn #8 - 2 parameters (s * R)
-{
-	 x=v.x*s;
-	 y=v.y*s;
-	 z=v.z*s;
-	return *this;
-}
-*/
 
 
 

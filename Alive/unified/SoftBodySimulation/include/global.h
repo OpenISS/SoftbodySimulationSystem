@@ -19,10 +19,6 @@ using namespace std;
 #define RKS 120.0f            // radium spring constant
 #define RKD 40.0f            // radium spring damping constant
 
-//#define KS 755.0f    // Hooke spring constant
-//#define KD 35.0f     // Hooke spring damping constant
-
-
 #define PI     3.1416f    // Circle = 2*PI*RADIUS
 #define RADIUS    0.5f    // Ball initial radius	
 
@@ -35,12 +31,12 @@ using namespace std;
 #define Height    500     // Display window Height
 #define RESTLEN   2.2f    // Mouse rest length  
 
-#define SCRSIZE 9	        // screen size factor
+#define SCRSIZE 7	        // screen size factor
 
 
           // radium spring damping constant
-#define MOUSE_KS 15.0f		// mouse spring constant
-#define MOUSE_KD 15.0f		// mouse damping constant
+#define MOUSE_KS 25.0f		// mouse spring constant
+#define MOUSE_KD 25.0f		// mouse damping constant
 #define MOUSE_REST 2.0f		// mouse rest lenth
 
 #define LIMIT     2.0f    // Screen size

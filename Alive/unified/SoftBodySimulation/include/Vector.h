@@ -35,32 +35,34 @@ public:
 		 // Computation operators.
 		 
 	Vector& operator+ (Vector const &);   // #1 fcn - Vector addition
-//    Vector& operator+ (Vector &);   // #1 fcn - Vector addition
-//	Vector& operator- (Vector const &);   // #2 fcn - Vector subtraction
-//	Vector operator- (Vector const &, Vector const &);   // #2 fcn - Vector subtraction
+    Vector& operator+ (float);   // #1 fcn - Vector addition
+	friend Vector operator+ (const Vector & p, const Vector & q); 
+
+	Vector& operator- (Vector const &);   // #2 fcn - Vector subtraction
+	Vector& operator- (float); 
 	friend Vector operator- (const Vector & p, const Vector & q);   // #2 fcn - Vector subtraction
-	Vector& operator* (float);		     // #3 fcn - Vector by a scalar
-//	Vector& operator% (Vector const &);	 // #4 fcn - Vector cross multiply 
-	float  operator* (Vector const &); // #6 fcn - Vector dot multiply
-	void   operator= (Vector const &); // #7 fcn - Vector assign	
+
+	Vector& operator* (Vector const &);   // #2 fcn - Vector subtraction
+	Vector& operator* (float); 
+	friend Vector operator* (const Vector & p, const Vector & q);   // #2 fcn - Vector subtraction
+
+	Vector& operator/ (Vector const &);   // #2 fcn - Vector subtraction
+	Vector& operator/ (float); 
+	friend Vector operator/ (const Vector & p, const Vector & q);   // #2 fcn - Vector subtraction
+
+	Vector& operator% (Vector const &);
+
+	Vector&  operator= (Vector const &); // #7 fcn - Vector assign	
 	
-//	Vector operator=(Vector const &K)   // fcn #6 - Vector assign operator
 
 	bool     operator==(Vector const &); // #8 fcn - Vector equal
-	Vector& operator/ (int);		     // #3 fcn - Vector by a scalar
 
 
-
-//	Vector& operator*(float s, Vector &v); // 2 parameters, Vector + scalar  
 
 	
 		 // Vector length.
 	inline float getLength() { 
-	/*	cout<<"this.x="<<this->x<<endl;
-		cout<<"this.y="<<this->y<<endl;
-		cout<<"this.z="<<this->z<<endl;
-		cout<<"sqrt="<<sqrt((this->x)*(this->x)+(this->y) * (this->y)+(this->z)*(this->z))<<endl;
-	*/	return sqrt((this->x)*(this->x)+(this->y) * (this->y)+(this->z)*(this->z)); }
+	return sqrt((this->x)*(this->x)+(this->y) * (this->y)+(this->z)*(this->z)); }
 		
 		//  Normalize Vector.		 
 	inline void Normalize()

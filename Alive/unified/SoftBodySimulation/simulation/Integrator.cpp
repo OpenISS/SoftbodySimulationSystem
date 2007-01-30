@@ -55,11 +55,11 @@ void Integrator::ExternalForces()
 
 	int i;    // runing index
 
-   	float inner_x1,inner_x2,inner_y1,inner_y2;	// points inner_p1, inner_p2 on the inner circle
+//   	float inner_x1,inner_x2,inner_y1,inner_y2;	// points inner_p1, inner_p2 on the inner circle
   
-    float inner_rd12;			            	// length of inner_p1, inner_p2
+//    float inner_rd12;			            	// length of inner_p1, inner_p2
 
-    float inner_Fx,inner_Fy;		            // force vector
+//    float inner_Fx,inner_Fy;		            // force vector
 
 
 	float outer_x1,outer_x2,outer_y1,outer_y2;	// points outer_p1, outer_p2 on the outer circle
@@ -69,7 +69,7 @@ void Integrator::ExternalForces()
     float outer_Fx,outer_Fy;		            // force vector
 
 
-	float radium_Fx, radium_Fy;                 // force vector
+//	float radium_Fx, radium_Fy;                 // force vector
 
 	float f;				        // external force 
 
@@ -325,7 +325,7 @@ void Integrator::PressureForces()
    	float inner_x1,inner_x2,inner_y1,inner_y2;	// points inner_p1, inner_p2 on the inner circle
     float outer_x1,outer_x2,outer_y1,outer_y2;	// points outer_p1, outer_p2 on the outer circle
 
- 	float radium_rd12;                          // length of inner_p1, outer_p1 
+// 	float radium_rd12;                          // length of inner_p1, outer_p1 
 
 	float inner_rd12;			            	// length of inner_p1, inner_p2
 	float outer_rd12;			            	// length of outer_p1, outer_p2    

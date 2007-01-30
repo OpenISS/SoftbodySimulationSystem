@@ -16,6 +16,8 @@ using namespace std;
 
 class Integrator;
 
+enum integrator_type {EULER, MIDPOINT, RK4};
+
 class Object
 {
 protected:
@@ -32,23 +34,15 @@ protected:
 	float Kd1, Kd2;
 
 	Integrator* integrator;
+	integrator_type integratorType;
 
 
 public:
 	Spring inner_springs[MAX_POINTS_SPRINGS];
 	Particle inner_points[MAX_POINTS_SPRINGS];
-/*
-	Particle temp_points0[40];
-	Particle temp_points1[40];
-	Particle temp_points2[40];
-	Particle temp_points3[40];
-	Particle temp_points4[40];
-*/
+
 	Spring outer_springs[MAX_POINTS_SPRINGS];     // for point springs on outer circle
 	Particle outer_points[MAX_POINTS_SPRINGS];  // for outer circle Particles + 1 mouse Particle
-	
-//	Spring OneDSpring[1];
-//	Particle OneDPoint[2];
 
 
 public:
@@ -68,6 +62,8 @@ public:
 	virtual void SetObject();           // Then, make the Object3D object
 
 	Integrator* getIntegrator() {return integrator;}
+
+	void setIntegratorType(integrator_type type);
 
 protected:
 	virtual void SetParticles();         // create Particle Object3D
