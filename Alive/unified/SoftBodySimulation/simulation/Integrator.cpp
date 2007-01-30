@@ -1,8 +1,6 @@
 #include "Integrator.h"
-#include "global.h"
 #include "Object2D.h"
 
-#define FIXMEPLEASE 123.1
 
 Integrator::Integrator(Object& object) : dragExists(false)
 {
@@ -26,9 +24,7 @@ void Integrator::integrate(float deltaT, bool drag, float xDrag, float yDrag)
 
 	AccumulateForces();   // accumulate forces acted on 
 	Derivatives(deltaT, 1.0);
- //   memcpy(temp_inner_points0, object->inner_points, sizeof(Particle) * MAX_POINTS_SPRINGS);
-//	memcpy(temp_outer_points0, object->outer_points, sizeof(Particle) * MAX_POINTS_SPRINGS);
-}
+ }
 
 
 void Integrator::AccumulateForces()   // accumulate forces acted on 
@@ -50,16 +46,7 @@ void Integrator::AccumulateForces()   // accumulate forces acted on
 
 void Integrator::ExternalForces()
 {
-	//GravityForce();
-	///DragForce();
-
 	int i;    // runing index
-
-//   	float inner_x1,inner_x2,inner_y1,inner_y2;	// points inner_p1, inner_p2 on the inner circle
-  
-//    float inner_rd12;			            	// length of inner_p1, inner_p2
-
-//    float inner_Fx,inner_Fy;		            // force vector
 
 
 	float outer_x1,outer_x2,outer_y1,outer_y2;	// points outer_p1, outer_p2 on the outer circle
@@ -69,28 +56,20 @@ void Integrator::ExternalForces()
     float outer_Fx,outer_Fy;		            // force vector
 
 
-//	float radium_Fx, radium_Fy;                 // force vector
 
 	float f;				        // external force 
-
-	// Gravity force computation
-	
-//	for(i=0; i<NUMP; i++)
 	for(i=0; i<object->GetNumberOfParticles(); i++)
 	{    
 	  object->inner_points[i].f->x = 0;//40*sin(25*i);
 
-    // OneDSpring[i].fx = 0.0;
+ 
 	 object->inner_points[i].f->y = 0;//(object->inner_points[i].mass)*GY;     
      
 	 object->outer_points[i].f->x = 0;//40*sin(25*i);
 
-    // OneDSpring[i].fx = 0.0;
+   
 	 object->outer_points[i].f->y = 0;//(object->outer_points[i].mass)*GY;
      
-//	    when mouse is clicked (mouse spring) 
-//		if(i==closest_i)		// closest point on outer ring 
-	//	if(i==0)		// closest point on outer ring 
 
 		if(dragExists)			// if user clicked
 		{
@@ -337,29 +316,6 @@ void Integrator::PressureForces()
 	float outer_p_accu;         	// pressure force accumulation
 
 
-//	if(true) return;
-//
-//	for(i=0; i<NUMS; i++)
-//	{
-		/* Calculate normal vectors to springs */
-/*
-		object->outer_springs[i].normal.x =  -(outer_y1 - outer_y2) / outer_rd12;  // Normal X-vector 
-		object->outer_springs[i].normal.y =  +(outer_x1 - outer_x2) / outer_rd12;  // Normal Y-vector
-		object->inner_springs[i].normal.x =  -(inner_y1 - inner_y2) / inner_rd12;  // Normal X-vector 
-		object->inner_springs[i].normal.y =  +(inner_x1 - inner_x2) / inner_rd12;  // Normal Y-vector*/
-
-//		inner_rd12 = sqrt((object->inner_springs[i].sp1->r->x - object->inner_springs[i].sp2->r->x)*(object->inner_springs[i].sp1->r->x - object->inner_springs[i].sp2->r->x)
-//					 +(object->inner_springs[i].sp1->r->y - object->inner_springs[i].sp2->r->y)*(object->inner_springs[i].sp1->r->y - object->inner_springs[i].sp2->r->y));	 // distance on inner
- 
-/*		outer_rd12 = sqrt((object->outer_springs[i].sp1->r->x - object->outer_springs[i].sp2->r->x)*(object->outer_springs[i].sp1->r->x - object->outer_springs[i].sp2->r->x)
-					 +(object->outer_springs[i].sp1->r->y - object->outer_springs[i].sp2->r->y)*(object->outer_springs[i].sp1->r->y - object->outer_springs[i].sp2->r->y));	 // distance on outer
-*/
-//		object->outer_springs[i].normal.x =  -(object->outer_springs[i].sp1->r->x - object->outer_springs[i].sp2->r->x) / outer_rd12;  // Normal X-vector 
-//		object->outer_springs[i].normal.y =  +(object->outer_springs[i].sp1->r->y - object->outer_springs[i].sp2->r->y) / outer_rd12;  // Normal Y-vector
-//		object->inner_springs[i].normal.y =  -(object->inner_springs[i].sp1->r->x - object->inner_springs[i].sp2->r->x) / inner_rd12;  // Normal X-vector 
-//		object->inner_springs[i].normal.x =  +(object->inner_springs[i].sp1->r->y - object->inner_springs[i].sp2->r->y) / inner_rd12;  // Normal Y-vector
-//	}
-
 	// pressure force for the inner circle 
 	
 	for(i=0; i<object->GetNumberOfSprings(); i++) // calculation of inner circle volume
@@ -387,19 +343,7 @@ void Integrator::PressureForces()
 	} 
 
 	
-	/* pressure force for the outer circle */
-	/*
-	for(i=1; i<=object->GetNumberOfParticles(); i++) // calculation of outer circle volume
-	{
-        outer_x1 = outer_points[ outer_springs[i].head ].px;	
-		outer_y1 = outer_points[ outer_springs[i].head ].py;
-		outer_x2 = outer_points[ outer_springs[i].tail ].px;	
-		outer_y2 = outer_points[ outer_springs[i].tail ].py;
-		outer_rd12=sqrt((outer_x1-outer_x2)*(outer_x1-outer_x2)
-		+(outer_y1-outer_y2)*(outer_y1-outer_y2));	
-														
-		outer_volume+=0.5*fabs(outer_x1-outer_x2)*fabs(outer_springs[i].nx)*(outer_rd12);
-	} */
+
 
 
 	for(i=0; i<object->GetNumberOfSprings(); i++)  // calculation inner pressure force 
@@ -441,23 +385,6 @@ void Integrator::PressureForces()
 	}
 
 
-/*
-	for(i=1; i<=NUMP; i++)  // calculation outer pressure force 
-	{
-        outer_x1 = outer_points[ outer_springs[i].head ].px;
-		outer_y1 = outer_points[ outer_springs[i].head ].py;
-		outer_x2 = outer_points[ outer_springs[i].tail ].px;	
-		outer_y2 = outer_points[ outer_springs[i].tail ].py;
-		outer_rd12=sqrt((outer_x1-outer_x2)*(outer_x1-outer_x2) 
-		+  (outer_y1-outer_y2)*(outer_y1-outer_y2));	
-														
-		outer_p_accu=outer_rd12*pressure*(1.0f/outer_volume)/1.5;
-		outer_points[outer_springs[i].head].fx+=outer_springs[i].nx*outer_p_accu;
-		outer_points[outer_springs[i].head].fy+=outer_springs[i].ny*outer_p_accu;
-		outer_points[outer_springs[i].tail].fx+=outer_springs[i].nx*outer_p_accu;
-		outer_points[outer_springs[i].tail].fy+=outer_springs[i].ny*outer_p_accu;
-	}
-	*/
 }
 
 void Integrator::CollisionDetection(int i)

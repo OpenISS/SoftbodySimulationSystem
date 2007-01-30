@@ -18,23 +18,21 @@
 
 #include "Simulation.h"
 
+// Mouse variables
+extern int mousedown;                // for GLUT_LEFT_BUTTON, GLUT_RIGHT_BUTTON
+extern float xMouse, yMouse, zMouse;    // for mouse point r(x,y,z) 
+extern int closest_i, closest_j;        // Closest point index i, j 
+
 int   main_window;
 int   wireframe = 0;
 int   segments = 8;
 
-int NUMP=2;
-int NUMS=1;
 
+float Mass1 =   10.0f;
+float Ks1   =700.0f;
+float Kd1   =  45.0f;
+float Press1 = 10.0f;//(orignal press2=50;)
 
-float Mass1 =   10.0f, Mass2 =   1.0f;
-float Ks1   =700.0f, Ks2   = 100.0f;
-float Kd1   =  45.0f, Kd2   =  1.0f;
-float Rad1  =   1.0f, Rad2  =   4.0f; 
-float Press1 = 10.0f, Press2=  50.0f; //(orignal press2=50;)
-
-
-//int PosX=0;
-//int PosY=0;
 
 
 Object3D ThreeDInner(Mass1, Ks1, Kd1,  Press1);   //	Creat a ball object globally
@@ -42,8 +40,6 @@ Object3D ThreeDInner(Mass1, Ks1, Kd1,  Press1);   //	Creat a ball object globall
 
 //Ball OneD(Mass1, Ks1, Kd1);
 
-//Spring OneDSpring[1];
-//Particle OneDPoint[2];
 
 Object1D object1D;
 Object2D object2D;
@@ -65,65 +61,65 @@ void Reshape(int width, int height)
 		
 void Display(void)
 {
-	    glClearColor(0.0, 0.0, 0.0, 0.0);  // Initialize
-		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+	glClearColor(0.0, 0.0, 0.0, 0.0);  // Initialize
+	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
-		glEnable(GL_DEPTH_TEST);
-		
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
+	glEnable(GL_DEPTH_TEST);
+	
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
 
-		gluPerspective(50,float(Width)/float(Height), 1, 100.);
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
- 		gluLookAt(2,0,5,0,0,0,0,1,0);  // Camera difinition
+	gluPerspective(50,float(Width)/float(Height), 1, 100.);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+ 	gluLookAt(2,0,5,0,0,0,0,1,0);  // Camera difinition
+
+	glEnable(GL_BLEND);                                // transparent
+  	glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);  // transparent
+
+	glPointSize(8);
+	object1D.Draw();
+	object2D.Draw();
+
  
-		glEnable(GL_BLEND);                                // transparent
-  	    glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);  // transparent
+	/*	glPushMatrix();
 
-		glPointSize(8);
-		object1D.Draw();
-		object2D.Draw();
+	glRotatef(xMouse, 0.0, 1.0, 1.0);
 
-     
-		/*	glPushMatrix();
-
-		glRotatef(xMouse, 0.0, 1.0, 1.0);
-
-          ThreeDInner.Rotated();      // Rotate about X-axis, Y-axis, and/or Z-axis 
-		
-	//	 
-	//	
- 		ThreeDInner.Draw();         // Draw the ball object
-        glPopMatrix();
-		
-		glColor4f(0,0,1,1);
-	//	outer.Draw();
+      ThreeDInner.Rotated();      // Rotate about X-axis, Y-axis, and/or Z-axis 
 	
-
-		glPointSize(4);
-		glLineWidth(3);
+//	 
+//	
+ 	ThreeDInner.Draw();         // Draw the ball object
+    glPopMatrix();
 	
+	glColor4f(0,0,1,1);
+//	outer.Draw();
 
-		glPushMatrix();
-		//glTranslatef(0,1.67,0);
-		glScalef(1.4,1.4,1.4);	   
-		glPopMatrix();*/
-	//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+	glPointSize(4);
+	glLineWidth(3);
+
+
+	glPushMatrix();
+	//glTranslatef(0,1.67,0);
+	glScalef(1.4,1.4,1.4);	   
+	glPopMatrix();*/
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 	box.Draw();           // Draw the view box space 	
 
 	if(mousedown)
 	{
-	  glColor3f(1,0,1);
-	  glBegin(GL_LINES);
-		glVertex2f(xMouse,yMouse);
-//   	   	glVertex2f(OneDPoint[closest_i].r->x,OneDPoint[closest_i].r->y);
-   	   	glVertex2f(object1D.inner_points[closest_i].r->x,object1D.inner_points[closest_i].r->y);
-      glEnd();
+		glColor3f(1,0,1);
+		glBegin(GL_LINES);
+			glVertex2f(xMouse,yMouse);
+			//   	   	glVertex2f(OneDPoint[closest_i].r->x,OneDPoint[closest_i].r->y);
+			glVertex2f(object1D.inner_points[closest_i].r->x,object1D.inner_points[closest_i].r->y);
+		glEnd();
 	}     
 
 
-		glutSwapBuffers(); 
+	glutSwapBuffers(); 
 }
 
 //===================================================================================

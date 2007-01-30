@@ -38,8 +38,8 @@ public:
     Vector& operator+ (float);   // #1 fcn - Vector addition
 	friend Vector operator+ (const Vector & p, const Vector & q); 
 
-	Vector& operator- (Vector const &);   // #2 fcn - Vector subtraction
-	Vector& operator- (float); 
+	//Vector& operator- (Vector const &);   // #2 fcn - Vector subtraction
+	//Vector& operator- (float); 
 	friend Vector operator- (const Vector & p, const Vector & q);   // #2 fcn - Vector subtraction
 
 	Vector& operator* (Vector const &);   // #2 fcn - Vector subtraction
@@ -50,7 +50,7 @@ public:
 	Vector& operator/ (float); 
 	friend Vector operator/ (const Vector & p, const Vector & q);   // #2 fcn - Vector subtraction
 
-	Vector& operator% (Vector const &);
+	friend Vector operator% (Vector const &, Vector const &);
 
 	Vector&  operator= (Vector const &); // #7 fcn - Vector assign	
 	

@@ -3,15 +3,12 @@
 
 #include "Object.h"
 
-enum dimensionality {DIM1D, DIM2D, DIM3D};
-
 class Object;
 
 class Integrator
 {
 protected:
 	Object* object;
-///	Object* initObject;
 
 	Particle temp_inner_points0[MAX_POINTS_SPRINGS];
 	Particle temp_inner_points1[MAX_POINTS_SPRINGS];
@@ -35,7 +32,6 @@ public:
 	Integrator(Object&);
 	virtual ~Integrator();
 
-//	virtual void integrate(float);
 	virtual void integrate(float, bool drag = false, float xDrag = 0, float yDrag = 0);
 
 protected:

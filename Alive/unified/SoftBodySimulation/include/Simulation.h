@@ -1,4 +1,3 @@
-
 /********************************************************************************
  *                                                                              *
  *  A demo 3D ball of multi-layers with deformation under non-uniform factors.  *

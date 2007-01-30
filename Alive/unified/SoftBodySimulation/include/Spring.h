@@ -1,16 +1,10 @@
-
 #ifndef SPRING_H
 #define SPRING_H
 
 
-#include "global.h"
 #include "Particle.h"
 
 // Linear hooke Spring is built between two space Particles
-
-enum spring_type { SPRING_RADIUM, SPRING_STRUCTURAL, SPRING_SHEAR };
-
-
 class Spring 
 {
 public:
@@ -20,14 +14,7 @@ public:
 	Spring();
 	~Spring();
 
-	void InverseConstraints(void);     // for Inverse Dynamics Constraints
-	//  void CalculateSpringForceM(void);  
-	void CalculateSpringForceT(void);
-	//void CalculateSpringForceH(void);
-
 	void setRestLen();
-
-	bool operator== (Spring const &s2);
 
 
 public:

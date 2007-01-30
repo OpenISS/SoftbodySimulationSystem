@@ -1,19 +1,13 @@
-
 #ifndef PARTICLE_H
 #define PARTICLE_H
 
-
 #include "Vector.h"
-//#include "CollectionElement.h"
-#include "global.h"
+
 // Class Particle declaration
-
-
-
-class Particle /*: public CollectionElement*/
+class Particle
 {
-
 public:
+
 	Particle(Vector* R, float Mass) : mass(Mass)
 	{		
 		r = R;
@@ -23,37 +17,50 @@ public:
 		norm = new Vector(0,0,0);
 		dr = new Vector(0,0,0);
 		dv = new Vector(0,0,0);
+//		norm = NULL;
+//		dr = NULL;
+//		dv = NULL;
 //		f = NULL;
 //		v = NULL;
 		f = new Vector(0,0,0);
 		v = new Vector(0,0,0);
 	}
 
-	Particle ()
+	Particle()
 	{
-		r= new Vector(0,0,0);
+		r = new Vector(0,0,0);
 		norm = new Vector(0,0,0);
 		dr = new Vector(0,0,0);
 		dv = new Vector(0,0,0);
 		f = new Vector(0,0,0);
 		v = new Vector(0,0,0);
+
+		/*
+		//r = NULL;
+		norm = NULL;
+		dr = NULL;
+		dv = NULL;
+		f = NULL;
+		v = NULL;
+		*/
 	}
 
 
 	~Particle()
 	{
+		/*
 		delete norm;
 		delete dr;
 		delete dv;
 		delete f;
 		delete v;
+		*/
 	}
 	
 	void ClearForce(void);   // reset forces at a Particle 		
 	void AccumuForce(Vector const &);
 	friend ostream& operator<<(ostream& os, const Particle& c);
 
-	
 
 public:
 

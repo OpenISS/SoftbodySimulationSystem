@@ -1,10 +1,11 @@
+#ifndef _GLOBAL_H
+#define _GLOBAL_H
+
 #include <GL/glut.h>
 #include <cmath>
 #include <iostream>
-#include <windows.h>
 #include <math.h>
 #include <iostream>
-#include <GL/glu.h>
 #include <stdlib.h>
 #include <vector>
 
@@ -41,8 +42,19 @@ using namespace std;
 
 #define LIMIT     2.0f    // Screen size
 
-// Mouse variables
-extern int mousedown;                // for GLUT_LEFT_BUTTON, GLUT_RIGHT_BUTTON
-extern float xMouse, yMouse, zMouse;    // for mouse point r(x,y,z) 
-extern int closest_i, closest_j;        // Closest point index i, j 
-extern int NUMS;
+
+enum dimensionality {DIM1D, DIM2D, DIM3D};
+enum integrator_type {EULER, MIDPOINT, RK4};
+enum spring_type { SPRING_RADIUM, SPRING_STRUCTURAL, SPRING_SHEAR };
+
+
+#define NUMPOINTS   20
+#define NUMSPRINGS  NUMPOINTS
+#define DEFAULTPRESSURE 25.0
+#define MASS 1.0f           // point mass on the rings = 5.0
+#define RING_RADIUS 0.5f	// default radius of the ball
+#define MAX_POINTS_SPRINGS 40
+
+
+
+#endif /* _GLOBAL_H */

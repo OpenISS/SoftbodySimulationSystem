@@ -1,8 +1,6 @@
 #include "Object3D.h"
-#include <GL/glut.h> 
 
 //using vector pointers
-
 
 
 // Mouse variables

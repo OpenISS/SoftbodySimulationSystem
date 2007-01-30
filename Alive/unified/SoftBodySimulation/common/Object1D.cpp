@@ -2,14 +2,7 @@
 
 Object1D::Object1D()
 {
-	PosX = 0;
-	PosY = 0;
-	Mass1 =   10.0f; Mass2 =   1.0f;
-	Ks1   =700.0f; Ks2   = 100.0f;
-	Kd1   =  20.0f; Kd2   =  1.0f;
-	CreateOneD();
-
-	//new Integrator::integrate(OneDPoint, NUMPS);
+	CreateStructure();
 }
 
 
@@ -19,10 +12,10 @@ Object1D::~Object1D()
 
 void Object1D::Draw()
 {
-	NUMS = 1;
+	numSprings = 1;
 	glPushMatrix();
 		glBegin(GL_LINES); // the draw of inner circle
-			for(int i = 0 ; i < NUMS; i++)
+			for(int i = 0 ; i < numSprings; i++)
 			{
 				glColor3f(1.0,1.0,1.0);
 			/*	glVertex2f(inner_springs[i].sp1->r->x,inner_springs[i].sp1->r->y);
@@ -83,21 +76,22 @@ void Object1D::Add_Tangent_Spring(int index, int head, int tail)
 //	cout<<"restLen"<<inner_springs[index].restLen<<endl;;
 }
 
-void Object1D::CreateOneD()
+void Object1D::CreateStructure()
 {
-	 for(int i=0; i<2; i++)		// create NUMP points into 2D circle 
-	 {
-	   outer_points[i].r->x += PosX ;   // outer X coordiation
-	   outer_points[i].r->y += PosY;   // outer Y coordiation
-	   outer_points[i].mass = 2.0*Mass2;
-		 		 
-		PosY+=2;
-	
-	 }
+	int PosX = 0;
+	int PosY = 0;
 
-	 for(i=0; i<1 ;i++)	       // NUMP-1 springs from 1st to the NUMP for outer & inner
-	 {  
+	for(int i=0; i<2; i++)		// create NUMP points into 2D circle 
+	{
+		outer_points[i].r->x += PosX ;   // outer X coordiation
+		outer_points[i].r->y += PosY;   // outer Y coordiation
+		outer_points[i].mass = 2.0 * MASS;
+			 
+		PosY += 2;
+	}
 
-		Add_Tangent_Spring(i, i, (i+1) % NUMP); 
-	 }
+	for(i=0; i<1 ;i++)	       // NUMP-1 springs from 1st to the NUMP for outer & inner
+	{  
+		Add_Tangent_Spring(i, i, (i+1) % numParticles); 
+	}
 }

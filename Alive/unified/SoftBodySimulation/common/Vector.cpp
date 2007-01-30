@@ -1,5 +1,3 @@
-
-
 #include <cmath>
 #include "Vector.h"
 
@@ -35,7 +33,7 @@ Vector operator- (const Vector &K, const Vector &N)    // fcn #2 - Vectors subtr
 {
 	return Vector(K.x - N.x, K.y - N.y, K.z - N.z);
 }
-
+/*
 Vector& Vector::operator- (Vector const &K)    // fcn #2 - Vectors subtraction
 {
 	x-=K.x;
@@ -51,6 +49,7 @@ Vector& Vector::operator- (float s)    // fcn #2 - Vectors subtraction
 	z -= s;
 	return *this;
 }
+*/
 
 //////////////////////////////////////////////////////////////////////////
 Vector operator* (const Vector &K, const Vector &N)    // fcn #2 - Vectors subtraction
@@ -99,9 +98,9 @@ Vector& Vector::operator / (float k)
 ////////////////////////////////////////////////////////
 
 
-Vector& Vector::operator% (Vector const &K)   // fcn #5 - Vectors cross product (R % K)
+Vector operator% (Vector const &R, Vector const &K)   // fcn #5 - Vectors cross product (R % K)
 {	
-	return Vector(y*K.z - z*K.y, z*K.x - x*K.z, x*K.y - y*K.x);
+	return Vector(R.y*K.z - R.z*K.y, R.z*K.x - R.x*K.z, R.x*K.y - R.y*K.x);
 }
 
 
@@ -113,21 +112,20 @@ Vector& Vector::operator=(Vector const &K)   // fcn #6 - Vector assign operator
 	y=K.y;
 	z=K.z;
 	return *this;
-
 }
 
 
 
 ////////////////////////////////////////////////////////////  
 bool Vector::operator==(Vector const &K)    // fcn #7 - Vector equalization operator
-	  {
-			if(x == K.x)
-			if(y == K.y)
+{
+	if(x == K.x)
+		if(y == K.y)
 			if(z == K.z)
 				return true;
 
-			return false;
-	  }
+	return false;
+}
 
 
 

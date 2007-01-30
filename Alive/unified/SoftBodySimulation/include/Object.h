@@ -3,35 +3,19 @@
 
 #include "Face.h"
 #include "Spring.h"
-#include "Particle.h"
-
-#define MAX_POINTS_SPRINGS 40
-
-
 #include "Integrator.h"
-
-#include "global.h"
 
 using namespace std;
 
 class Integrator;
-
-enum integrator_type {EULER, MIDPOINT, RK4};
 
 class Object
 {
 protected:
 	vector<Face*> face; 
 
-	int NUMP;
-	int NUMS;
-
-	//tmp
-	int PosX;
-	int PosY;
-	float Mass1, Mass2;
-	float Ks1, Ks2;
-	float Kd1, Kd2;
+	int numParticles;
+	int numSprings;
 
 	Integrator* integrator;
 	integrator_type integratorType;
@@ -47,17 +31,14 @@ public:
 
 public:
 	Object();
-//	Object(Object&);
 	virtual ~Object();
 
 
-	int GetNumberOfParticles() { return NUMP; }
-	int GetNumberOfSprings() { return NUMS; }
+	int GetNumberOfParticles() { return numParticles; }
+	int GetNumberOfSprings() { return numSprings; }
 
 	virtual void Draw() = 0; 
 	virtual void Update(float, bool = false, float = 0, float = 0);
-
-	//virtual void Clone(); 
 
 	virtual void SetObject();           // Then, make the Object3D object
 
@@ -67,8 +48,6 @@ public:
 
 protected:
 	virtual void SetParticles();         // create Particle Object3D
-	virtual void SetSprings();   // set springs on horizontal planes, connect Particles
-	virtual void SetTriPlanes();      // set triangle faces on side surfaces
 };
 
 #endif /* OBJECT_H */

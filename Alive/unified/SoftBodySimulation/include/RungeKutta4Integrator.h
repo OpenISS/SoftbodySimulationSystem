@@ -9,11 +9,7 @@ public:
 	RungeKutta4Integrator(Object&);
 	~RungeKutta4Integrator();
 
-//	virtual void integrate();
-
-//	virtual void Derivatives(float deltaT, float k);
 protected:
-//	void PressureForces();     // pressure 
 
 	void k4(int, float, float);
 	void k3(int, float, float);

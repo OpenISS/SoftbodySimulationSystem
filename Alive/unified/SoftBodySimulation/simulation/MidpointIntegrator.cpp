@@ -9,33 +9,12 @@ MidpointIntegrator::~MidpointIntegrator()
 {
 }
 
-void MidpointIntegrator::AccumulateForces()   // accumulate forces acted on 
-{
-	EulerIntegrator::AccumulateForces();
-//	PressureForces();
-}
-
-/*
-void MidpointIntegrator::Derivatives(float deltaT, float k)
-{
-//	EulerIntegrator::Derivatives(deltaT, 0.5);
-	//EulerIntegrator::AccumulateForces();
-//	EulerIntegrator::Derivatives(deltaT, 1.0);
-
-
-
-}
-*/
-
 void MidpointIntegrator::k2(int i, float k, float deltaT)
 {
 	k1(i, k, deltaT);
 
 	memcpy(temp_inner_points2, temp_inner_points1, sizeof(Particle) * MAX_POINTS_SPRINGS);
 	memcpy(temp_outer_points2, temp_outer_points1, sizeof(Particle) * MAX_POINTS_SPRINGS);
-
-	
-//	k1(i, 0.5 * k, deltaT);
 
 	temp_inner_points2[i].v->x = temp_inner_points0[i].v->x + k * 0.5 * (temp_inner_points1[i].f->x/temp_inner_points1[i].mass) * deltaT;
 	temp_inner_points2[i].v->y = temp_inner_points0[i].v->y + k * 0.5 * (temp_inner_points1[i].f->y/temp_inner_points1[i].mass) * deltaT;

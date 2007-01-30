@@ -1,4 +1,3 @@
-
 #include "Particle.h"
 
 
@@ -6,7 +5,16 @@
 
 void Particle::ClearForce(void)   // reset forces at a Particle 	
 {
-	f = new Vector(0,0,0);    // A force vector with all coordinates equal zero
+	if(f == NULL)
+	{
+		f = new Vector(0,0,0);    // A force vector with all coordinates equal zero
+	}
+	else
+	{
+		f->x = 0;
+		f->y = 0;
+		f->z = 0;
+	}
 } 
 
 void Particle::AccumuForce(Vector const &force) // Adding a force vector

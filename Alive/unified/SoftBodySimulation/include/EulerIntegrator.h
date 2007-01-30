@@ -9,9 +9,7 @@ public:
 	EulerIntegrator(Object&);
 	virtual ~EulerIntegrator();
 
-	virtual void AccumulateForces();   // accumulate forces acted on 
 	virtual void Derivatives(float, float);
-
 
 protected:
 	void k1(int, float, float);
