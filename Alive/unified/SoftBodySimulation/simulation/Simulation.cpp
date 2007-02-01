@@ -238,7 +238,7 @@ int main(void)
 	glutInitDisplayMode(GLUT_DOUBLE|GLUT_RGB);
     main_window = glutCreateWindow("A Simulation Ball - Miao Song"); 
 
-    ThreeDInner.SetObject(); 
+  //  ThreeDInner.SetObject(); 
 //	CreateOneD();
  //   outer.SetBall();	
 

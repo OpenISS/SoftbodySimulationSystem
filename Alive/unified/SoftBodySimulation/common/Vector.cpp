@@ -9,7 +9,7 @@ Vector operator+ (const Vector &K, const Vector &N)    // fcn #2 - Vectors subtr
 {
 	return Vector(K.x + N.x, K.y + N.y, K.z + N.z);
 }
-
+/*
 Vector& Vector::operator+ (Vector const &K)    // fcn #1 - Vectors addition
 {
 
@@ -26,7 +26,7 @@ Vector& Vector::operator+ (float s)    // fcn #2 - Vectors subtraction
 	y+=s;
 	z+=s;
 	return *this;
-}
+}*/
 //////////////////////////////////////////////////////////////////////
 
 Vector operator- (const Vector &K, const Vector &N)    // fcn #2 - Vectors subtraction
@@ -56,7 +56,7 @@ Vector operator* (const Vector &K, const Vector &N)    // fcn #2 - Vectors subtr
 {
 	return Vector(K.x * N.x, K.y * N.y, K.z * N.z);
 }
-
+/*
 Vector& Vector::operator* (Vector const &K)    // // fcn #4 - Vectors dot product (R * K)
 {
 	x*=K.x;
@@ -73,13 +73,13 @@ Vector& Vector::operator* (float s)    // fcn #3 - multiply by a scalar (R * s)
 	return *this;
 
 }
-
+*/
 ////////////////////////////////////////////////////////////////
 Vector operator/ (const Vector &K, const Vector &N)    // fcn #2 - Vectors subtraction
 {
 	return Vector(K.x / N.x, K.y / N.y, K.z / N.z);
 }
-
+/*
 Vector& Vector::operator/ (Vector const &K)    // fcn #2 - Vectors subtraction
 {
 	x/=K.x;
@@ -94,7 +94,7 @@ Vector& Vector::operator / (float k)
 	z/=k;
 	return *this;
 }
-
+*/
 ////////////////////////////////////////////////////////
 
 

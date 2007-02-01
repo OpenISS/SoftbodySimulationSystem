@@ -4,7 +4,7 @@ Object2D::Object2D() : pressure(DEFAULTPRESSURE)
 {
 	numParticles = NUMPOINTS;
 	numSprings = NUMSPRINGS;
-	CreateStructure();
+	SetObject();
 }
 
 
@@ -132,7 +132,7 @@ void Object2D::Draw()
 
 /* Function of adding a new spring on the inner rings*/
 
-void Object2D::Add_Tangent_Spring(int index, int h, int t)
+void Object2D::Add_Structual_Spring(int index, int h, int t)
 //void Object2D::Add_Tangent_Spring(int index, Particle* h, Particle* t)
 {
 	/*
@@ -193,6 +193,7 @@ void Object2D::Add_Radium_Spring(int index)
 	//*/
 
 	radium_springs[index].setRestLen();
+//	cout<<"radium spring ["<<index<<"]---------------"<<radium_springs[index].restLen<<endl;
 } 
 
 
@@ -233,10 +234,12 @@ void Object2D::Add_Shear_Spring(int index, int h, int t )
 	shear_springs_left[index].setRestLen();
 	shear_springs_right[index].setRestLen();
   
+	cout<<"shear_springs_left["<<index<<"]="<<shear_springs_left[index].restLen<<endl;
+	cout<<"shear_springs_right["<<index<<"]="<<shear_springs_right[index].restLen<<endl;
 } 
 
 /* Create 2 2D-rings (points + springs) */
-void Object2D::CreateStructure(void)
+void Object2D::SetObject(void)
 {
 	int i;
 	for(i=0; i<numParticles; i++)		// create NUMP points into 2D circle 
@@ -245,15 +248,20 @@ void Object2D::CreateStructure(void)
 		inner_points[i].r->y=  RING_RADIUS*sin(i*(2.0*PI)/numParticles);   // inner Y coordiation
 		inner_points[i].mass = 2.0*MASS;
 				 
-		outer_points[i].r->x=3*RING_RADIUS*cos(i*(2.0*PI)/numParticles); // outer point X coordiation
-		outer_points[i].r->y=3*RING_RADIUS*sin(i*(2.0*PI)/numParticles); // outer point Y coordiation
+
+		outer_points[i].r->x=2*RING_RADIUS*cos(i*(2.0*PI)/numParticles); // outer point X coordiation
+		outer_points[i].r->y=2*RING_RADIUS*sin(i*(2.0*PI)/numParticles); // outer point Y coordiation
 		outer_points[i].mass = MASS;
+
+//		cout<<"inner_points["<<i<<"]"<<inner_points[i].r->x<<","<<inner_points[i].r->y<<endl;
+//		cout<<"outer_points["<<i<<"]"<<outer_points[i].r->x<<","<<outer_points[i].r->y<<endl;
+	
 	}
 
 
 	for(i=0; i<numParticles ;i++)	       // NUMP-1 springs from 1st to the NUMP for outer & inner
 	{  
-		Add_Tangent_Spring(i,i,(i+1) % numParticles); 
+		Add_Structual_Spring(i,i,(i+1) % numParticles); 
 		Add_Radium_Spring(i) ;
 		Add_Shear_Spring(i,i,(i+1) % numParticles);
 	}

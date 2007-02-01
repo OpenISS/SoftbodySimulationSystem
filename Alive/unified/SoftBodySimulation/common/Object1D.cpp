@@ -2,7 +2,7 @@
 
 Object1D::Object1D()
 {
-	CreateStructure();
+	SetObject();
 }
 
 
@@ -12,7 +12,7 @@ Object1D::~Object1D()
 
 void Object1D::Draw()
 {
-	numSprings = 1;
+//	cout<<"numSprings----1D-----"<<numSprings<<endl;
 	glPushMatrix();
 		glBegin(GL_LINES); // the draw of inner circle
 			for(int i = 0 ; i < numSprings; i++)
@@ -32,6 +32,8 @@ void Object1D::Draw()
 			}
 		glEnd();
 		glBegin(GL_POINTS);
+			for(int j = 0 ; j < numSprings; j++)
+			{
 		//	glVertex2f(OneDPoint[OneDSpring[0].sp1->r->x,OneDPoint[OneDSpring[0].sp1]->r->y);
 		//	glVertex2f(OneDPoint[OneDSpring[0].sp2]->r->x,OneDPoint[OneDSpring[0].sp2]->r->y);
 
@@ -40,11 +42,12 @@ void Object1D::Draw()
 
 		//	glVertex2f(inner_springs[0].sp1->r->x,inner_springs[0].sp1->r->y);
 			
-			glVertex2f(outer_springs[0].sp1->r->x,outer_springs[0].sp1->r->y);
+			glVertex2f(outer_springs[j].sp1->r->x,outer_springs[j].sp1->r->y);
 
 		//	glVertex2f(inner_springs[0].sp2->r->x,inner_springs[0].sp2->r->y);
 		
-			glVertex2f(outer_springs[0].sp2->r->x,outer_springs[0].sp2->r->y);
+			glVertex2f(outer_springs[j].sp2->r->x,outer_springs[j].sp2->r->y);
+			}
 		glEnd();
 	glPopMatrix();
 }
@@ -57,8 +60,8 @@ void Object1D::Add_Tangent_Spring(int index, int head, int tail)
    	outer_springs[index].sp1=&outer_points[head];
 	outer_springs[index].sp2=&outer_points[tail];
 
-   	inner_springs[index].sp2= new Particle();
-	inner_springs[index].sp1= new Particle();
+   	inner_springs[index].sp1= new Particle();
+	inner_springs[index].sp2= new Particle();
 
 
   
@@ -73,15 +76,15 @@ void Object1D::Add_Tangent_Spring(int index, int head, int tail)
 */
 //	inner_springs[index].setRestLen();
 	outer_springs[index].setRestLen();
-//	cout<<"restLen"<<inner_springs[index].restLen<<endl;;
+//	cout<<"restLen"<<outer_springs[index].restLen<<endl;;
 }
 
-void Object1D::CreateStructure()
+void Object1D::SetObject()
 {
 	int PosX = 0;
 	int PosY = 0;
-
-	for(int i=0; i<2; i++)		// create NUMP points into 2D circle 
+//	cout<<"numParticles---1D------"<<numParticles<<endl;
+	for(int i=0; i<numParticles; i++)		// create NUMP points into 2D circle 
 	{
 		outer_points[i].r->x += PosX ;   // outer X coordiation
 		outer_points[i].r->y += PosY;   // outer Y coordiation

@@ -14,7 +14,7 @@ public:
 
 private:	
 	void Add_Tangent_Spring(int index, int head, int tail);
-	void CreateStructure();
+	virtual void SetObject();
 };
 
 #endif /* OBJECT1D_H */

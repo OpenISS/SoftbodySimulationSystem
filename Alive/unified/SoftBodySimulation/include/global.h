@@ -15,13 +15,13 @@ using namespace std;
 #define DT      0.003f    // Delta time in derivatives	
 
 #define KS 755.0f    // Hooke spring constant
-#define KD 45.0f     // Hooke spring damping constant
+#define KD 35.0f     // Hooke spring damping constant
 
-#define RKS 120.0f            // radium spring constant
-#define RKD 40.0f            // radium spring damping constant
+#define RKS 755.0f            // radium spring constant
+#define RKD 35.0f            // radium spring damping constant
 
 #define PI     3.1416f    // Circle = 2*PI*RADIUS
-#define RADIUS    0.5f    // Ball initial radius	
+//#define RADIUS    1.0f    // Ball initial radius	
 
 #define GY        0.0f    // Gravity
 #define WIND      10.0f    // External force, such as wind force
@@ -45,7 +45,7 @@ using namespace std;
 
 enum dimensionality {DIM1D, DIM2D, DIM3D};
 enum integrator_type {EULER, MIDPOINT, RK4};
-enum spring_type { SPRING_RADIUM, SPRING_STRUCTURAL, SPRING_SHEAR };
+enum spring_type { SPRING_STRUCTURAL, SPRING_RADIUM, SPRING_SHEAR };
 
 
 #define NUMPOINTS   20

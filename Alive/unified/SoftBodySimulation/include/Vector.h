@@ -15,39 +15,31 @@ public:
 	  x(Ax),y(Ay),z(Az)  // constructor with variables, Ax, Ay, Az
 		                   // default Vector(0,0,0)  
   {
-		cout << "vector's getting born: x=" << x << ",y=" << y << ",z=" << z << endl;
+	//	cout << "vector's getting born: x=" << x << ",y=" << y << ",z=" << z << endl;
   }
 
-/*
-	Vector()	 
-  { x=1;
-	y=1;
-	z=1;  
-		cout << "vector's getting born: x=" << x << ",y=" << y << ",z=" << z << endl;
-  }
-*/
 
 	~Vector()
 	{
-		cout << "vector's dying: x=" << x << ",y=" << y << ",z=" << z << endl;
+	//	cout << "vector's dying: x=" << x << ",y=" << y << ",z=" << z << endl;
 	}            // destructor
 	
 		 // Computation operators.
 		 
-	Vector& operator+ (Vector const &);   // #1 fcn - Vector addition
-    Vector& operator+ (float);   // #1 fcn - Vector addition
+//	Vector& operator+ (Vector const &);   // #1 fcn - Vector addition
+//  Vector& operator+ (float);   // #1 fcn - Vector addition
 	friend Vector operator+ (const Vector & p, const Vector & q); 
 
 	//Vector& operator- (Vector const &);   // #2 fcn - Vector subtraction
 	//Vector& operator- (float); 
 	friend Vector operator- (const Vector & p, const Vector & q);   // #2 fcn - Vector subtraction
 
-	Vector& operator* (Vector const &);   // #2 fcn - Vector subtraction
-	Vector& operator* (float); 
+//	Vector& operator* (Vector const &);   // #2 fcn - Vector subtraction
+//	Vector& operator* (float); 
 	friend Vector operator* (const Vector & p, const Vector & q);   // #2 fcn - Vector subtraction
 
-	Vector& operator/ (Vector const &);   // #2 fcn - Vector subtraction
-	Vector& operator/ (float); 
+//	Vector& operator/ (Vector const &);   // #2 fcn - Vector subtraction
+//	Vector& operator/ (float); 
 	friend Vector operator/ (const Vector & p, const Vector & q);   // #2 fcn - Vector subtraction
 
 	friend Vector operator% (Vector const &, Vector const &);
