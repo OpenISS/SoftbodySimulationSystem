@@ -22,13 +22,14 @@ protected:
 	Particle temp_outer_points3[MAX_POINTS_SPRINGS];
 	Particle temp_outer_points4[MAX_POINTS_SPRINGS];
 
-	bool dragExists;
-	float mDragX;
-	float mDragY;
+	
 
 	dimensionality dim;
 
 public:
+	bool dragExists;
+	float mDragX;
+	float mDragY;
 	Integrator(Object&);
 	virtual ~Integrator();
 

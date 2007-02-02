@@ -101,10 +101,10 @@ void Object3D::SetParticles(void) // [M+2][N] array for M*N+2 Points
 		   cout<<"pa->x="<<pa->r->x<<"; pa->y="<<pa->r->y<<"; pa->z="<<pa->r->z<<endl;
 		   cout<<"pb->x="<<pb->r->x<<"; pb->y="<<pb->r->y<<"; pb->z="<<pb->r->z<<endl;
 		   cout<<"pc->x="<<pc->r->x<<"; pc->y="<<pc->r->y<<"; pc->z="<<pc->r->z<<endl;
-		   pa->r->Normalize();
+/*		   pa->r->Normalize();
 		   pb->r->Normalize();
 		   pc->r->Normalize();
-
+*/
 		   cout<<"after normalization: "<<endl;
 
 		   cout<<"pa->x="<<pa->r->x<<"; pa->y="<<pa->r->y<<"; pa->z="<<pa->r->z<<endl;

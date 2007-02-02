@@ -10,7 +10,7 @@ Object::Object()
 	numParticles = 2;
 	numSprings = 1;
 	integrator = NULL;
-	integratorType = RK4;
+	integratorType = EULER;
 }
 
 Object::~Object()
@@ -52,6 +52,7 @@ void Object::setIntegratorType(integrator_type type)
 
 void Object::Update(float deltaT, bool drag, float xDrag, float yDrag)
 {
+
 	if(integrator == NULL)
 	{
 		switch(integratorType)

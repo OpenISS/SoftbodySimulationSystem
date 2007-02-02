@@ -28,10 +28,10 @@ public:
 
 private:
 	void Add_Structual_Spring(int index, int h, int t);
-//	void Add_Tangent_Spring(int index, Particle* h, Particle* t);
+
 	void Add_Radium_Spring(int index);
 	void Add_Shear_Spring(int index, int h, int t );
-//	void Add_Shear_Spring(int index, Particle* h, Particle* t);
+
 
 	virtual void SetObject(void);
 };

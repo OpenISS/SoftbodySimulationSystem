@@ -28,21 +28,8 @@ int   wireframe = 0;
 int   segments = 8;
 
 
-float Mass1 =   10.0f;
-float Ks1   =700.0f;
-float Kd1   =  45.0f;
-float Press1 = 10.0f;//(orignal press2=50;)
-
-
-
-Object3D ThreeDInner(Mass1, Ks1, Kd1,  Press1);   //	Creat a ball object globally
-//Ball outer(Mass2, Ks2, Kd2, Rad2, Press2);
-
-//Ball OneD(Mass1, Ks1, Kd1);
-
-
 Object1D object1D;
-Object2D object2D;
+//Object2D object2D;
 
 
 ViewSpace  box;                              // Creat a viewer space
@@ -79,44 +66,11 @@ void Display(void)
 
 	glPointSize(8);
 	object1D.Draw();
-	object2D.Draw();
-
- 
-	/*	glPushMatrix();
-
-	glRotatef(xMouse, 0.0, 1.0, 1.0);
-
-      ThreeDInner.Rotated();      // Rotate about X-axis, Y-axis, and/or Z-axis 
-	
-//	 
-//	
- 	ThreeDInner.Draw();         // Draw the ball object
-    glPopMatrix();
-	
-	glColor4f(0,0,1,1);
-//	outer.Draw();
+//	object2D.Draw();
 
 
-	glPointSize(4);
-	glLineWidth(3);
-
-
-	glPushMatrix();
-	//glTranslatef(0,1.67,0);
-	glScalef(1.4,1.4,1.4);	   
-	glPopMatrix();*/
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 	box.Draw();           // Draw the view box space 	
-
-	if(mousedown)
-	{
-		glColor3f(1,0,1);
-		glBegin(GL_LINES);
-			glVertex2f(xMouse,yMouse);
-			//   	   	glVertex2f(OneDPoint[closest_i].r->x,OneDPoint[closest_i].r->y);
-			glVertex2f(object1D.inner_points[closest_i].r->x,object1D.inner_points[closest_i].r->y);
-		glEnd();
-	}     
 
 
 	glutSwapBuffers(); 
@@ -129,7 +83,7 @@ void Display(void)
 
 void Mouse(int button, int state, int x, int y)
 {
-    ThreeDInner.Mouse(button, state, x, y);
+   // ThreeDInner.Mouse(button, state, x, y);
 
 	if (button == GLUT_LEFT_BUTTON)
 	{
@@ -145,6 +99,8 @@ void Mouse(int button, int state, int x, int y)
 		{
 
 	       	mousedown = 0;
+			xMouse = 0;
+			yMouse = 0;
 	  	}
      }
 }
@@ -154,7 +110,7 @@ void Mouse(int button, int state, int x, int y)
 
 void Motion(int x, int y)
 {
-    ThreeDInner.Motion(x, y);
+  //  ThreeDInner.Motion(x, y);
 
 		if (mousedown)
 	{
@@ -170,14 +126,14 @@ void Motion(int x, int y)
 
 void Keyboard(unsigned char key, int x, int y)
 {     
-	ThreeDInner.Keyboard(key, x, y);		
+//	ThreeDInner.Keyboard(key, x, y);		
 }
 
 // when a moving direction Key is pressed
 
 void SpecialKeys(int key, int x, int y)
 {
-	ThreeDInner.SpecialKeys(key, x, y);	
+//	ThreeDInner.SpecialKeys(key, x, y);	
 }
 
 
@@ -186,32 +142,9 @@ void SpecialKeys(int key, int x, int y)
 void Idle()
 {
 	
-
-//	xMouse+=2;
-//	yMouse+=2;
-
-//	ThreeDInner.AccumulateForces();
-//	ThreeDInner.Derivatives(DT);
-//  outer.AccumulateForces();
- // outer.Derivatives(DT);
-
-
-//	AccumulateForces();
-//	Euler_Integrator();
-
-	//object1D.Update(DT, false, xMouse, yMouse);
 	object1D.Update(DT, mousedown != 0, xMouse, yMouse);
-	object2D.Update(DT, mousedown != 0, xMouse, yMouse);
-	//object2D.Update(DT, false, xMouse, yMouse);
+//	object2D.Update(DT, mousedown != 0, xMouse, yMouse);
 
-	
-  if (ThreeDInner.getPressure()<PRESSURE)
-  {
-      ThreeDInner.setPressure(PRESSURE);
-//	  outer.setPressure(PRESSURE);
-	  
-	  ThreeDInner.setPressure(ThreeDInner.getPressure()+PRESSURE/300.0f);
-  }
 
   glutPostRedisplay();
 }
@@ -238,10 +171,7 @@ int main(void)
 	glutInitDisplayMode(GLUT_DOUBLE|GLUT_RGB);
     main_window = glutCreateWindow("A Simulation Ball - Miao Song"); 
 
-  //  ThreeDInner.SetObject(); 
-//	CreateOneD();
- //   outer.SetBall();	
-
+ 
 	glutReshapeFunc(Reshape);
     
 

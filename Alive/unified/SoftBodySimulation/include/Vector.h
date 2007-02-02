@@ -57,7 +57,7 @@ public:
 	return sqrt((this->x)*(this->x)+(this->y) * (this->y)+(this->z)*(this->z)); }
 		
 		//  Normalize Vector.		 
-	inline void Normalize()
+/*	inline void Normalize()
 	{
 		float d = getLength(); // its length
 
@@ -66,7 +66,7 @@ public:
 		if(d !=0)
 			*this = (*this) * (1.0f/d);
 	}
-
+*/
 public:
 
 	float x;				// x-coordinate

@@ -8,7 +8,7 @@ Integrator::Integrator(Object& object) : dragExists(false)
 	memcpy(temp_inner_points0, object.inner_points, sizeof(Particle) * MAX_POINTS_SPRINGS);
 	memcpy(temp_outer_points0, object.outer_points, sizeof(Particle) * MAX_POINTS_SPRINGS);
 
-	dim = DIM2D;
+	dim = DIM1D;
 }
 
 Integrator::~Integrator()
@@ -68,7 +68,7 @@ void Integrator::ExternalForces()
 	 object->outer_points[i].f->x = 0;//40*sin(25*i);
 
    
-	 object->outer_points[i].f->y = 0;//(object->outer_points[i].mass)*GY;
+	 object->outer_points[i].f->y = MASS * GY ;//10;//(object->outer_points[i].mass)*GY;
      
 
 		if(dragExists)			// if user clicked
@@ -137,7 +137,6 @@ void Integrator::SpringForces()
 	// Three parts for computing the spring forces on all the points
 	
 	
-//	 for(i=0; i<NUMS; i++)  // Part #1, tangent spring force constribution 
 	 for(i=0; i<object->GetNumberOfSprings(); i++)  // Part #1, tangent spring force constribution 
 	 {
 	
@@ -157,7 +156,7 @@ void Integrator::SpringForces()
 
 		inner_rd12 = sqrt((inner_x1-inner_x2)*(inner_x1-inner_x2)
 					 +(inner_y1-inner_y2)*(inner_y1-inner_y2));	 // distance on inner
- 
+
 
 		outer_rd12 = sqrt((outer_x1-outer_x2)*(outer_x1-outer_x2)
 					 +(outer_y1-outer_y2)*(outer_y1-outer_y2));	 // distance on outer
@@ -284,13 +283,15 @@ shear_right_vy12=((Object2D*)object)->shear_springs_right[i].sp1->v->y - ((Objec
 
 
 
-		/* Calculate normal vectors to springs */
-		object->inner_springs[i].normal.y =  +(object->inner_springs[i].sp1->r->x - object->inner_springs[i].sp2->r->x) / inner_rd12;  // Normal X-vector 
+		/* Calculate normal vectors to springs */	
+	
 		object->inner_springs[i].normal.x =  -(object->inner_springs[i].sp1->r->y - object->inner_springs[i].sp2->r->y) / inner_rd12;  // Normal Y-vector
-
+		object->inner_springs[i].normal.y =  +(object->inner_springs[i].sp1->r->x - object->inner_springs[i].sp2->r->x) / inner_rd12;  // Normal X-vector 
+	
 		/* Calculate normal vectors to springs */
-		object->outer_springs[i].normal.y =  +(object->outer_springs[i].sp1->r->x - object->outer_springs[i].sp2->r->x) / outer_rd12;  // Normal X-vector 
+		
 		object->outer_springs[i].normal.x =  -(object->outer_springs[i].sp1->r->y - object->outer_springs[i].sp2->r->y) / outer_rd12;  // Normal Y-vector
+		object->outer_springs[i].normal.y =  +(object->outer_springs[i].sp1->r->x - object->outer_springs[i].sp2->r->x) / outer_rd12;  // Normal X-vector 
 		
 	
 	}
@@ -396,14 +397,14 @@ void Integrator::CollisionDetection(int i)
 	{
        object->outer_points[i].dr->x = -LIMIT - object->outer_points[i].r->x;
 	   object->outer_points[i].v->x = - 0.2 * object->outer_points[i].v->x;
-       object->outer_points[i].v->y =   0.9 * object->outer_points[i].v->y;
+       object->outer_points[i].v->y =   0.8 * object->outer_points[i].v->y;
      //  object->outer_points[i].v.z =   0.9 * object->outer_points[i].v.z;   
 	}else 
 	if ((object->outer_points[i].r->x + object->outer_points[i].dr->x) > LIMIT )
 	{
        object->outer_points[i].dr->x = LIMIT - object->outer_points[i].r->x;
 	   object->outer_points[i].v->x = - 0.2 * object->outer_points[i].v->x;
-       object->outer_points[i].v->y =   0.9 * object->outer_points[i].v->y;
+       object->outer_points[i].v->y =   0.8 * object->outer_points[i].v->y;
     //   ballpoints[i].v->z =   0.9 * ballpoints[i].v->z;   
 	} 
 
@@ -416,14 +417,14 @@ void Integrator::CollisionDetection(int i)
        object->outer_points[i].dr->y = -LIMIT - object->outer_points[i].r->y;
 	   object->outer_points[i].v->y = - 0.2 * object->outer_points[i].v->y;
   //     object->outer_points[i].v->z =   0.9 * object->outer_points[i].v->z;
-       object->outer_points[i].v->x =   0.9 * object->outer_points[i].v->x;   
+       object->outer_points[i].v->x =   0.8 * object->outer_points[i].v->x;   
 	}else
     if ((object->outer_points[i].r->y + object->outer_points[i].dr->y) > LIMIT )
 	{
        object->outer_points[i].dr->y = LIMIT - object->outer_points[i].r->y;
 	   object->outer_points[i].v->y = - 0.2 * object->outer_points[i].v->y;
   //     object->outer_points[i].v->z =   0.9 * object->outer_points[i].v->z;
-       object->outer_points[i].v->x =   0.9 * object->outer_points[i].v->x;   
+       object->outer_points[i].v->x =   0.8 * object->outer_points[i].v->x;   
 	}
 
     object->outer_points[i].r->y  = object->outer_points[i].r->y + object->outer_points[i].dr->y;
