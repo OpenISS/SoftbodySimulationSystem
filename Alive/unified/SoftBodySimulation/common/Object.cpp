@@ -15,6 +15,7 @@ Object::Object()
 
 Object::~Object()
 {
+
 	delete integrator;
 }
 
@@ -22,6 +23,7 @@ Object::~Object()
 
 void Object::SetParticles() // M*N horizonal springs
 {
+
 	assert(false);
 }
 
@@ -30,23 +32,16 @@ void Object::SetParticles() // M*N horizonal springs
 
 void Object::SetObject()
 {
-	cout<<"set points"<<endl;
+	
 	SetParticles();         // create point Object3D
 
-//SetNormals();
- 
-// SetTriPlanes();      // set triangle faces on side surfaces
-//	SetSprings();   // set springs on horizontal planes, connect points
- //iteration();  
- /*  Object3DParticles=t_Object3DParticles;
-
-  Face=t_Face;*/
 }
 
 //#############################################################################
 
 void Object::setIntegratorType(integrator_type type)
 {
+	
 	this->integratorType = type;
 }
 
@@ -61,14 +56,14 @@ void Object::Update(float deltaT, bool drag, float xDrag, float yDrag)
 				integrator = new EulerIntegrator(*this);
 				break;
 
-			case MIDPOINT:
+	/*		case MIDPOINT:
 				integrator = new MidpointIntegrator(*this);
 				break;
 
 			case RK4:
 				integrator = new RungeKutta4Integrator(*this);
 				break;
-
+*/
 			default:
 				assert(false);
 				return;

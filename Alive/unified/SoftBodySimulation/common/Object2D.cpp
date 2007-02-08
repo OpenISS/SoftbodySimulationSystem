@@ -2,6 +2,7 @@
 
 Object2D::Object2D() : pressure(DEFAULTPRESSURE)
 {
+	cout<<"2D constructor"<<endl;
 	numParticles = NUMPOINTS;
 	numSprings = NUMSPRINGS;
 	SetObject();
@@ -14,6 +15,7 @@ Object2D::~Object2D()
 
 void Object2D::Draw()
 {
+	cout<<"2D draw"<<endl;
 	int i;
 	//glClearColor(0,0,0,0);
 	//glClear(GL_COLOR_BUFFER_BIT);
@@ -109,10 +111,10 @@ void Object2D::Draw()
 
 /* Function of adding a new spring on the inner rings*/
 
-void Object2D::Add_Structual_Spring(int index, int h, int t)
+void Object2D::Add_Structural_Spring(int index, int h, int t)
 
 {
-	
+	cout<<"2D add_structual_spring"<<endl;
     
     inner_springs[index].sp1 = &inner_points[h]; // h, t stand for spring head and tail
     inner_springs[index].sp2 = &inner_points[t]; // index for spring index on the ring
@@ -129,7 +131,7 @@ void Object2D::Add_Structual_Spring(int index, int h, int t)
 void Object2D::Add_Radium_Spring(int index)
 {
    
-	
+cout<<"2D add_radium_spring"<<endl;	
 	
 	radium_springs[index].sp1 = &inner_points[index]; // h, t stand for spring head and tail
     radium_springs[index].sp2 = &outer_points[index]; // index for spring index on the ring
@@ -142,6 +144,7 @@ void Object2D::Add_Radium_Spring(int index)
 void Object2D::Add_Shear_Spring(int index, int h, int t )
 {
       
+	cout<<"2D add_shear_spring"<<endl;
 	shear_springs_left[index].sp1 = &inner_points[h];;
 	shear_springs_left[index].sp2 = &outer_points[t];;
 	
@@ -156,6 +159,7 @@ void Object2D::Add_Shear_Spring(int index, int h, int t )
 /* Create 2 2D-rings (points + springs) */
 void Object2D::SetObject(void)
 {
+	cout<<"2D setobj"<<endl;
 	int i;
 	for(i=0; i<numParticles; i++)		// create NUMP points into 2D circle 
 	{
@@ -176,7 +180,7 @@ void Object2D::SetObject(void)
 
 	for(i=0; i<numParticles ;i++)	       // NUMP-1 springs from 1st to the NUMP for outer & inner
 	{  
-		Add_Structual_Spring(i,i,(i+1) % numParticles); 
+		Add_Structural_Spring(i,i,(i+1) % numParticles); 
 		Add_Radium_Spring(i) ;
 		Add_Shear_Spring(i,i,(i+1) % numParticles);
 	}

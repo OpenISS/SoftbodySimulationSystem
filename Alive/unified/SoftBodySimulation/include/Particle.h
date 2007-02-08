@@ -8,45 +8,28 @@ class Particle
 {
 public:
 
-	Particle(Vector* R, float Mass) : mass(Mass)
+	Particle(Vector* R, float Mass) : mass(Mass)		 // particle constructor with variables position and mass
 	{		
 		r = R;
-	  //mass=1;
-//		cout<<"Mass. Particle: "<<mass<<endl;
-		OneOverMass=1.0/mass;      // constructor	
-		norm = new Vector(0,0,0);
+	
+		OneOverMass=1.0/mass;						
 		dr = new Vector(0,0,0);
 		dv = new Vector(0,0,0);
-//		norm = NULL;
-//		dr = NULL;
-//		dv = NULL;
-//		f = NULL;
-//		v = NULL;
-		f = new Vector(0,0,0);
-		v = new Vector(0,0,0);
+		f  = new Vector(0,0,0);
+		v  = new Vector(0,0,0);
 	}
 
-	Particle()
+	Particle()											// particle constructor with variables position and mass
 	{
-		r = new Vector(0,0,0);
-		norm = new Vector(0,0,0);
+		r  = new Vector(0,0,0);
 		dr = new Vector(0,0,0);
 		dv = new Vector(0,0,0);
-		f = new Vector(0,0,0);
-		v = new Vector(0,0,0);
-
-		/*
-		//r = NULL;
-		norm = NULL;
-		dr = NULL;
-		dv = NULL;
-		f = NULL;
-		v = NULL;
-		*/
+		f  = new Vector(0,0,0);
+		v  = new Vector(0,0,0);
 	}
 
 
-	~Particle()
+	~Particle()											// particle destructor			
 	{
 		/*
 		delete norm;
@@ -57,24 +40,21 @@ public:
 		*/
 	}
 	
-	void ClearForce(void);   // reset forces at a Particle 		
-	void AccumuForce(Vector const &);
+	void ClearForce(void);								// reset forces at a Particle 		
+//	void AccumuForce(Vector const &);
 	friend ostream& operator<<(ostream& os, const Particle& c);
 
 
 public:
 
-	float mass;         // space Particle with mass 
-	float OneOverMass;  // for computation
+	float mass;					// space Particle with mass 
+	float OneOverMass;			// for computation
 	
-	Vector* r;		    // Particle space position
-	Vector* f;		    // Particle space force
-	Vector* v;		    // Particle space velocity
-    Vector* dr;		    // small change of position in derivatives
-	Vector* dv;		    // small change of velocity in derivatives
-	
-	Vector* norm;	    // normal vector at the Particle on a ball
-	
+	Vector* r;					// Particle space position
+	Vector* f;					// Particle space force
+	Vector* v;					// Particle space velocity
+    Vector* dr;					// small change of position in derivatives
+	Vector* dv;					// small change of velocity in derivatives	
 };
 
 #endif

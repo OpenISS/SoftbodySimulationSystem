@@ -3,11 +3,12 @@
 
 // class Particle number functions
 
-void Particle::ClearForce(void)   // reset forces at a Particle 	
+void Particle::ClearForce(void)					// reset forces at a Particle 	
 {
+	
 	if(f == NULL)
 	{
-		f = new Vector(0,0,0);    // A force vector with all coordinates equal zero
+		f = new Vector(0,0,0);					// A force vector with all coordinates equal zero
 	}
 	else
 	{
@@ -16,11 +17,6 @@ void Particle::ClearForce(void)   // reset forces at a Particle
 		f->z = 0;
 	}
 } 
-
-void Particle::AccumuForce(Vector const &force) // Adding a force vector
-{
-	*f = *f + force;
-}
 
 
 ostream& operator<<(ostream& os, const Particle& c)
@@ -51,9 +47,5 @@ ostream& operator<<(ostream& os, const Particle& c)
 	os<<c.dv->y;  // small change of velocity in derivatives
 	os<<c.dv->z;
 
-	os<<c.norm->x;
-	os<<c.norm->y;
-	os<<c.norm->z;	    // normal vector at the Particle on a ball
-	
 	return os; //Always return stream object.
 }

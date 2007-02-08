@@ -22,9 +22,9 @@ protected:
 
 
 public:
-	Spring inner_springs[MAX_POINTS_SPRINGS];
+/*	Spring inner_springs[MAX_POINTS_SPRINGS];
 	Particle inner_points[MAX_POINTS_SPRINGS];
-
+*/
 	Spring outer_springs[MAX_POINTS_SPRINGS];     // for point springs on outer circle
 	Particle outer_points[MAX_POINTS_SPRINGS];  // for outer circle Particles + 1 mouse Particle
 

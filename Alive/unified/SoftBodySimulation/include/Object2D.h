@@ -27,7 +27,7 @@ public:
 
 
 private:
-	void Add_Structual_Spring(int index, int h, int t);
+	void Add_Structural_Spring(int index, int h, int t);
 
 	void Add_Radium_Spring(int index);
 	void Add_Shear_Spring(int index, int h, int t );

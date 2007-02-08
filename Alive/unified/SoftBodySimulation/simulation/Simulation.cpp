@@ -19,9 +19,9 @@
 #include "Simulation.h"
 
 // Mouse variables
-extern int mousedown;                // for GLUT_LEFT_BUTTON, GLUT_RIGHT_BUTTON
-extern float xMouse, yMouse, zMouse;    // for mouse point r(x,y,z) 
-extern int closest_i, closest_j;        // Closest point index i, j 
+int mousedown =0;                // for GLUT_LEFT_BUTTON, GLUT_RIGHT_BUTTON
+float xMouse, yMouse, zMouse;    // for mouse point r(x,y,z) 
+int closest_i, closest_j;        // Closest point index i, j 
 
 int   main_window;
 int   wireframe = 0;
@@ -175,7 +175,7 @@ int main(void)
 	glutReshapeFunc(Reshape);
     
 
-	glutPassiveMotionFunc(motion);
+//	glutPassiveMotionFunc(motion);
     glutIdleFunc(Idle);
 	glutDisplayFunc(Display);
 

@@ -10,12 +10,12 @@ class Integrator
 protected:
 	Object* object;
 
-	Particle temp_inner_points0[MAX_POINTS_SPRINGS];
+/*	Particle temp_inner_points0[MAX_POINTS_SPRINGS];
 	Particle temp_inner_points1[MAX_POINTS_SPRINGS];
 	Particle temp_inner_points2[MAX_POINTS_SPRINGS];
 	Particle temp_inner_points3[MAX_POINTS_SPRINGS];
 	Particle temp_inner_points4[MAX_POINTS_SPRINGS];
-
+*/
 	Particle temp_outer_points0[MAX_POINTS_SPRINGS];
 	Particle temp_outer_points1[MAX_POINTS_SPRINGS];
 	Particle temp_outer_points2[MAX_POINTS_SPRINGS];
@@ -30,6 +30,8 @@ public:
 	bool dragExists;
 	float mDragX;
 	float mDragY;
+
+public:
 	Integrator(Object&);
 	virtual ~Integrator();
 
@@ -44,8 +46,8 @@ protected:
 	virtual void Derivatives(float, float) = 0;   // Differential computation
 	virtual void CollisionDetection(int);
 
-	virtual void GravityForce();
-	virtual void DragForce();
+private:
+	void CalculateSpringForces(Spring springs[], int i, float rd12, float x1, float y1, float x2, float y2);
 };
 
 #endif /* INTEGRATOR_H */
