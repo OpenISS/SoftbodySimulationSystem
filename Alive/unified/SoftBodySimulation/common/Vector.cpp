@@ -31,7 +31,7 @@ Vector& Vector::operator+ (float s)							// #1 fcn - Vector addition
 
 Vector operator- (const Vector &K, const Vector &N)			// #2 fcn - Vector subtraction
 {
-	cout<<"vecotr -"<<endl;
+	//cout<<"vecotr -"<<endl;
 	return Vector(K.x - N.x, K.y - N.y, K.z - N.z);
 }
 /*

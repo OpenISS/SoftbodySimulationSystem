@@ -50,6 +50,8 @@ void Object::Update(float deltaT, bool drag, float xDrag, float yDrag)
 
 	if(integrator == NULL)
 	{
+		cout << "INTEGRATOR IS ABOUT TO BE INSTATIATED" << endl;
+
 		switch(integratorType)
 		{
 			case EULER:
