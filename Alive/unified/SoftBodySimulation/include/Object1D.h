@@ -11,10 +11,12 @@ public:
 
 	virtual void Draw();
 
-
+	void FindClosestPoint(void);
 private:	
-	void Add_Tangent_Spring(int index, int head, int tail);
+	void Add_Structural_Spring(int index, int head, int tail);
 	virtual void SetObject();
+
+
 };
 
 #endif /* OBJECT1D_H */

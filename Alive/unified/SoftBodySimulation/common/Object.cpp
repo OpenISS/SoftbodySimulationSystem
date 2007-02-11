@@ -7,10 +7,12 @@
 
 Object::Object()
 {
-	numParticles = 2;
-	numSprings = 1;
-	integrator = NULL;
-	integratorType = EULER;
+	numParticles = 2;					//default particle number on the object
+	numSprings = 1;						//default spring number on the object
+	integrator = NULL;					//default integrator 
+	integratorType = EULER;				//default integrator tpye is Euler
+	dim = DIM1D;						//default object is 1D
+	closest_i=0;			  		    // the point which is closest to mouse position
 }
 
 Object::~Object()
@@ -21,37 +23,44 @@ Object::~Object()
 
 //==========================================================================  
 
-void Object::SetParticles() // M*N horizonal springs
+void Object::SetParticles()				//model the particles on the object
 {
 
 	assert(false);
 }
 
+void Object::Add_Structural_Spring(int index, int head, int tail)
+{
+	assert(false);
+
+}
 
 //##############################################################################
 
-void Object::SetObject()
+void Object::SetObject()				//model the object
 {
 	
-	SetParticles();         // create point Object3D
+	SetParticles();						//model the particles on the object
 
 }
 
 //#############################################################################
 
-void Object::setIntegratorType(integrator_type type)
+void Object::setIntegratorType(integrator_type type)		//set the integrator tpye as user selects from the GUI
 {
 	
 	this->integratorType = type;
 }
 
-void Object::Update(float deltaT, bool drag, float xDrag, float yDrag)
+//#############################################################################
+//update the forces, velocity, and position of the particle on the object
+
+void Object::Update(float deltaT, bool drag, float xDrag, float yDrag)  
 {
 
 	if(integrator == NULL)
 	{
-		cout << "INTEGRATOR IS ABOUT TO BE INSTATIATED" << endl;
-
+	
 		switch(integratorType)
 		{
 			case EULER:
@@ -70,6 +79,8 @@ void Object::Update(float deltaT, bool drag, float xDrag, float yDrag)
 				assert(false);
 				return;
 		}
+
+		integrator->setDimension(dim);
 	}
 
 	integrator->integrate(deltaT, drag, xDrag, yDrag);

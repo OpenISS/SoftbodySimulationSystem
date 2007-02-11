@@ -3,6 +3,7 @@
 Object1D::Object1D()
 {
 	SetObject();
+	dim = DIM1D;
 }
 
 
@@ -36,28 +37,32 @@ void Object1D::Draw()
 			glColor3f(1,1,0);      // A white line between the Object3D point and the mouse point
 			glBegin(GL_LINES);	
 				glVertex2f(integrator->mDragX, integrator->mDragY);
-				glVertex2f(outer_springs[0].sp1->r->x,outer_springs[0].sp1->r->y);
+				glVertex2f(outer_points[closest_i].r->x,outer_points[closest_i].r->y);
 			glEnd();
 		}                   
 
 	glPopMatrix();
+
+  
 }
 
 //====================================================================
 
-void Object1D::Add_Tangent_Spring(int index, int head, int tail)
+void Object1D::Add_Structural_Spring(int index, int head, int tail)
 {
 
 
    	outer_springs[index].sp1 = &outer_points[head];
 	outer_springs[index].sp2 = &outer_points[tail];
 
-/*  	inner_springs[index].sp1 = new Particle();
+  	inner_springs[index].sp1 = new Particle();
 	inner_springs[index].sp2 = new Particle();
-*/
+
 	outer_springs[index].setRestLen();
 }
 
+
+//================================================================
 void Object1D::SetObject()
 {
 
@@ -77,6 +82,30 @@ void Object1D::SetObject()
 
 	for(i=0; i<1 ;i++)	       // NUMP-1 springs from 1st to the NUMP for outer & inner
 	{  
-		Add_Tangent_Spring(i, i, (i+1) % numParticles); 
+		Add_Structural_Spring(i, i, (i+1) % numParticles); 
+	}
+}
+
+
+//=======================================================
+		
+void Object1D::FindClosestPoint(void)
+{
+	float dmin = 0;
+	float mousepointd = 0;
+	int i;
+
+	// find closest point
+	dmin = sqrt(pow(outer_points[closest_i].r->x - integrator->mDragX,2) + pow(outer_points[closest_i].r->y - integrator->mDragY,2));
+
+	for(i=0; i<numParticles; i++)
+	{
+		mousepointd = sqrt(	pow(outer_points[i].r->x - integrator->mDragX,2) +
+							pow(outer_points[i].r->y - integrator->mDragY,2));
+		if(mousepointd < dmin)
+		{
+			dmin = mousepointd;
+			closest_i = i;
+		}
 	}
 }

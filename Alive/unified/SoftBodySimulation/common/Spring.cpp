@@ -5,7 +5,7 @@
 Spring::Spring(Particle *P1, Particle *P2,float Ks, float Kd):		// constructor
   sp1(P1), sp2(P2), ks(Ks), kd(Kd)
 {
-	  cout<<"spring construcotr1"<<endl;
+
 	// *P1, *P2 Particles the srping two ends
 	// Spring_ks is the Hooke constant
 	// Spring_kd is the dampling constant
@@ -50,7 +50,7 @@ Spring::~Spring()
   
 void Spring::setRestLen()
 {
-	cout<<"spring setrestlen"<<endl;
+
 //			cout<<"restLen!=0"<<endl; 
 	restLen = (*sp1->r - *sp2->r).getLength(); // static length
 //	restLen = (*sp2->r - *sp1->r).getLength(); // static length

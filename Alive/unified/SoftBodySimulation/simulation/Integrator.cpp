@@ -9,7 +9,7 @@ Integrator::Integrator(Object& object) : dragExists(false)
 //	memcpy(temp_inner_points0, object.inner_points, sizeof(Particle) * MAX_POINTS_SPRINGS);
 	memcpy(temp_outer_points0, object.outer_points, sizeof(Particle) * MAX_POINTS_SPRINGS);
 
-	dim = DIM1D;
+	dim = DIM2D;
 }
 
 Integrator::~Integrator()
@@ -26,10 +26,11 @@ void Integrator::integrate(float deltaT, bool drag, float xDrag, float yDrag)
 	AccumulateForces();   // accumulate forces acted on 
 	Derivatives(deltaT, 1.0);
 
-	cout<<"derived fx sp1 = "<<object->outer_points[0].f->x << ",fy sp1=" <<object->outer_points[0].f->y<<endl;
+/*	cout<<"derived fx sp1 = "<<object->outer_points[0].f->x << ",fy sp1=" <<object->outer_points[0].f->y<<endl;
 	cout<<"derived vx sp1 = "<<object->outer_points[0].v->x << ",vy sp1=" <<object->outer_points[0].v->y<<endl;
 	cout<<"==================================="<<endl<<endl;
-}
+*/
+  }
 
 
 void Integrator::AccumulateForces()   // accumulate forces acted on 
@@ -46,6 +47,7 @@ void Integrator::AccumulateForces()   // accumulate forces acted on
 		case DIM2D:
 		case DIM3D:
 			PressureForces();
+			break;
 	}
 }
 
@@ -55,11 +57,11 @@ void Integrator::ExternalForces()
 	int i;    // runing index
 
 
-	float outer_x1,outer_x2,outer_y1,outer_y2;	// points outer_p1, outer_p2 on the outer circle
+	float outer_x1,outer_x2,outer_y1,outer_y2,outer_z1,outer_z2;	// points outer_p1, outer_p2 on the outer circle
   
     float outer_rd12;			            	// length of outer_p1, outer_p2
 
-    float outer_Fx,outer_Fy;		            // force vector
+    float outer_Fx,outer_Fy,outer_Fz;		            // force vector
 
 	float f;				        // external force 
 
@@ -67,43 +69,56 @@ void Integrator::ExternalForces()
 	// Gravity
 	for(i = 0; i < object->GetNumberOfParticles(); i++)
 	{
-/*		object->inner_points[i].f->x = 0;//40*sin(25*i);
+		object->inner_points[i].f->x = 0;//40*sin(25*i);
 		object->inner_points[i].f->y = 0;//(object->inner_points[i].mass)*GY;     
-*/
+		object->inner_points[i].f->z = 0;//(object->inner_points[i].mass)*GY;     
+
 		object->outer_points[i].f->x = 0;//40*sin(25*i);
-		object->outer_points[i].f->y = MASS * GY;//10;//(object->outer_points[i].mass)*GY;
-	}
-
-	i = 0;
-
-	// Drag force
+		object->outer_points[i].f->y = MASS * GY;//10;//(object->outer_points[i].mass)*GY;	
+		object->outer_points[i].f->z = 0;//40*sin(25*i);
+		
+		if(i == object->closest_i)
 		if(dragExists)			// if user clicked
 		{
 			outer_x1 = object->outer_points[ i ].r->x;		// get points X-coord
 			outer_y1 = object->outer_points[ i ].r->y;        // get points Y-coord
+			outer_z1 = object->outer_points[ i ].r->z;        // get points Y-coord
+
 			outer_x2 = mDragX;                      // get Mouse  X-coord
 			outer_y2 = mDragY;                      // get Mouse  Y-coord
+			outer_z2 = 0.0;                      // get Mouse  Y-coord
 
 			outer_rd12 =
 				sqrt((outer_x1-outer_x2) * (outer_x1-outer_x2)
-					+(outer_y1-outer_y2) * (outer_y1-outer_y2)); // distance
+					+(outer_y1-outer_y2) * (outer_y1-outer_y2)
+					+(outer_z1-outer_z2) * (outer_z1-outer_z2)
+					); // distance
 
 			f = (outer_rd12 - MOUSE_REST) * MOUSE_KS
 			  + (
 					  object->outer_points[i].v->x * (outer_x1-outer_x2)
 					+ object->outer_points[i].v->y * (outer_y1-outer_y2)
+					+ object->outer_points[i].v->z * (outer_y1-outer_z2)
 				) * MOUSE_KD / outer_rd12;
 
 			// calculate spring force
 			outer_Fx = ((outer_x1 - outer_x2) / outer_rd12) * f;
 			outer_Fy = ((outer_y1 - outer_y2) / outer_rd12) * f;
+			outer_Fz = ((outer_z1 - outer_z2) / outer_rd12) * f;
 
 			// accumulate gravity + hooke forces
 			object->outer_points[i].f->x -= outer_Fx; // from the closet point to the Mouse point
 			object->outer_points[i].f->y -= outer_Fy;
+			object->outer_points[i].f->z -= outer_Fz;
 		}
 
-		cout<<"external fx sp1 = "<<object->outer_points[i].f->x << ",fy sp2=" <<object->outer_points[i].f->y<<endl;
+	}
+
+//	i = 0;
+
+	// Drag force
+	
+//		cout<<"external fx sp1 = "<<object->outer_points[i].f->x << ",fy sp2=" <<object->outer_points[i].f->y<<endl;
 }
 
 
@@ -115,18 +130,10 @@ void Integrator::SpringForces()
 	// Three parts for computing the spring forces on all the points
 	for(i=0; i<object->GetNumberOfSprings(); i++)  // Part #1, tangent spring force constribution 
 	{
-/*		if(inner_rd12!=0) // spring force on points of inner ring
-		{
-			CalculateSpringForces
-			(
-				object->inner_springs,
-				i
-			);
-		}
-*/
+	
 		CalculateSpringForces(object->outer_springs, i);
 
-/*
+
 		switch(dim)
 		{
 			case DIM1D:
@@ -134,6 +141,13 @@ void Integrator::SpringForces()
 
 			default:
 			{
+		
+				CalculateSpringForces
+				(
+					object->inner_springs,
+					i
+				);
+			
 				CalculateSpringForces
 				(
 					((Object2D*)object)->radium_springs,
@@ -153,7 +167,8 @@ void Integrator::SpringForces()
 					i
 				);
 			}
-*/
+		}
+
 	}
 }
 
@@ -203,8 +218,8 @@ void Integrator::CalculateSpringForces(Spring springs[], int i)
 	Fx = ((x1 - x2) / rd12) * f;
 	Fy = ((y1 - y2) / rd12) * f;
 
-	cout<<"Fx-------------"<<Fx<<endl;
-	cout<<"Fy-------------"<<Fy<<endl;
+//	cout<<"Fx-------------"<<Fx<<endl;
+//	cout<<"Fy-------------"<<Fy<<endl;
 
 
 	springs[i].sp1->f->x -= Fx;
@@ -213,17 +228,19 @@ void Integrator::CalculateSpringForces(Spring springs[], int i)
 	springs[i].sp2->f->x += Fx;
 	springs[i].sp2->f->y += Fy;
 
-	cout<<"fx sp1 = "<<springs[i].sp1->f->x << ",fy sp1=" <<springs[i].sp1->f->y<<endl;
+/*	cout<<"fx sp1 = "<<springs[i].sp1->f->x << ",fy sp1=" <<springs[i].sp1->f->y<<endl;
 	cout<<"fx sp2 = "<<springs[i].sp2->f->x << ",fy sp2=" <<springs[i].sp2->f->y<<endl;
 
 	cout<<"vx sp1 = "<<springs[i].sp1->v->x << ",vy sp1=" <<springs[i].sp1->v->y<<endl;
 	cout<<"vx sp2 = "<<springs[i].sp2->v->x << ",vy sp2=" <<springs[i].sp2->v->y<<endl;
+*/
+
 }
 
 
 void Integrator::PressureForces()
 {
-/*	int i;    // runing index
+	int i;    // runing index
 
    	float inner_x1,inner_x2,inner_y1,inner_y2;	// points inner_p1, inner_p2 on the inner circle
     float outer_x1,outer_x2,outer_y1,outer_y2;	// points outer_p1, outer_p2 on the outer circle
@@ -307,7 +324,7 @@ void Integrator::PressureForces()
 
 	
 	}
-*/
+
 
 }
 

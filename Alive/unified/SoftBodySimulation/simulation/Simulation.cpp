@@ -23,13 +23,21 @@ int mousedown =0;                // for GLUT_LEFT_BUTTON, GLUT_RIGHT_BUTTON
 float xMouse, yMouse, zMouse;    // for mouse point r(x,y,z) 
 int closest_i, closest_j;        // Closest point index i, j 
 
+// Keyboard variables
+int   GoDir;           // for GLUT_KEY_LEFT,GLUT_KEY_RIGHT,GLUT_KEY_UP,GLUT_KEY_DOWN
+float RotateRegX=0;    // for glRotatef() rotating direction
+float RotateRegY=0;    // for glRotatef() rotating direction
+float RotateRegZ=0;    // for glRotatef() rotating direction
+
+
 int   main_window;
 int   wireframe = 0;
 int   segments = 8;
 
 
 Object1D object1D;
-//Object2D object2D;
+Object2D object2D;
+Object3D object3D;
 
 
 ViewSpace  box;                              // Creat a viewer space
@@ -65,8 +73,10 @@ void Display(void)
   	glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);  // transparent
 
 	glPointSize(8);
+
 	object1D.Draw();
-//	object2D.Draw();
+	object2D.Draw();
+	object3D.Draw();
 
 
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -91,16 +101,17 @@ void Mouse(int button, int state, int x, int y)
 		{
 			mousedown = 1;
 
-			xMouse = SCRSIZE * 2.0 * ((float)x/(float)Width - 0.5);
-			yMouse = -SCRSIZE * 2.0 * ((float)y/(float)Height - 0.5);
-
+//			xMouse = 2.0 * ((float)x/(float)Width - 0.5);
+//			yMouse = -2.0 * ((float)y/(float)Height - 0.5);
+			
 		}
 		else if (state == GLUT_UP)
 		{
 
 	       	mousedown = 0;
-			xMouse = 0;
-			yMouse = 0;
+	//		xMouse = 0;
+	//		yMouse = 0;
+		
 	  	}
      }
 }
@@ -112,12 +123,19 @@ void Motion(int x, int y)
 {
   //  ThreeDInner.Motion(x, y);
 
-		if (mousedown)
+	if (mousedown)
 	{
-		xMouse = SCRSIZE * 2.0 * ((float)x/(float)Width - 0.5);
-		yMouse = -SCRSIZE * 2.0 * ((float)y/(float)Height - 0.5);
+		xMouse =  2.0 * ((float)x/(float)Width - 0.5);
+		yMouse =  -2.0 * ((float)y/(float)Height - 0.5);
+		object1D.FindClosestPoint();
 		glutPostRedisplay();
  	}
+	else
+	{
+		xMouse = 0;
+		yMouse = 0;
+	
+	}
 }
 
 
@@ -127,13 +145,75 @@ void Motion(int x, int y)
 void Keyboard(unsigned char key, int x, int y)
 {     
 //	ThreeDInner.Keyboard(key, x, y);		
+   	switch(key){
+    case 'x':
+    case 'X':
+		RotateRegX+=10;			
+        glutPostRedisplay();
+		break;
+
+    case 'y':
+    case 'Y':
+		RotateRegY+=10;	
+        glutPostRedisplay();
+		break;
+
+
+	case 'z':
+    case 'Z':
+		RotateRegZ+=10;	
+        glutPostRedisplay();
+		break;
+
+    case 'r':
+    case 'R':
+		RotateRegX+=5;
+       	RotateRegY+=5;
+       	RotateRegZ+=5;
+        glutPostRedisplay();
+		break;
+   
+        default:                             
+		break;                           // do nothing
+	}
 }
+
+void Rotated(void)
+{  
+   cout<<"rotate"<<endl;
+   glRotated(RotateRegX, 1.0, 0.0, 0.0);  // Rotate 90 about X-axis 
+   glRotated(RotateRegY, 0.0, 1.0, 0.0);  // Rotate 90 about X-axis 
+   glRotated(RotateRegZ, 0.0, 0.0, 1.0);  // Rotate 90 about X-axis 
+} 
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
 
 // when a moving direction Key is pressed
 
 void SpecialKeys(int key, int x, int y)
 {
 //	ThreeDInner.SpecialKeys(key, x, y);	
+	switch (key){
+
+	case GLUT_KEY_UP:
+		 GoDir = 1;
+         break;
+	case GLUT_KEY_DOWN:
+		 GoDir = 2;
+		 break;
+	case GLUT_KEY_LEFT:
+		 GoDir = 3;
+		 break;
+	case GLUT_KEY_RIGHT:
+		 GoDir = 4;
+		 break;
+	default:
+		 GoDir = 0;
+		 break; 	
+	}
 }
 
 
@@ -143,20 +223,11 @@ void Idle()
 {
 	
 	object1D.Update(DT, mousedown != 0, xMouse, yMouse);
-//	object2D.Update(DT, mousedown != 0, xMouse, yMouse);
+	object2D.Update(DT, mousedown != 0, xMouse, yMouse);
+	object3D.Update(DT, mousedown != 0, xMouse, yMouse);
 
-
-  glutPostRedisplay();
+	glutPostRedisplay();
 }
-
-void motion (int mx, int my)
-{
-   // Normalize mouse coordinates.
-   xMouse = double(mx) ;
-   yMouse = double(my) ;
-   glutPostRedisplay();
-}
-
 
 //======================================================================================
 

@@ -1,11 +1,12 @@
 #include "Object2D.h"
 
-Object2D::Object2D() : pressure(DEFAULTPRESSURE)
+Object2D::Object2D() : pressure(PRESSURE)
 {
 	cout<<"2D constructor"<<endl;
 	numParticles = NUMPOINTS;
 	numSprings = NUMSPRINGS;
 	SetObject();
+	dim = DIM2D;
 }
 
 
@@ -15,10 +16,8 @@ Object2D::~Object2D()
 
 void Object2D::Draw()
 {
-	cout<<"2D draw"<<endl;
+
 	int i;
-	//glClearColor(0,0,0,0);
-	//glClear(GL_COLOR_BUFFER_BIT);
 
 
 	glPushMatrix();
@@ -57,11 +56,22 @@ void Object2D::Draw()
 	glPopMatrix();
 
 	glPushMatrix();
+	glBegin(GL_POINTS); // the draw of inner circle
+
+		for(i=0 ; i<numParticles; i++)
+		{
+			glColor3f(0.0, 0.0, 1.0);
+			glVertex2f(inner_points[i].r->x,inner_points[i].r->y);
+		}
+	glEnd();
+	glPopMatrix();
+
+	glPushMatrix();
 	glBegin(GL_LINES); // the draw of inner circle
 		for(i=0 ; i<numSprings; i++)
 
 		{
-			glColor3f(0.0, 0.0, 1.0);
+			glColor3f(0.3, 0.3, 1.0);
 
 			glVertex2f(inner_springs[i].sp1->r->x,inner_springs[i].sp1->r->y);
 			glVertex2f(inner_springs[i].sp2->r->x,inner_springs[i].sp2->r->y);
@@ -87,7 +97,7 @@ void Object2D::Draw()
 	glBegin(GL_LINES); // the left shear lines from inner to outer
 		for(i=0 ; i<numSprings; i++)
 		{
-			glColor3f(0.0,1.0,1.0);
+			glColor3f(1.0,0.0,0.0);
 			glVertex2f(shear_springs_left[i].sp1->r->x,shear_springs_left[i].sp1->r->y);
 			glVertex2f(shear_springs_left[i].sp2->r->x,shear_springs_left[i].sp2->r->y);
 		}
@@ -100,7 +110,7 @@ void Object2D::Draw()
 	glBegin(GL_LINES); // the right shear lines from inner to outer
 		for(i=0 ; i<numSprings; i++)
 		{
-			glColor3f(0.0,1.0,1.0);
+			glColor3f(0.0,0.0,1.0);
 			glVertex2f(shear_springs_right[i].sp1->r->x,shear_springs_right[i].sp1->r->y);
 			glVertex2f(shear_springs_right[i].sp2->r->x,shear_springs_right[i].sp2->r->y);
 		}
@@ -114,71 +124,65 @@ void Object2D::Draw()
 void Object2D::Add_Structural_Spring(int index, int h, int t)
 
 {
-	cout<<"2D add_structual_spring"<<endl;
+
     
-    inner_springs[index].sp1 = &inner_points[h]; // h, t stand for spring head and tail
-    inner_springs[index].sp2 = &inner_points[t]; // index for spring index on the ring
+    inner_springs[index].sp1 = &inner_points[h];		//inner structural spring head points to the inner particle i
+    inner_springs[index].sp2 = &inner_points[t];		//inner structural spring tail points to the inner particle i+1
 	
-    outer_springs[index].sp1 = &outer_points[h]; // h, t stand for spring head and tail
-    outer_springs[index].sp2 = &outer_points[t]; // index for spring index on the ring
+    outer_springs[index].sp1 = &outer_points[h];		//outer structural spring head points to the outer particle i
+    outer_springs[index].sp2 = &outer_points[t];		//outer structural spring tail points to the outer particle i+1
 
 	
-	inner_springs[index].setRestLen();
-	outer_springs[index].setRestLen();
+	inner_springs[index].setRestLen();					//set the inner spring's length
+	outer_springs[index].setRestLen();					//set the outer spring's length
 }
 
 
 void Object2D::Add_Radium_Spring(int index)
 {
-   
-cout<<"2D add_radium_spring"<<endl;	
-	
-	radium_springs[index].sp1 = &inner_points[index]; // h, t stand for spring head and tail
-    radium_springs[index].sp2 = &outer_points[index]; // index for spring index on the ring
+   	
+	radium_springs[index].sp1 = &inner_points[index];		//radium spring head points to the inner particle i
+    radium_springs[index].sp2 = &outer_points[index];		//radium spring tail points to the outer particle i
 
-
-	radium_springs[index].setRestLen();
+	radium_springs[index].setRestLen();						//set the radium spring's length
 } 
 
 
 void Object2D::Add_Shear_Spring(int index, int h, int t )
 {
       
-	cout<<"2D add_shear_spring"<<endl;
-	shear_springs_left[index].sp1 = &inner_points[h];;
-	shear_springs_left[index].sp2 = &outer_points[t];;
 	
-	shear_springs_right[index].sp1 = &inner_points[t];	
-	shear_springs_right[index].sp2 = &outer_points[h]; 
+	shear_springs_left[index].sp1 = &inner_points[h];		//shear left spring head points to the inner particle i
+	shear_springs_left[index].sp2 = &outer_points[t];		//shear left spring tail points to the outer particle i+1
+	
+	shear_springs_right[index].sp1 = &inner_points[t];		//shear right spring head points to the inner particle i+1
+	shear_springs_right[index].sp2 = &outer_points[h];		//shear right spring head points to the outer particle i
    
-	shear_springs_left[index].setRestLen();
-	shear_springs_right[index].setRestLen();
+	shear_springs_left[index].setRestLen();					//set the shear left spring's length
+	shear_springs_right[index].setRestLen();				//set the shear right spring's length
  
 } 
 
 /* Create 2 2D-rings (points + springs) */
 void Object2D::SetObject(void)
 {
-	cout<<"2D setobj"<<endl;
 	int i;
-	for(i=0; i<numParticles; i++)		// create NUMP points into 2D circle 
+	for(i=0; i<numParticles; i++)							// create NUMP points into 2D circle 
 	{
-		inner_points[i].r->x=  RING_RADIUS*cos(i*(2.0*PI)/numParticles);   // inner X coordiation
-		inner_points[i].r->y=  RING_RADIUS*sin(i*(2.0*PI)/numParticles);   // inner Y coordiation
-		inner_points[i].mass = 2.0*MASS;
+		inner_points[i].r->x=  RING_RADIUS*cos(i*(2.0*PI)/numParticles);	// inner X coordiation
+		inner_points[i].r->y=  RING_RADIUS*sin(i*(2.0*PI)/numParticles);	// inner Y coordiation
+		inner_points[i].mass = MASS;
 				 
 
-		outer_points[i].r->x=2*RING_RADIUS*cos(i*(2.0*PI)/numParticles); // outer point X coordiation
-		outer_points[i].r->y=2*RING_RADIUS*sin(i*(2.0*PI)/numParticles); // outer point Y coordiation
+		outer_points[i].r->x=2*RING_RADIUS*cos(i*(2.0*PI)/numParticles);	// outer point X coordiation
+		outer_points[i].r->y=2*RING_RADIUS*sin(i*(2.0*PI)/numParticles);	// outer point Y coordiation
 		outer_points[i].mass = MASS;
 
-//		cout<<"inner_points["<<i<<"]"<<inner_points[i].r->x<<","<<inner_points[i].r->y<<endl;
-//		cout<<"outer_points["<<i<<"]"<<outer_points[i].r->x<<","<<outer_points[i].r->y<<endl;
 	
 	}
 
 
-	for(i=0; i<numParticles ;i++)	       // NUMP-1 springs from 1st to the NUMP for outer & inner
+	for(i=0; i<numParticles ;i++)						//add the springs for outer & inner
 	{  
 		Add_Structural_Spring(i,i,(i+1) % numParticles); 
 		Add_Radium_Spring(i) ;

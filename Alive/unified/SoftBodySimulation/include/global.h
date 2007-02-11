@@ -30,7 +30,7 @@ using namespace std;
 
 #define GY        -10.0f		// Gravity
 #define WIND      10.0f			// External force, such as wind force
-#define PRESSURE 40.0f			// Pressure constant
+#define PRESSURE 20.0f			// Pressure constant
 
 #define LIMIT     2.0f			// Collision detection floor and wall screen size
 #define Width     500			// Display window width

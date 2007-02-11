@@ -14,40 +14,44 @@ class Object
 protected:
 	vector<Face*> face; 
 
-	int numParticles;
-	int numSprings;
+	int numParticles;							//number of particles of the object
+	int numSprings;								//number of springs of the object
 
-	Integrator* integrator;
-	integrator_type integratorType;
+	Integrator* integrator;						//integrator object
+	integrator_type integratorType;				//different type of integrator, Euler, Midpoint, RK4
+
+	dimensionality dim;							//dimension type to specify the object is 1D, 2D, or 3D
+
+public:
+	Spring inner_springs[MAX_POINTS_SPRINGS];	//springs for inner layer object
+	Particle inner_points[MAX_POINTS_SPRINGS];	//particles for inner layer object
+
+	Spring outer_springs[MAX_POINTS_SPRINGS];   //springs for outer layer object
+	Particle outer_points[MAX_POINTS_SPRINGS];  //particles for outer layer object
+
+	int   closest_i;  		    // the point which is closest to mouse position
 
 
 public:
-/*	Spring inner_springs[MAX_POINTS_SPRINGS];
-	Particle inner_points[MAX_POINTS_SPRINGS];
-*/
-	Spring outer_springs[MAX_POINTS_SPRINGS];     // for point springs on outer circle
-	Particle outer_points[MAX_POINTS_SPRINGS];  // for outer circle Particles + 1 mouse Particle
+	Object();									//object constructor
+	virtual ~Object();							//object diconstructor
 
 
-public:
-	Object();
-	virtual ~Object();
+	int GetNumberOfParticles() { return numParticles; }					//get the number of particles of the object
+	int GetNumberOfSprings() { return numSprings; }						//get the number of springs of the object
 
-
-	int GetNumberOfParticles() { return numParticles; }
-	int GetNumberOfSprings() { return numSprings; }
-
-	virtual void Draw() = 0; 
-	virtual void Update(float, bool = false, float = 0, float = 0);
-
-	virtual void SetObject();           // Then, make the Object3D object
-
-	Integrator* getIntegrator() {return integrator;}
-
-	void setIntegratorType(integrator_type type);
+	virtual void SetObject();											//model the object
+	virtual void Add_Structural_Spring(int, int, int);
+	
+	void setIntegratorType(integrator_type type);						//choose the integrator
+	Integrator* getIntegrator() {return integrator;}					//get the integrator type
+	
+	virtual void Update(float, bool = false, float = 0, float = 0);		//update the object about forces, velocity, position
+	
+	virtual void Draw() = 0;											//display the object
 
 protected:
-	virtual void SetParticles();         // create Particle Object3D
+	virtual void SetParticles();										//model the particles on the object
 };
 
 #endif /* OBJECT_H */

@@ -9,12 +9,11 @@ float xMouse, yMouse, zMouse;    // for mouse point r(x,y,z)
 int closest_i, closest_j;        // Closest point index i, j 
 */
 // Keyboard variables
-int   GoDir;           // for GLUT_KEY_LEFT,GLUT_KEY_RIGHT,GLUT_KEY_UP,GLUT_KEY_DOWN
+/*int   GoDir;           // for GLUT_KEY_LEFT,GLUT_KEY_RIGHT,GLUT_KEY_UP,GLUT_KEY_DOWN
 float RotateRegX=0;    // for glRotatef() rotating direction
 float RotateRegY=0;    // for glRotatef() rotating direction
 float RotateRegZ=0;    // for glRotatef() rotating direction
-//int static npoints=6;
-int iterations=1 ;
+*/
 
 //extern Object3D inner;
 
@@ -23,6 +22,61 @@ int iterations=1 ;
 //vector <Spring>  spring; 
 vector<Face> t_Face; 
 //Face t_Face;*/
+
+Object3D::Object3D() 
+{
+	Object3D(MASS, KS, KD, PRESSURE);
+}
+
+Object3D::Object3D(float Mass, float Ks, float Kd, float Press)
+//		: pressure(Press), Bmass(Mass), ks(Ks), kd(Kd)
+{
+	pressure=Press;
+	ks=Ks;
+	kd=Kd;
+	Bmass=Mass;
+
+	this->iterations = 1;
+
+	pa=new Particle(new Vector(0,0,0), Mass);
+	pb=new Particle(new Vector(0,0,0), Mass);
+	pc=new Particle(new Vector(0,0,0), Mass);
+
+	dim = DIM3D;
+
+/*	pa=new Particle();
+	pb=new Particle();
+	pc=new Particle();*/
+
+}
+
+Object3D::Object3D(float Mass, float Ks, float Kd)
+{
+	pressure=0;
+	ks=Ks;
+	kd=Kd;
+	Bmass=Mass;
+
+/*	pa=new Particle(new Vector(0,0,0), Mass);
+	pb=new Particle(new Vector(0,0,0), Mass);
+	pc=new Particle(new Vector(0,0,0), Mass);
+*/
+/*	pa=new Particle();
+	pb=new Particle();
+	pc=new Particle();*/
+
+	dim = DIM3D;
+}
+
+Object3D::~Object3D()
+{
+/*	delete pa;
+	delete pb;
+	delete pc;
+*/
+}
+
+
 
 void Object3D::SetParticles(void) // [M+2][N] array for M*N+2 Points 
 {
@@ -429,10 +483,10 @@ void Object3D::GetClosestParticle(void)
 }
 
 
-
+/*
 void Object3D::Mouse(int button, int state, int x, int y)
 {
-/*	if (button == GLUT_LEFT_BUTTON)
+	if (button == GLUT_LEFT_BUTTON)
 	{
 		if (state == GLUT_DOWN)
 		{
@@ -456,39 +510,28 @@ void Object3D::Mouse(int button, int state, int x, int y)
 
 
 	  	}
-     }*/
+     }
 }
+*/
 
 
 
-
-void Object3D::Motion (int x, int y)
-{
-/*   if(mousedown)
-   {
-
-     xMouse =   LIMIT * 2.0 * ( (float)x/(float)Width  - 1/2.0 );
-     yMouse = - LIMIT * 2.0 * ( (float)y/(float)Height - 1/2.0 );
-     zMouse = 0.0;
-
-     glutPostRedisplay();
-   }*/
-}
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
+/*
 void Object3D::Rotated(void)
 {  
    cout<<"3D rotate"<<endl;
    glRotated(RotateRegX, 1.0, 0.0, 0.0);  // Rotate 90 about X-axis 
    glRotated(RotateRegY, 0.0, 1.0, 0.0);  // Rotate 90 about X-axis 
    glRotated(RotateRegZ, 0.0, 0.0, 1.0);  // Rotate 90 about X-axis 
-	
 } 
+*/	
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+/*
 void Object3D::Keyboard(unsigned char key, int x, int y)
 {
 	cout<<"3D keyboard"<<endl;
@@ -524,9 +567,11 @@ void Object3D::Keyboard(unsigned char key, int x, int y)
 		break;                           // do nothing
 	}
 } 
-  
+  */
+
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+/*
 
 void Object3D::SpecialKeys(int key, int x, int y)
 {
@@ -550,7 +595,7 @@ void Object3D::SpecialKeys(int key, int x, int y)
 		 break; 	
 	}
 }	
-
+*/
 
 //================================================================================
 

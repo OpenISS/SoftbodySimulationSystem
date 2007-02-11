@@ -106,6 +106,10 @@ SOURCE=.\common\Object1D.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\common\Object2D.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\common\Particle.cpp
 # End Source File
 # Begin Source File
@@ -151,6 +155,10 @@ SOURCE=.\include\Object.h
 # Begin Source File
 
 SOURCE=.\include\Object1D.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\Object2D.h
 # End Source File
 # Begin Source File
 

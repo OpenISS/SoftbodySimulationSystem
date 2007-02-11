@@ -10,32 +10,34 @@ class Integrator
 protected:
 	Object* object;
 
-/*	Particle temp_inner_points0[MAX_POINTS_SPRINGS];
+	Particle temp_inner_points0[MAX_POINTS_SPRINGS];		//temp inner particle container for integrator computation
 	Particle temp_inner_points1[MAX_POINTS_SPRINGS];
 	Particle temp_inner_points2[MAX_POINTS_SPRINGS];
 	Particle temp_inner_points3[MAX_POINTS_SPRINGS];
 	Particle temp_inner_points4[MAX_POINTS_SPRINGS];
-*/
-	Particle temp_outer_points0[MAX_POINTS_SPRINGS];
+
+	Particle temp_outer_points0[MAX_POINTS_SPRINGS];		//temp outer particle container for integrator computation
 	Particle temp_outer_points1[MAX_POINTS_SPRINGS];
 	Particle temp_outer_points2[MAX_POINTS_SPRINGS];
 	Particle temp_outer_points3[MAX_POINTS_SPRINGS];
 	Particle temp_outer_points4[MAX_POINTS_SPRINGS];
 
-	
-
 	dimensionality dim;
 
 public:
-	bool dragExists;
-	float mDragX;
+	bool dragExists;										//if there is user interaction
+	float mDragX;											//mouse position
 	float mDragY;
 
 public:
-	Integrator(Object&);
+	Integrator(Object&);									//integrator constructor
 	virtual ~Integrator();
 
 	virtual void integrate(float, bool drag = false, float xDrag = 0, float yDrag = 0);
+
+
+	dimensionality getDimension() {return dim;}
+	void setDimension(dimensionality dim) {this->dim = dim;}
 
 protected:
 	virtual void ExternalForces();     // gravity force
