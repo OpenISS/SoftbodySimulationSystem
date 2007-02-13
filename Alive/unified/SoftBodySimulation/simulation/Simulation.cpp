@@ -37,7 +37,7 @@ int   segments = 8;
 
 Object1D object1D;
 Object2D object2D;
-Object3D object3D;
+//Object3D object3D;
 
 
 ViewSpace  box;                              // Creat a viewer space
@@ -76,7 +76,7 @@ void Display(void)
 
 	object1D.Draw();
 	object2D.Draw();
-	object3D.Draw();
+//	object3D.Draw();
 
 
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -101,16 +101,15 @@ void Mouse(int button, int state, int x, int y)
 		{
 			mousedown = 1;
 
-//			xMouse = 2.0 * ((float)x/(float)Width - 0.5);
-//			yMouse = -2.0 * ((float)y/(float)Height - 0.5);
-			
+			xMouse = 5+ LIMIT * 2.0 * ( (float)x/(float)Width  - 0.5);
+			yMouse = 5 -LIMIT * 2.0 * ( (float)y/(float)Height - 0.5);
+            zMouse = 0.0;
+					
 		}
 		else if (state == GLUT_UP)
 		{
 
 	       	mousedown = 0;
-	//		xMouse = 0;
-	//		yMouse = 0;
 		
 	  	}
      }
@@ -125,17 +124,19 @@ void Motion(int x, int y)
 
 	if (mousedown)
 	{
-		xMouse =  2.0 * ((float)x/(float)Width - 0.5);
-		yMouse =  -2.0 * ((float)y/(float)Height - 0.5);
-		object1D.FindClosestPoint();
+
+     xMouse = 5	+  LIMIT * 2.0 * ( (float)x/(float)Width  - 1/2.0 );
+     yMouse = 5 - LIMIT * 2.0 * ( (float)y/(float)Height - 1/2.0 );
+     zMouse = 0.0;
+//		object1D.FindClosestPoint();
 		glutPostRedisplay();
  	}
-	else
+/*	else
 	{
 		xMouse = 0;
 		yMouse = 0;
 	
-	}
+	}*/
 }
 
 
@@ -224,9 +225,17 @@ void Idle()
 	
 	object1D.Update(DT, mousedown != 0, xMouse, yMouse);
 	object2D.Update(DT, mousedown != 0, xMouse, yMouse);
-	object3D.Update(DT, mousedown != 0, xMouse, yMouse);
+//	object3D.Update(DT, mousedown != 0, xMouse, yMouse);
 
 	glutPostRedisplay();
+}
+
+void motion (int mx, int my)
+{
+   // Normalize mouse coordinates.
+ /*  xMouse = double(mx) ;
+   yMouse = double(my) ;
+   glutPostRedisplay();*/
 }
 
 //======================================================================================
@@ -246,7 +255,7 @@ int main(void)
 	glutReshapeFunc(Reshape);
     
 
-//	glutPassiveMotionFunc(motion);
+	glutPassiveMotionFunc(motion);
     glutIdleFunc(Idle);
 	glutDisplayFunc(Display);
 

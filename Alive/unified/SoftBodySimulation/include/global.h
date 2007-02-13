@@ -14,13 +14,13 @@ using namespace std;
 
 #define DT      0.003f			// Delta time in derivatives	
 
-#define KS 1300.0f				// Hooke spring constant
-#define KD 100.0f				// Hooke spring damping constant
+#define KS 500.0f				// Hooke spring constant
+#define KD 30.0f				// Hooke spring damping constant
 
-#define RKS 755.0f				// radium spring constant
-#define RKD 35.0f				// radium spring damping constant
+#define RKS 500.0f				// radium spring constant
+#define RKD 15.0f				// radium spring damping constant
 
-#define MOUSE_KS 25.0f			// mouse spring constant
+#define MOUSE_KS 50.0f			// mouse spring constant
 #define MOUSE_KD 25.0f			// mouse damping constant
 #define MOUSE_REST 2.0f			// mouse rest lenth
 
@@ -30,7 +30,7 @@ using namespace std;
 
 #define GY        -10.0f		// Gravity
 #define WIND      10.0f			// External force, such as wind force
-#define PRESSURE 20.0f			// Pressure constant
+#define PRESSURE 10.0f			// Pressure constant
 
 #define LIMIT     2.0f			// Collision detection floor and wall screen size
 #define Width     500			// Display window width
@@ -39,7 +39,7 @@ using namespace std;
 #define SCRSIZE 10				// screen size factor for mouse dragging
 
 #define MAX_POINTS_SPRINGS 40											//reserve temp space particle and spring
-#define NUMPOINTS   30													//default number of particles on a object
+#define NUMPOINTS   10													//default number of particles on a object
 #define NUMSPRINGS  NUMPOINTS											//default number of springs on a object
 
 #define MASS 1.0f				// point mass on the rings = 5.0

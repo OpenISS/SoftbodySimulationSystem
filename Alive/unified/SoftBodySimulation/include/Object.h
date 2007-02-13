@@ -4,7 +4,7 @@
 #include "Face.h"
 #include "Spring.h"
 #include "Integrator.h"
-
+#include <vector>
 using namespace std;
 
 class Integrator;
@@ -12,7 +12,7 @@ class Integrator;
 class Object
 {
 protected:
-	vector<Face*> face; 
+	vector<Face*> faces;
 
 	int numParticles;							//number of particles of the object
 	int numSprings;								//number of springs of the object
@@ -23,13 +23,19 @@ protected:
 	dimensionality dim;							//dimension type to specify the object is 1D, 2D, or 3D
 
 public:
-	Spring inner_springs[MAX_POINTS_SPRINGS];	//springs for inner layer object
+/*	Spring inner_springs[MAX_POINTS_SPRINGS];	//springs for inner layer object
 	Particle inner_points[MAX_POINTS_SPRINGS];	//particles for inner layer object
 
 	Spring outer_springs[MAX_POINTS_SPRINGS];   //springs for outer layer object
 	Particle outer_points[MAX_POINTS_SPRINGS];  //particles for outer layer object
+*/
 
-	int   closest_i;  		    // the point which is closest to mouse position
+	vector<Spring*>  inner_springs;
+	vector<Spring*>  outer_springs;
+	vector<Particle*>  inner_points;
+	vector<Particle*>  outer_points;
+
+	int   closest_i ;  		    // the point which is closest to mouse position
 
 
 public:
@@ -40,8 +46,6 @@ public:
 	int GetNumberOfParticles() { return numParticles; }					//get the number of particles of the object
 	int GetNumberOfSprings() { return numSprings; }						//get the number of springs of the object
 
-	virtual void SetObject();											//model the object
-	virtual void Add_Structural_Spring(int, int, int);
 	
 	void setIntegratorType(integrator_type type);						//choose the integrator
 	Integrator* getIntegrator() {return integrator;}					//get the integrator type
@@ -52,6 +56,8 @@ public:
 
 protected:
 	virtual void SetParticles();										//model the particles on the object
+	virtual void SetObject();											//model the object
+	virtual void Add_Structural_Spring(int, int, int);
 };
 
 #endif /* OBJECT_H */

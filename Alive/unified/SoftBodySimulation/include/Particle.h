@@ -10,9 +10,11 @@ public:
 
 	Particle(Vector* R, float Mass) : mass(Mass)		 // particle constructor with variables position and mass
 	{		
+		cout<<"call me now--------------"<<endl;
 		r = R;
 	
-		OneOverMass=1.0/mass;						
+	
+	//	OneOverMass=1.0/mass;						
 		dr = new Vector(0,0,0);
 		dv = new Vector(0,0,0);
 		f  = new Vector(0,0,0);
@@ -26,6 +28,38 @@ public:
 		dv = new Vector(0,0,0);
 		f  = new Vector(0,0,0);
 		v  = new Vector(0,0,0);
+	}
+
+	Particle(const Particle& p)											// particle constructor with variables position and mass
+	{
+		mass = p.mass;
+
+		r  = new Vector(0,0,0);
+		r->x = p.r->x;
+		r->y = p.r->y;
+		r->z = p.r->z;
+		
+		dr = new Vector(0,0,0);
+		dr->x = p.dr->x;
+		dr->y = p.dr->y;
+		dr->z = p.dr->z;
+
+
+
+		dv = new Vector(0,0,0);
+		dv->x = p.dv->x;
+		dv->y = p.dv->y;
+		dv->z = p.dv->z;
+
+		f  = new Vector(0,0,0);
+		f->x = p.f->x;
+		f->y = p.f->y;
+		f->z = p.f->z;
+
+		v  = new Vector(0,0,0);
+		v->x = p.v->x;
+		v->y = p.v->y;
+		v->z = p.v->z;
 	}
 
 

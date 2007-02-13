@@ -10,9 +10,16 @@ protected:
 
 public:
 
-	Spring radium_springs[NUMSPRINGS];			// for radium springs between two circles 
+/*	Spring radium_springs[NUMSPRINGS];			// for radium springs between two circles 
 	Spring shear_springs_left[NUMSPRINGS];		// for shear spring toward left
 	Spring shear_springs_right[NUMSPRINGS];		// for right spring toward right
+*/
+
+
+
+	vector<Spring*>  radium_springs;
+	vector<Spring*>  shear_springs_left;
+	vector<Spring*>	 shear_springs_right;
 
 public:
 
@@ -34,6 +41,8 @@ private:
 	void Add_Radium_Spring(int index);						//add the radium springs with inner point i and outer point i 
 	void Add_Shear_Spring(int index, int h, int t );		//add the left shear springs with inner point i and outer point i+1
 															//add the right shear springs with inner point i+1 and outer point i
+
+	virtual void Add_Faces(int i, int i1, int imid);
 	
 };
 

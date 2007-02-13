@@ -55,7 +55,7 @@ Vector& Vector::operator- (float s)							// #2 fcn - Vector subtraction
 //////////////////////////////////////////////////////////////////////////
 Vector operator* (const Vector &K, const Vector &N)		    // #3 fcn - Vector multiplication
 {
-	cout<<"vecotr *"<<endl;
+	cout<<"vector *"<<endl;
 	return Vector(K.x * N.x, K.y * N.y, K.z * N.z);
 }
 /*

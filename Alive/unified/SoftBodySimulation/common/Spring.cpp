@@ -25,8 +25,8 @@ Spring::Spring(Particle *P1, Particle *P2,float Ks, float Kd):		// constructor
 Spring::Spring()
 {
 
-			 sp1 = new Particle(0,0);				// head Particle of a Spring
-			 sp2 = new Particle(0,0);				// tail Particle of a Spring
+			 sp1 = new Particle();				// head Particle of a Spring
+			 sp2 = new Particle();				// tail Particle of a Spring
 
 
 	restLen = 0;          // lenth when Fs = 0 (Hooke force)
