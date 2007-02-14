@@ -13,7 +13,7 @@ protected:
 
 	void k4(int, float, float);
 	void k3(int, float, float);
-	void k2(int, float, float);
+//	void k2(int, float, float);
 	void ynew(int, float, float);
 };
 

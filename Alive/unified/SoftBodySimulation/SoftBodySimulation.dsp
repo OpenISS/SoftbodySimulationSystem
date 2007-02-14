@@ -98,6 +98,10 @@ SOURCE=.\simulation\Integrator.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\simulation\MidpointIntegrator.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\common\Object.cpp
 # End Source File
 # Begin Source File
@@ -111,6 +115,10 @@ SOURCE=.\common\Object2D.cpp
 # Begin Source File
 
 SOURCE=.\common\Particle.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\simulation\RungeKutta4Integrator.cpp
 # End Source File
 # Begin Source File
 
@@ -150,6 +158,10 @@ SOURCE=.\include\Integrator.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\include\MidpointIntegrator.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\include\Object.h
 # End Source File
 # Begin Source File
@@ -163,6 +175,10 @@ SOURCE=.\include\Object2D.h
 # Begin Source File
 
 SOURCE=.\include\Particle.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\RungeKutta4Integrator.h
 # End Source File
 # Begin Source File
 

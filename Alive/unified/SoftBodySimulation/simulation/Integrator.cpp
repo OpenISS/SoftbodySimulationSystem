@@ -120,7 +120,7 @@ void Integrator::ExternalForces()
 			  + (
 					  object->outer_points[i]->v->x * (outer_x1-outer_x2)
 					+ object->outer_points[i]->v->y * (outer_y1-outer_y2)
-					+ object->outer_points[i]->v->z * (outer_y1-outer_z2)
+					+ object->outer_points[i]->v->z * (outer_z1-outer_z2)
 				) * MOUSE_KD / outer_rd12;
 
 			// calculate spring force
@@ -215,7 +215,7 @@ void Integrator::CalculateSpringForces(vector<Spring *>springs, int i)
 	springs[i]->normal.y =  +(x1 - x2) / rd12;  // Normal X-vector 
 
 	//XXX
-	springs[i]->normal.z = 0;// +(x1 - x2) / rd12;  // Normal Z-vector 
+//	springs[i]->normal.z = 0;// +(x1 - x2) / rd12;  // Normal Z-vector 
 
 
 	if(rd12 == 0)

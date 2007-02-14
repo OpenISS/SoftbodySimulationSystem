@@ -10,7 +10,7 @@ Object::Object()
 	numParticles = 2;					//default particle number on the object
 	numSprings = 1;						//default spring number on the object
 	integrator = NULL;					//default integrator 
-	integratorType = EULER;				//default integrator tpye is Euler
+	integratorType = MIDPOINT;				//default integrator tpye is Euler
 	dim = DIM1D;						//default object is 1D
 	closest_i=0;			  		    // the point which is closest to mouse position
 }
@@ -67,14 +67,14 @@ void Object::Update(float deltaT, bool drag, float xDrag, float yDrag)
 				integrator = new EulerIntegrator(*this);
 				break;
 
-	/*		case MIDPOINT:
+			case MIDPOINT:
 				integrator = new MidpointIntegrator(*this);
 				break;
-
+	
 			case RK4:
 				integrator = new RungeKutta4Integrator(*this);
 				break;
-*/
+
 			default:
 				assert(false);
 				return;

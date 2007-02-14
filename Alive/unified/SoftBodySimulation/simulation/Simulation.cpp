@@ -101,10 +101,9 @@ void Mouse(int button, int state, int x, int y)
 		{
 			mousedown = 1;
 
-			xMouse = 5+ LIMIT * 2.0 * ( (float)x/(float)Width  - 0.5);
-			yMouse = 5 -LIMIT * 2.0 * ( (float)y/(float)Height - 0.5);
-            zMouse = 0.0;
-					
+			xMouse = LIMIT * 2.0 * ( (float)x/(float)Width  );
+			yMouse = LIMIT * 2.0 * ( (float)y/(float)Height );
+        //    zMouse = 0.0;					
 		}
 		else if (state == GLUT_UP)
 		{
@@ -125,9 +124,9 @@ void Motion(int x, int y)
 	if (mousedown)
 	{
 
-     xMouse = 5	+  LIMIT * 2.0 * ( (float)x/(float)Width  - 1/2.0 );
-     yMouse = 5 - LIMIT * 2.0 * ( (float)y/(float)Height - 1/2.0 );
-     zMouse = 0.0;
+     xMouse = LIMIT * 2.0 * ( (float)x/(float)Width  );
+     yMouse = LIMIT * 2.0 * ( (float)y/(float)Height );
+ //    zMouse = 0.0;
 //		object1D.FindClosestPoint();
 		glutPostRedisplay();
  	}
