@@ -85,3 +85,29 @@ void Object::Update(float deltaT, bool drag, float xDrag, float yDrag)
 
 	integrator->integrate(deltaT, drag, xDrag, yDrag);
 }
+
+
+///////////////////////////////////////////////////////////
+
+void Object::FindClosestPoint(void)
+{
+	float dmin = 0;
+	float mousepointd = 0;
+	int i;
+
+	// find closest point
+	dmin = sqrt(pow(outer_points[closest_i]->r->x - integrator->mDragX,2) + pow(outer_points[closest_i]->r->y - integrator->mDragY,2));
+
+	for(i=0; i<numParticles; i++)
+	{
+		mousepointd = sqrt(	pow(outer_points[i]->r->x - integrator->mDragX,2) +
+							pow(outer_points[i]->r->y - integrator->mDragY,2));
+		if(mousepointd < dmin)
+		{
+			dmin = mousepointd;
+			closest_i = i;
+		}
+	}
+
+	//cout<<"	closest_i=="<<	closest_i<<endl;
+}

@@ -13,6 +13,7 @@ Object1D::~Object1D()
 
 void Object1D::Draw()
 {
+	static bool findOnce = false;
 
 	glPushMatrix();
 		glBegin(GL_LINES); // the draw of inner circle
@@ -34,12 +35,27 @@ void Object1D::Draw()
 
 		if(integrator->dragExists)
 		{
+			if(findOnce == true)
+			{
+				FindClosestPoint();
+				findOnce = false;
+			}
+
+		//	cout<<"mDragX="<<integrator->mDragX<<",mDragY="<<integrator->mDragY<<",x="<<outer_points[closest_i]->r->x<<",y="<<outer_points[closest_i]->r->y<<endl;
+
+		
 			glColor3f(1,1,0);      // A white line between the Object3D point and the mouse point
 			glBegin(GL_LINES);	
 				glVertex2f(integrator->mDragX, integrator->mDragY);
 				glVertex2f(outer_points[closest_i]->r->x,outer_points[closest_i]->r->y);
 			glEnd();
-		}                   
+		}
+		else
+		{
+			FindClosestPoint();
+			findOnce = true;
+		}
+
 
 	glPopMatrix();
 
@@ -62,6 +78,7 @@ void Object1D::Add_Structural_Spring(int index, int head, int tail)
 
 	outer_springs[index].setRestLen();
 	*/
+	inner_springs[index]->setRestLen();
 	outer_springs[index]->setRestLen();
 }
 
@@ -87,12 +104,7 @@ void Object1D::SetObject()
 		PosY += 2;
 	}
 
-	cout<<"1D outer_points.size()=================="<<outer_points.size()<<endl;
-	for (int k = 0; k<outer_points.size();k++)
-	{
-	cout<<"in circle outer_points[k]->v->y::::::"<<outer_points[k]->v->y<<endl;
-	
-	}
+
 	for(i=0; i<1 ;i++)	       // NUMP-1 springs from 1st to the NUMP for outer & inner
 	{  
 		Add_Structural_Spring(i, i, (i+1) % numParticles); 
@@ -101,7 +113,7 @@ void Object1D::SetObject()
 
 
 //=======================================================
-	/*	
+/*		
 void Object1D::FindClosestPoint(void)
 {
 	float dmin = 0;
@@ -109,16 +121,18 @@ void Object1D::FindClosestPoint(void)
 	int i;
 
 	// find closest point
-	dmin = sqrt(pow(outer_points[closest_i].r->x - integrator->mDragX,2) + pow(outer_points[closest_i].r->y - integrator->mDragY,2));
+	dmin = sqrt(pow(outer_points[closest_i]->r->x - integrator->mDragX,2) + pow(outer_points[closest_i]->r->y - integrator->mDragY,2));
 
 	for(i=0; i<numParticles; i++)
 	{
-		mousepointd = sqrt(	pow(outer_points[i].r->x - integrator->mDragX,2) +
-							pow(outer_points[i].r->y - integrator->mDragY,2));
+		mousepointd = sqrt(	pow(outer_points[i]->r->x - integrator->mDragX,2) +
+							pow(outer_points[i]->r->y - integrator->mDragY,2));
 		if(mousepointd < dmin)
 		{
 			dmin = mousepointd;
 			closest_i = i;
 		}
 	}
+
+	cout<<"	closest_i=="<<	closest_i<<endl;
 }*/

@@ -12,7 +12,7 @@ class Integrator;
 class Object
 {
 protected:
-	vector<Face*> faces;
+
 
 	int numParticles;							//number of particles of the object
 	int numSprings;								//number of springs of the object
@@ -34,6 +34,8 @@ public:
 	vector<Spring*>  outer_springs;
 	vector<Particle*>  inner_points;
 	vector<Particle*>  outer_points;
+	vector<Face*> inner_faces;
+	vector<Face*> outer_faces;
 
 	int   closest_i ;  		    // the point which is closest to mouse position
 
@@ -53,11 +55,13 @@ public:
 	virtual void Update(float, bool = false, float = 0, float = 0);		//update the object about forces, velocity, position
 	
 	virtual void Draw() = 0;											//display the object
+	virtual void FindClosestPoint(void) ;
 
 protected:
 	virtual void SetParticles();										//model the particles on the object
 	virtual void SetObject();											//model the object
 	virtual void Add_Structural_Spring(int, int, int);
+
 };
 
 #endif /* OBJECT_H */

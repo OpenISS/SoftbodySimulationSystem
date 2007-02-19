@@ -58,8 +58,6 @@ void Display(void)
 {
 	glClearColor(0.0, 0.0, 0.0, 0.0);  // Initialize
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-
-	glEnable(GL_DEPTH_TEST);
 	
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -69,18 +67,20 @@ void Display(void)
 	glLoadIdentity();
  	gluLookAt(2,0,5,0,0,0,0,1,0);  // Camera difinition
 
-	glEnable(GL_BLEND);                                // transparent
-  	glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);  // transparent
 
 	glPointSize(8);
 
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+	box.Draw();        // Draw the view box space 	
+
 	object1D.Draw();
+
+Rotated();
+
 	object2D.Draw();
 //	object3D.Draw();
 
-
-//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-	box.Draw();           // Draw the view box space 	
+ 
 
 
 	glutSwapBuffers(); 
@@ -93,25 +93,19 @@ void Display(void)
 
 void Mouse(int button, int state, int x, int y)
 {
-   // ThreeDInner.Mouse(button, state, x, y);
+   
+			xMouse = (4 *  ((float)x/(float)Width)) -2 ;
+			yMouse = -((4 * ( (float)y/(float)Height))-2) ;
 
-	if (button == GLUT_LEFT_BUTTON)
-	{
 		if (state == GLUT_DOWN)
 		{
 			mousedown = 1;
-
-			xMouse = LIMIT * 2.0 * ( (float)x/(float)Width  );
-			yMouse = LIMIT * 2.0 * ( (float)y/(float)Height );
-        //    zMouse = 0.0;					
 		}
 		else if (state == GLUT_UP)
 		{
-
-	       	mousedown = 0;
-		
-	  	}
-     }
+			mousedown = 0;	
+		}
+	
 }
 
 
@@ -119,23 +113,8 @@ void Mouse(int button, int state, int x, int y)
 
 void Motion(int x, int y)
 {
-  //  ThreeDInner.Motion(x, y);
-
-	if (mousedown)
-	{
-
-     xMouse = LIMIT * 2.0 * ( (float)x/(float)Width  );
-     yMouse = LIMIT * 2.0 * ( (float)y/(float)Height );
- //    zMouse = 0.0;
-//		object1D.FindClosestPoint();
-		glutPostRedisplay();
- 	}
-/*	else
-	{
-		xMouse = 0;
-		yMouse = 0;
-	
-	}*/
+		xMouse = (4 *  ((float)x/(float)Width)) -2 ;
+		yMouse = -((4 * ( (float)y/(float)Height))-2 );
 }
 
 
@@ -180,7 +159,6 @@ void Keyboard(unsigned char key, int x, int y)
 
 void Rotated(void)
 {  
-   cout<<"rotate"<<endl;
    glRotated(RotateRegX, 1.0, 0.0, 0.0);  // Rotate 90 about X-axis 
    glRotated(RotateRegY, 0.0, 1.0, 0.0);  // Rotate 90 about X-axis 
    glRotated(RotateRegZ, 0.0, 0.0, 1.0);  // Rotate 90 about X-axis 
@@ -229,14 +207,14 @@ void Idle()
 	glutPostRedisplay();
 }
 
-void motion (int mx, int my)
+ /*void motion (int mx, int my)
 {
    // Normalize mouse coordinates.
- /*  xMouse = double(mx) ;
+  xMouse = double(mx) ;
    yMouse = double(my) ;
-   glutPostRedisplay();*/
+   glutPostRedisplay();
 }
-
+*/
 //======================================================================================
 
 //	Function main()
@@ -247,22 +225,30 @@ int main(void)
     
 	glutInitWindowPosition(200, 200); 
 	glutInitWindowSize( Width, Height);
-	glutInitDisplayMode(GLUT_DOUBLE|GLUT_RGB);
+	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
+
+//	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
     main_window = glutCreateWindow("A Simulation Ball - Miao Song"); 
 
  
 	glutReshapeFunc(Reshape);
     
+	glEnable(GL_BLEND);                                // transparent
+ 	glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);  // transparent
+	glEnable(GL_DEPTH_TEST);
 
-	glutPassiveMotionFunc(motion);
-    glutIdleFunc(Idle);
-	glutDisplayFunc(Display);
+//	glutPassiveMotionFunc(motion);
+    
+
 
 	glutMouseFunc(Mouse);
 	glutMotionFunc(Motion);
 	glutKeyboardFunc(Keyboard);
 	glutSpecialFunc(SpecialKeys);
-/*
+
+	glutDisplayFunc(Display);
+	glutIdleFunc(Idle);
+	/*
 	GLUI *glui = GLUI_Master.create_glui( "GLUI" );
 
 	new GLUI_Checkbox( glui, "Wireframe", &wireframe );
@@ -272,6 +258,7 @@ int main(void)
 	glui->set_main_gfx_window( main_window );
 	GLUI_Master.set_glutIdleFunc( Idle ); 
 */
+
 	glutMainLoop(); 	
 
 	return 0;

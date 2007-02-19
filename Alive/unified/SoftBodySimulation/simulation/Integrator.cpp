@@ -45,6 +45,9 @@ void Integrator::integrate(float deltaT, bool drag, float xDrag, float yDrag)
 	mDragX = xDrag;
 	mDragY = yDrag;
 
+//	this->object->FindClosestPoint();
+
+	//cout<<"mDragX=="<<mDragX<<"==mDragY=="<<mDragY<<endl;
 	AccumulateForces();   // accumulate forces acted on 
 	Derivatives(deltaT, 1.0);
 
@@ -100,38 +103,40 @@ void Integrator::ExternalForces()
 		object->outer_points[i]->f->z = 0;//40*sin(25*i);
 		
 		if(i == object->closest_i)
-		if(dragExists)			// if user clicked
 		{
-			outer_x1 = object->outer_points[ i ]->r->x;		// get points X-coord
-			outer_y1 = object->outer_points[ i ]->r->y;        // get points Y-coord
-			outer_z1 = 0;//object->outer_points[ i ]->r->z;        // get points Y-coord
+			if(dragExists)			// if user clicked
+			{
+				outer_x1 = object->outer_points[ i ]->r->x;		// get points X-coord
+				outer_y1 = object->outer_points[ i ]->r->y;        // get points Y-coord
+				outer_z1 = 0;//object->outer_points[ i ]->r->z;        // get points Y-coord
 
-			outer_x2 = mDragX;                      // get Mouse  X-coord
-			outer_y2 = mDragY;                      // get Mouse  Y-coord
-			outer_z2 = 0;                      // get Mouse  Y-coord
+				outer_x2 = mDragX;                      // get Mouse  X-coord
+				outer_y2 = mDragY;                      // get Mouse  Y-coord
+				outer_z2 = 0;                      // get Mouse  Y-coord
 
-			outer_rd12 =
-				sqrt((outer_x1-outer_x2) * (outer_x1-outer_x2)
-					+(outer_y1-outer_y2) * (outer_y1-outer_y2)
-					+(outer_z1-outer_z2) * (outer_z1-outer_z2)
-					); // distance
+				outer_rd12 =
+					sqrt((outer_x1-outer_x2) * (outer_x1-outer_x2)
+						+(outer_y1-outer_y2) * (outer_y1-outer_y2)
+						+(outer_z1-outer_z2) * (outer_z1-outer_z2)
+						); // distance
 
-			f = (outer_rd12 - MOUSE_REST) * MOUSE_KS
-			  + (
-					  object->outer_points[i]->v->x * (outer_x1-outer_x2)
-					+ object->outer_points[i]->v->y * (outer_y1-outer_y2)
-					+ object->outer_points[i]->v->z * (outer_z1-outer_z2)
-				) * MOUSE_KD / outer_rd12;
+				f = (outer_rd12 - MOUSE_REST) * MOUSE_KS
+				  + (
+						  object->outer_points[i]->v->x * (outer_x1-outer_x2)
+						+ object->outer_points[i]->v->y * (outer_y1-outer_y2)
+						+ object->outer_points[i]->v->z * (outer_z1-outer_z2)
+					) * MOUSE_KD / outer_rd12;
 
-			// calculate spring force
-			outer_Fx = ((outer_x1 - outer_x2) / outer_rd12) * f;
-			outer_Fy = ((outer_y1 - outer_y2) / outer_rd12) * f;
-			outer_Fz = ((outer_z1 - outer_z2) / outer_rd12) * f;
+				// calculate spring force
+				outer_Fx = ((outer_x1 - outer_x2) / outer_rd12) * f;
+				outer_Fy = ((outer_y1 - outer_y2) / outer_rd12) * f;
+				outer_Fz = ((outer_z1 - outer_z2) / outer_rd12) * f;
 
-			// accumulate gravity + hooke forces
-			object->outer_points[i]->f->x -= outer_Fx; // from the closet point to the Mouse point
-			object->outer_points[i]->f->y -= outer_Fy;
-			object->outer_points[i]->f->z -= outer_Fz;
+				// accumulate gravity + hooke forces
+				object->outer_points[i]->f->x -= outer_Fx; // from the closet point to the Mouse point
+				object->outer_points[i]->f->y -= outer_Fy;
+				object->outer_points[i]->f->z -= outer_Fz;
+			}
 		}
 
 	}

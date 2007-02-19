@@ -38,8 +38,8 @@ public:
 	//Vector& operator- (float);									// #2 fcn - Vector subtraction
 	friend Vector operator- (const Vector & p, const Vector & q);   // #2 fcn - Vector subtraction
 
-//	Vector& operator* (Vector const &);								// #3 fcn - Vector multiplication
-//	Vector& operator* (float);										// #3 fcn - Vector multiplication
+	Vector& operator* (Vector const &);								// #3 fcn - Vector multiplication
+	Vector& operator* (float);										// #3 fcn - Vector multiplication
 	friend Vector operator* (const Vector & p, const Vector & q);   // #3 fcn - Vector multiplication
 
 //	Vector& operator/ (Vector const &);								// #4 fcn - Vector division
@@ -47,9 +47,9 @@ public:
 	friend Vector operator/ (const Vector & p, const Vector & q);   // #4 fcn - Vector division
 
 
-	friend Vector operator% (Vector const &, Vector const &);		// #5 fcn - Vector cross product, results in a vector 
+	friend Vector operator^ (Vector const &, Vector const &);		// #5 fcn - Vector cross product, results in a vector 
 
-	friend double operator^ (Vector const &, Vector const &);		// #6 fcn - Vector dot product, results in a scalar
+//	friend Vector operator^ (Vector const &, Vector const &);		// #6 fcn - Vector dot product, results in a scalar
 
 
 	Vector&  operator= (Vector const &);							// #7 fcn - Vector assign	
@@ -67,9 +67,10 @@ public:
 	{
 		float d = getLength();										// its length
 
-		cout<<"d="<<d<<endl;
+//		cout<<"d="<<d<<endl;
 
 		if(d !=0)	*this = (*this) * (1.0f/d);
+		//cout<<"this.x--"<<this
 	}
 
 	

@@ -2,6 +2,7 @@
 #define OBJECT2D_H
 
 #include "Object1D.h"
+#include "global.h"
 
 class Object2D : public Object1D
 {

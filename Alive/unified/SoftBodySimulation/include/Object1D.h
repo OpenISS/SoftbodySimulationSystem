@@ -11,7 +11,7 @@ public:
 
 	virtual void Draw();
 
-	void FindClosestPoint(void);
+//	virtual void FindClosestPoint(void);
 
 private:	
 	void Add_Structural_Spring(int index, int head, int tail);

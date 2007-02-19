@@ -1,4 +1,5 @@
 #include <cmath>
+#include<assert.h>
 #include "Vector.h"
 
 
@@ -31,7 +32,7 @@ Vector& Vector::operator+ (float s)							// #1 fcn - Vector addition
 
 Vector operator- (const Vector &K, const Vector &N)			// #2 fcn - Vector subtraction
 {
-	//cout<<"vecotr -"<<endl;
+//	cout<<"vecotr -"<<endl;
 	return Vector(K.x - N.x, K.y - N.y, K.z - N.z);
 }
 /*
@@ -55,12 +56,14 @@ Vector& Vector::operator- (float s)							// #2 fcn - Vector subtraction
 //////////////////////////////////////////////////////////////////////////
 Vector operator* (const Vector &K, const Vector &N)		    // #3 fcn - Vector multiplication
 {
-	cout<<"vector *"<<endl;
+//	cout<<"vector *"<<endl;
 	return Vector(K.x * N.x, K.y * N.y, K.z * N.z);
 }
-/*
+
 Vector& Vector::operator* (Vector const &K)				    // #3 fcn - Vector multiplication
 {
+	//cout<<"call this one 2"<<endl;
+	
 	x*=K.x;
 	y*=K.y;
 	z*=K.z;
@@ -69,17 +72,18 @@ Vector& Vector::operator* (Vector const &K)				    // #3 fcn - Vector multiplica
 
 Vector& Vector::operator* (float s)							// #3 fcn - Vector multiplication
 {
+	//cout<<"call this one 1"<<endl;
 	x *= s;
 	y *= s;
 	z *= s;
 	return *this;
 
 }
-*/
+
 ////////////////////////////////////////////////////////////////
 Vector operator/ (const Vector &K, const Vector &N)			// #4 fcn - Vector division
 {
-	cout<<"vecotr /"<<endl;
+//	cout<<"vecotr /"<<endl;
 	return Vector(K.x / N.x, K.y / N.y, K.z / N.z);
 }
 /*
@@ -101,20 +105,23 @@ Vector& Vector::operator / (float k)						// #4 fcn - Vector division
 ////////////////////////////////////////////////////////
 
 
-Vector operator% (Vector const &R, Vector const &K)			// #5 fcn - Vector cross product, results in a vector 
+Vector operator^ (Vector const &R, Vector const &K)			// #5 fcn - Vector cross product, results in a vector 
 {	
+//	cout<<"heloooooooooooooooo"<<endl;
+	//assert(false);
+//	cout<<"R.y*K.z - R.z*K.y==="<<(R.y*K.z - R.z*K.y)<<endl;
 
 	return Vector(R.y*K.z - R.z*K.y, R.z*K.x - R.x*K.z, R.x*K.y - R.y*K.x);
 }
 
 ////////////////////////////////////////////////////////
 
-
-double operator^ (Vector const &R, Vector const &K)			// #6 fcn - Vector dot product, results in a scalar.
+/*
+Vector operator^ (Vector const &R, Vector const &K)			// #6 fcn - Vector dot product, results in a scalar.
 {	
 
 	return (R.x*K.x + R.y*K.y + R.z*K.z);
-}
+}*/
 //////////////////////////////////////////////////////////////
 
 Vector& Vector::operator=(Vector const &K)					// #7 fcn - Vector assign	

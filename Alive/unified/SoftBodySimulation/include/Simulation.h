@@ -17,3 +17,6 @@
 #include "ViewSpace.h"
 #include "global.h"
 #include "Object3D.h"
+
+
+void Rotated(void);

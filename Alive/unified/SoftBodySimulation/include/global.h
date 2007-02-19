@@ -39,16 +39,16 @@ using namespace std;
 #define SCRSIZE 10				// screen size factor for mouse dragging
 
 #define MAX_POINTS_SPRINGS 40											//reserve temp space particle and spring
-#define NUMPOINTS   10													//default number of particles on a object
+#define NUMPOINTS   20 													//default number of particles on a object
 #define NUMSPRINGS  NUMPOINTS											//default number of springs on a object
 
-#define MASS 1.0f				// point mass on the rings = 5.0
+#define MASS 0.3f				// point mass on the rings = 5.0
 #define RING_RADIUS 0.5f		// default radius of the 2D and 3D object
 
 
 enum dimensionality {DIM1D, DIM2D, DIM3D};								//object type, 1D, 2D, and 3D
 enum integrator_type {EULER, MIDPOINT, RK4};							//integrator type, EULER, MIDPOINT, RK4
-enum spring_type { SPRING_STRUCTURAL, SPRING_RADIUM, SPRING_SHEAR };	//spring type, structrual, radium, shear
+enum spring_type { SPRING_STRUCTURAL, SPRING_RADIUM, SPRING_SHEAR};	//spring type, structrual, radium, shear
 
 
 
