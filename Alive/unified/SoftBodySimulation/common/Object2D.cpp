@@ -70,7 +70,7 @@ void Object2D::Draw()
 		glBegin(GL_POINTS);
 			for(i = 0 ; i < outer_springs.size(); i++)
 			{
-				cout<<"i================"<<i<<endl;
+			//	cout<<"i================"<<i<<endl;
 			if(i==0) 
 				glColor3f(1.0,0.0,0.0);
 			else
@@ -218,7 +218,7 @@ void Object2D::SetObject(void)
 		toz = 0;//2*RING_RADIUS*sin(i*(2.0*PI)/numParticles);	// outer point Y coordiation
 
 
-		cout<<"tox=="<<tox<<"==toy=="<<toy<<"==toz=="<<toz<<endl;
+	//	cout<<"tox=="<<tox<<"==toy=="<<toy<<"==toz=="<<toz<<endl;
 		outer_points.push_back( new Particle(new Vector(tox, toy, toz), MASS));
 		inner_points.push_back( new Particle(new Vector(tix, tiy, tiz), MASS));
 	}
@@ -241,7 +241,7 @@ void Object2D::SetObject(void)
 		inner_faces[i]->CalNormalNField();
 
 	outer_faces[i]->CalNormalNField();
-		cout<<"outer_faces[i]->normal->x==="<<outer_faces[i]->normal->x<<"=== outer_faces[i]->normal->y==="<<outer_faces[i]->normal->y<<"===outer_faces[i]->normal->z===="<<outer_faces[i]->normal->z<<endl;
+//		cout<<"outer_faces[i]->normal->x==="<<outer_faces[i]->normal->x<<"=== outer_faces[i]->normal->y==="<<outer_faces[i]->normal->y<<"===outer_faces[i]->normal->z===="<<outer_faces[i]->normal->z<<endl;
 
 	
 	}

@@ -37,7 +37,7 @@ int   segments = 8;
 
 Object1D object1D;
 Object2D object2D;
-//Object3D object3D;
+Object3D object3D;
 
 
 ViewSpace  box;                              // Creat a viewer space
@@ -77,8 +77,8 @@ void Display(void)
 
 Rotated();
 
-	object2D.Draw();
-//	object3D.Draw();
+//	object2D.Draw();
+	object3D.Draw();
 
  
 
@@ -202,7 +202,7 @@ void Idle()
 	
 	object1D.Update(DT, mousedown != 0, xMouse, yMouse);
 	object2D.Update(DT, mousedown != 0, xMouse, yMouse);
-//	object3D.Update(DT, mousedown != 0, xMouse, yMouse);
+	object3D.Update(DT, mousedown != 0, xMouse, yMouse);
 
 	glutPostRedisplay();
 }

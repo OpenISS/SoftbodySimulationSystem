@@ -55,7 +55,7 @@ public:
 //void GetFace();
 
 private:
-    float ks, kd;
+  //  float ks, kd;
 
     int Bmass;
 

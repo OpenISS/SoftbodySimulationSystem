@@ -28,12 +28,12 @@ Object3D::Object3D()
 	Object3D(MASS, KS, KD, PRESSURE);
 }
 
-Object3D::Object3D(float Mass, float Ks, float Kd, float Press)
-//		: pressure(Press), Bmass(Mass), ks(Ks), kd(Kd)
+Object3D::Object3D(float Mass, float ks, float kd, float Press)
+//		: pressure(Press), Bmass(Mass), KS(KS), KD(KD)
 {
 	pressure=Press;
-	ks=Ks;
-	kd=Kd;
+//	KS=KS;
+//	KD=KD;
 	Bmass=Mass;
 
 	this->iterations = 1;
@@ -41,8 +41,9 @@ Object3D::Object3D(float Mass, float Ks, float Kd, float Press)
 	pa=new Particle(new Vector(0,0,0), Mass);
 	pb=new Particle(new Vector(0,0,0), Mass);
 	pc=new Particle(new Vector(0,0,0), Mass);
-
+SetParticles();
 	dim = DIM3D;
+	
 
 /*	pa=new Particle();
 	pb=new Particle();
@@ -50,11 +51,11 @@ Object3D::Object3D(float Mass, float Ks, float Kd, float Press)
 
 }
 
-Object3D::Object3D(float Mass, float Ks, float Kd)
+Object3D::Object3D(float Mass, float ks, float kd)
 {
 	pressure=0;
-	ks=Ks;
-	kd=Kd;
+//	KS=KS;
+//	KD=KD;
 	Bmass=Mass;
 
 /*	pa=new Particle(new Vector(0,0,0), Mass);
@@ -64,7 +65,7 @@ Object3D::Object3D(float Mass, float Ks, float Kd)
 /*	pa=new Particle();
 	pb=new Particle();
 	pc=new Particle();*/
-
+SetParticles();
 	dim = DIM3D;
 }
 
@@ -110,23 +111,23 @@ void Object3D::SetParticles(void) // [M+2][N] array for M*N+2 Points
 
 
 //	/*
-	faces.push_back(new Face(Object3DParticles[0], Object3DParticles[3], Object3DParticles[4]));
-	faces.push_back(new Face(Object3DParticles[0], Object3DParticles[4], Object3DParticles[5]));
-	faces.push_back(new Face(Object3DParticles[0], Object3DParticles[5], Object3DParticles[2]));
-	faces.push_back(new Face(Object3DParticles[0], Object3DParticles[2], Object3DParticles[3]));
-	faces.push_back(new Face(Object3DParticles[1], Object3DParticles[4], Object3DParticles[3]));
-	faces.push_back(new Face(Object3DParticles[1], Object3DParticles[5], Object3DParticles[4]));
-	faces.push_back(new Face(Object3DParticles[1], Object3DParticles[2], Object3DParticles[5]));
-	faces.push_back(new Face(Object3DParticles[1], Object3DParticles[3], Object3DParticles[2]));
+	outer_faces.push_back(new Face(Object3DParticles[0], Object3DParticles[3], Object3DParticles[4]));
+	outer_faces.push_back(new Face(Object3DParticles[0], Object3DParticles[4], Object3DParticles[5]));
+	outer_faces.push_back(new Face(Object3DParticles[0], Object3DParticles[5], Object3DParticles[2]));
+	outer_faces.push_back(new Face(Object3DParticles[0], Object3DParticles[2], Object3DParticles[3]));
+	outer_faces.push_back(new Face(Object3DParticles[1], Object3DParticles[4], Object3DParticles[3]));
+	outer_faces.push_back(new Face(Object3DParticles[1], Object3DParticles[5], Object3DParticles[4]));
+	outer_faces.push_back(new Face(Object3DParticles[1], Object3DParticles[2], Object3DParticles[5]));
+	outer_faces.push_back(new Face(Object3DParticles[1], Object3DParticles[3], Object3DParticles[2]));
 //*/
 
 
-	for (i=0; i<faces.size(); i++) // On each horizonal plane, N tangent springs
+	for (i=0; i<outer_faces.size(); i++) // On each horizonal plane, N tangent springs
 		{
 	     
-		    spring.push_back(new Spring(faces[i]->fp1, faces[i]->fp2,ks,kd));     // row i with offset j
-			spring.push_back(new Spring(faces[i]->fp2, faces[i]->fp3,ks,kd));
-			spring.push_back(new Spring(faces[i]->fp3, faces[i]->fp1,ks,kd));
+		    spring.push_back(new Spring(outer_faces[i]->fp1, outer_faces[i]->fp2,KS,KD));     // row i with offset j
+			spring.push_back(new Spring(outer_faces[i]->fp2, outer_faces[i]->fp3,KS,KD));
+			spring.push_back(new Spring(outer_faces[i]->fp3, outer_faces[i]->fp1,KS,KD));
 		
 		}
 
@@ -135,21 +136,21 @@ void Object3D::SetParticles(void) // [M+2][N] array for M*N+2 Points
  
 	for (int it=0; it<iterations;it++){
 
-		int ntold=faces.size();
+		int ntold=outer_faces.size();
 		static int j=0;
 	   for(int i=0;i<1;i++){
 
-		   pa->r->x=(faces[i]->fp1->r->x+faces[i]->fp2->r->x)/2;
-		   pa->r->y=(faces[i]->fp1->r->y+faces[i]->fp2->r->y)/2;
-		   pa->r->z=(faces[i]->fp1->r->z+faces[i]->fp2->r->z)/2;
+		   pa->r->x=(outer_faces[i]->fp1->r->x+outer_faces[i]->fp2->r->x)/2;
+		   pa->r->y=(outer_faces[i]->fp1->r->y+outer_faces[i]->fp2->r->y)/2;
+		   pa->r->z=(outer_faces[i]->fp1->r->z+outer_faces[i]->fp2->r->z)/2;
 		   
-		   pb->r->x=(faces[i]->fp2->r->x+faces[i]->fp3->r->x)/2;
-		   pb->r->y=(faces[i]->fp2->r->y+faces[i]->fp3->r->y)/2;
-		   pb->r->z=(faces[i]->fp2->r->z+faces[i]->fp3->r->z)/2;
+		   pb->r->x=(outer_faces[i]->fp2->r->x+outer_faces[i]->fp3->r->x)/2;
+		   pb->r->y=(outer_faces[i]->fp2->r->y+outer_faces[i]->fp3->r->y)/2;
+		   pb->r->z=(outer_faces[i]->fp2->r->z+outer_faces[i]->fp3->r->z)/2;
 
-		   pc->r->x=(faces[i]->fp1->r->x+faces[i]->fp3->r->x)/2;
-		   pc->r->y=(faces[i]->fp1->r->y+faces[i]->fp3->r->y)/2;
-		   pc->r->z=(faces[i]->fp1->r->z+faces[i]->fp3->r->z)/2;
+		   pc->r->x=(outer_faces[i]->fp1->r->x+outer_faces[i]->fp3->r->x)/2;
+		   pc->r->y=(outer_faces[i]->fp1->r->y+outer_faces[i]->fp3->r->y)/2;
+		   pc->r->z=(outer_faces[i]->fp1->r->z+outer_faces[i]->fp3->r->z)/2;
 
 		  
 		 
@@ -173,34 +174,34 @@ void Object3D::SetParticles(void) // [M+2][N] array for M*N+2 Points
  
 		   
 
-          /* faces.push_back(new Face(faces[i]->fp1,pa,pc));
-	       faces.push_back(new Face(pa,faces[i]->fp2,pb));
-	       faces.push_back(new Face(pb,faces[i]->fp3,pc)); 
+          /* outer_faces.push_back(new Face(outer_faces[i]->fp1,pa,pc));
+	       outer_faces.push_back(new Face(pa,outer_faces[i]->fp2,pb));
+	       outer_faces.push_back(new Face(pb,outer_faces[i]->fp3,pc)); 
  
-		   spring.push_back(new Spring(faces[i]->fp1, pa,ks,kd));     // row i with offset j
-		   spring.push_back(new Spring(pa, faces[i]->fp2,ks,kd));
-		   spring.push_back(new Spring(faces[i]->fp2, pb,ks,kd));
-		   spring.push_back(new Spring(pb, faces[i]->fp3,ks,kd));
-		   spring.push_back(new Spring(faces[i]->fp3, pc,ks,kd));
-		   spring.push_back(new Spring(pc, faces[i]->fp1,ks,kd));
+		   spring.push_back(new Spring(outer_faces[i]->fp1, pa,KS,KD));     // row i with offset j
+		   spring.push_back(new Spring(pa, outer_faces[i]->fp2,KS,KD));
+		   spring.push_back(new Spring(outer_faces[i]->fp2, pb,KS,KD));
+		   spring.push_back(new Spring(pb, outer_faces[i]->fp3,KS,KD));
+		   spring.push_back(new Spring(outer_faces[i]->fp3, pc,KS,KD));
+		   spring.push_back(new Spring(pc, outer_faces[i]->fp1,KS,KD));
 		   */
 
 
-		   Face* f1=new Face(faces[i]->fp1,pa,pc);
-		   faces.push_back(f1);
+		   Face* f1=new Face(outer_faces[i]->fp1,pa,pc);
+		   outer_faces.push_back(f1);
 		  //delete f1;
-		   Face* f2=new Face(pa,faces[i]->fp2,pb);
-	       faces.push_back(f2);
-		   Face* f3=new Face(pb,faces[i]->fp3,pc);
-	       faces.push_back(f3); 
+		   Face* f2=new Face(pa,outer_faces[i]->fp2,pb);
+	       outer_faces.push_back(f2);
+		   Face* f3=new Face(pb,outer_faces[i]->fp3,pc);
+	       outer_faces.push_back(f3); 
  
 		   //Spring *s1
-		   spring.push_back(new Spring(faces[i]->fp1, pa,ks,kd));     // row i with offset j
-		   spring.push_back(new Spring(pa, faces[i]->fp2,ks,kd));
-		   spring.push_back(new Spring(faces[i]->fp2, pb,ks,kd));
-		   spring.push_back(new Spring(pb, faces[i]->fp3,ks,kd));
-		   spring.push_back(new Spring(faces[i]->fp3, pc,ks,kd));
-		   spring.push_back(new Spring(pc, faces[i]->fp1,ks,kd));
+		   spring.push_back(new Spring(outer_faces[i]->fp1, pa,KS,KD));     // row i with offset j
+		   spring.push_back(new Spring(pa, outer_faces[i]->fp2,KS,KD));
+		   spring.push_back(new Spring(outer_faces[i]->fp2, pb,KS,KD));
+		   spring.push_back(new Spring(pb, outer_faces[i]->fp3,KS,KD));
+		   spring.push_back(new Spring(outer_faces[i]->fp3, pc,KS,KD));
+		   spring.push_back(new Spring(pc, outer_faces[i]->fp1,KS,KD));
 		   
 		   
 		   spring[j]->sp1=pa;
@@ -213,9 +214,9 @@ void Object3D::SetParticles(void) // [M+2][N] array for M*N+2 Points
 		   spring[j]->sp2=pa;
 		   j++;
 
-	       faces[i]->fp1=pa;
-	       faces[i]->fp2=pb;
-	       faces[i]->fp3=pc;
+	       outer_faces[i]->fp1=pa;
+	       outer_faces[i]->fp2=pb;
+	       outer_faces[i]->fp3=pc;
  
 		  
 	   }
@@ -643,7 +644,7 @@ glVertex3f(Object3DParticles[i].r.x+Object3DParticles[i].norm.x,
 
 
  //=================================================================================  
-	glColor4f(1,0,0,1);   // Red color line distribution
+/*	glColor4f(1,0,0,1);   // Red color line distribution
 
 	glBegin(GL_LINES);  // draw the Horizonal and Tangent springs 
 		
@@ -663,31 +664,31 @@ glVertex3f(Object3DParticles[i].r.x+Object3DParticles[i].norm.x,
 
 
  glBegin(GL_TRIANGLES);  	  
-	 for(i=0; i<faces.size(); i++)
+	 for(i=0; i<outer_faces.size(); i++)
 		{
 	//	 if(i==0)
 	//		 glColor4f(0,0,0,1);
 		//	glNormal3f (tri[i].normal.x, tri[i].normal.y, tri[i].normal.z);
 	//	 else
 		 glColor4f(1,0.8,0.2,.8);     	    // Yellow color face distribution
-	     glVertex3f(faces[i]->fp1->r->x, faces[i]->fp1->r->y, faces[i]->fp1->r->z);
-		 glVertex3f(faces[i]->fp2->r->x, faces[i]->fp2->r->y, faces[i]->fp2->r->z);
-		 glVertex3f(faces[i]->fp3->r->x, faces[i]->fp3->r->y, faces[i]->fp3->r->z);
+	     glVertex3f(outer_faces[i]->fp1->r->x, outer_faces[i]->fp1->r->y, outer_faces[i]->fp1->r->z);
+		 glVertex3f(outer_faces[i]->fp2->r->x, outer_faces[i]->fp2->r->y, outer_faces[i]->fp2->r->z);
+		 glVertex3f(outer_faces[i]->fp3->r->x, outer_faces[i]->fp3->r->y, outer_faces[i]->fp3->r->z);
 	
 		}
 	glEnd();
-
+*/
 
 /*	glBegin(GL_LINES);
 	
-		 glVertex3f(faces[i].fp2.r.x, faces[i].fp2.r.y, faces[i].fp2.r.z);
-		 glVertex3f(faces[i].fp3.r.x, faces[i].fp3.r.y, faces[i].fp3.r.z);
+		 glVertex3f(outer_faces[i].fp2.r.x, outer_faces[i].fp2.r.y, outer_faces[i].fp2.r.z);
+		 glVertex3f(outer_faces[i].fp3.r.x, outer_faces[i].fp3.r.y, outer_faces[i].fp3.r.z);
 	glEnd();
 
 	glBegin(GL_LINES);
-		 glVertex3f(faces[i].fp1.r.x, faces[i].fp1.r.y, faces[i].fp1.r.z);
+		 glVertex3f(outer_faces[i].fp1.r.x, outer_faces[i].fp1.r.y, outer_faces[i].fp1.r.z);
 		
-		 glVertex3f(faces[i].fp3.r.x, faces[i].fp3.r.y, faces[i].fp3.r.z);
+		 glVertex3f(outer_faces[i].fp3.r.x, outer_faces[i].fp3.r.y, outer_faces[i].fp3.r.z);
 		 	glEnd();
 }*/
 //=======================================================================================
@@ -713,13 +714,13 @@ glVertex3f(Object3DParticles[i].r.x+Object3DParticles[i].norm.x,
 	
  /*
  glBegin(GL_TRIANGLES);  	  
-	 for(i=0; i<faces.size(); i++)
+	 for(i=0; i<outer_faces.size(); i++)
 		{
 		
 		 glColor4f(.1,.6,.1,.8);     	    // Yellow color face distribution
-	     glVertex3f(faces[i].fp1.r.x, faces[i].fp1.r.y, faces[i].fp1.r.z);
-		 glVertex3f(faces[i].fp2.r.x, faces[i].fp2.r.y, faces[i].fp2.r.z);
-		 glVertex3f(faces[i].fp3.r.x, faces[i].fp3.r.y, faces[i].fp3.r.z);
+	     glVertex3f(outer_faces[i].fp1.r.x, outer_faces[i].fp1.r.y, outer_faces[i].fp1.r.z);
+		 glVertex3f(outer_faces[i].fp2.r.x, outer_faces[i].fp2.r.y, outer_faces[i].fp2.r.z);
+		 glVertex3f(outer_faces[i].fp3.r.x, outer_faces[i].fp3.r.y, outer_faces[i].fp3.r.z);
 	
 		}
 	glEnd();
