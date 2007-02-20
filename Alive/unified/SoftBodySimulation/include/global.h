@@ -28,7 +28,7 @@ using namespace std;
 #define PI     3.1416f			// Circle = 2*PI*RADIUS
 	
 
-#define GY        -10.0f		// Gravity
+#define GY        0.0f		// Gravity
 #define WIND      10.0f			// External force, such as wind force
 #define PRESSURE 10.0f			// Pressure constant
 
@@ -39,7 +39,7 @@ using namespace std;
 #define SCRSIZE 10				// screen size factor for mouse dragging
 
 #define MAX_POINTS_SPRINGS 40											//reserve temp space particle and spring
-#define NUMPOINTS   20 													//default number of particles on a object
+#define NUMPOINTS   23 													//default number of particles on a object
 #define NUMSPRINGS  NUMPOINTS											//default number of springs on a object
 
 #define MASS 0.3f				// point mass on the rings = 5.0

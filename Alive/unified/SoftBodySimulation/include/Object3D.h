@@ -13,14 +13,13 @@ class Object3D : public Object2D
 public:
 
 	Object3D();
-	Object3D(float Mass, float Ks, float Kd, float Press);
-	Object3D (float Mass, float Ks, float Kd);
+//	Object3D(float Mass, float Ks, float Kd, float Press);
+//	Object3D (float Mass, float Ks, float Kd);
 	virtual ~Object3D();
              	         
 			  
 
-private:
-	void SetParticles();         // create Particle Object3D
+
 /*	
  void SetSprings();   // set springs on horizontal planes, connect Particles
  void SetTriPlanes();      // set triangle faces on side surfaces
@@ -49,7 +48,7 @@ public:
 
 	virtual void Draw();
 
-	void GetClosestParticle();   // the Particle on the Object3D, which is cloest to the mouse pos
+//	void GetClosestParticle();   // the Particle on the Object3D, which is cloest to the mouse pos
 
 //void GetParticles ();
 //void GetFace();
@@ -57,12 +56,13 @@ public:
 private:
   //  float ks, kd;
 
-    int Bmass;
-
+ //   int Bmass;
+	virtual void SetObject(void);	
+	void Add_Structural_Spring(int index, int h, int t);	//model the inner or outer cirle with structural springs
 	Particle *pa, *pb, *pc;
 
-    vector<Spring*>  spring; 
-	vector<Particle*> Object3DParticles;
+   // vector<Spring*>  spring; 
+//	vector<Particle*> Object3DParticles;
 
 	//int static npoints=6;
 	int iterations;

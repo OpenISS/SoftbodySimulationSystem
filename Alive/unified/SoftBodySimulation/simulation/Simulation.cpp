@@ -73,7 +73,7 @@ void Display(void)
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 	box.Draw();        // Draw the view box space 	
 
-	object1D.Draw();
+//	object1D.Draw();
 
 Rotated();
 
@@ -200,8 +200,8 @@ void SpecialKeys(int key, int x, int y)
 void Idle()
 {
 	
-	object1D.Update(DT, mousedown != 0, xMouse, yMouse);
-	object2D.Update(DT, mousedown != 0, xMouse, yMouse);
+//	object1D.Update(DT, mousedown != 0, xMouse, yMouse);
+//	object2D.Update(DT, mousedown != 0, xMouse, yMouse);
 	object3D.Update(DT, mousedown != 0, xMouse, yMouse);
 
 	glutPostRedisplay();
