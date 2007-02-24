@@ -15,7 +15,7 @@ Object2D::~Object2D()
 
 void Object2D::Draw()
 {
-		static bool findOnce = false;
+	static bool findOnce = false;
 	//because of the drawing method, two circles are on the same plane, cross each other with depth buffer
 	glDisable(GL_DEPTH_TEST); 
 	
@@ -138,22 +138,24 @@ void Object2D::Draw()
 	glPopMatrix();
 	
 	if(integrator->dragExists)
-	{if(findOnce == true)
-			{
-				FindClosestPoint();
-				findOnce = false;
-			}
+	{
+		if(findOnce == true)
+		{
+			FindClosestPoint();
+			findOnce = false;
+		}
+
 		glColor3f(1,1,0);      // A white line between the Object3D point and the mouse point
 		glBegin(GL_LINES);	
 		glVertex2f(integrator->mDragX, integrator->mDragY);
 		glVertex2f(outer_points[closest_i]->r->x,outer_points[closest_i]->r->y);
 		glEnd();
 	}      
-		else
-		{
-			FindClosestPoint();
-			findOnce = true;
-		}
+	else
+	{
+		FindClosestPoint();
+		findOnce = true;
+	}
 
 
 	glEnable(GL_DEPTH_TEST);
@@ -203,6 +205,8 @@ void Object2D::SetObject(void)
 	inner_points.clear();
 	outer_springs.clear();
 	inner_springs.clear();
+	outer_faces.clear();
+	inner_faces.clear();
 	int i;
 	for(i=0; i<numParticles ; i++)							// create NUMP points into 2D circle 
 	{	

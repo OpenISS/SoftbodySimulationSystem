@@ -47,7 +47,7 @@ public:
 public:
 
 	virtual void Draw();
-
+	void Iteration();
 //	void GetClosestParticle();   // the Particle on the Object3D, which is cloest to the mouse pos
 
 //void GetParticles ();
@@ -59,6 +59,10 @@ private:
  //   int Bmass;
 	virtual void SetObject(void);	
 	void Add_Structural_Spring(int index, int h, int t);	//model the inner or outer cirle with structural springs
+	void Add_Radium_Spring(int index);						//add the radium springs with inner point i and outer point i 
+	void Add_Shear_Spring(int index);		//add the left shear springs with inner point i and outer point i+1
+
+	
 	Particle *pa, *pb, *pc;
 
    // vector<Spring*>  spring; 

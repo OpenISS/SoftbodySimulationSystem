@@ -2,6 +2,7 @@
 #include "Object2D.h"
 #include <assert.h>
 #include <vector>
+
 Integrator::Integrator(Object& objectToIntegrate) : dragExists(false)
 {
 
@@ -10,8 +11,8 @@ Integrator::Integrator(Object& objectToIntegrate) : dragExists(false)
 //	memcpy(temp_outer_points0, object.outer_points, sizeof(Particle) * MAX_POINTS_SPRINGS);
 
 //	temp_outer_points0 = object.outer_points;
-		for(int j=0; j<objectToIntegrate.outer_points.size(); j++)
-		{
+	for(int j=0; j<objectToIntegrate.outer_points.size(); j++)
+	{
 		temp_outer_points0.push_back(new Particle (*this->object->outer_points[j]));
 		temp_outer_points1.push_back(new Particle (*this->object->outer_points[j]));
 		temp_outer_points2.push_back(new Particle (*this->object->outer_points[j]));
@@ -23,8 +24,7 @@ Integrator::Integrator(Object& objectToIntegrate) : dragExists(false)
 		temp_inner_points2.push_back(new Particle (*this->object->inner_points[j]));
 		temp_inner_points3.push_back(new Particle (*this->object->inner_points[j]));
 		temp_inner_points4.push_back(new Particle (*this->object->inner_points[j]));
-
-		}
+	}
 
 	dim = DIM1D;
 }
@@ -34,9 +34,15 @@ Integrator::~Integrator()
 //	delete this->initObject;
 	temp_outer_points0.clear();
 	temp_outer_points1.clear();
+	temp_outer_points2.clear();
+	temp_outer_points3.clear();
+	temp_outer_points4.clear();
 
 	temp_inner_points0.clear();
 	temp_inner_points1.clear();
+	temp_inner_points2.clear();
+	temp_inner_points3.clear();
+	temp_inner_points4.clear();
 }
 
 void Integrator::integrate(float deltaT, bool drag, float xDrag, float yDrag)
@@ -48,14 +54,16 @@ void Integrator::integrate(float deltaT, bool drag, float xDrag, float yDrag)
 //	this->object->FindClosestPoint();
 
 	//cout<<"mDragX=="<<mDragX<<"==mDragY=="<<mDragY<<endl;
-	AccumulateForces();   // accumulate forces acted on 
+	// accumulate forces acted on
+	AccumulateForces();    
 	Derivatives(deltaT, 1.0);
 
-/*	cout<<"derived fx sp1 = "<<object->outer_points[0]->f->x << ",fy sp1=" <<object->outer_points[0]->f->y<<endl;
+/*
+	cout<<"derived fx sp1 = "<<object->outer_points[0]->f->x << ",fy sp1=" <<object->outer_points[0]->f->y<<endl;
 	cout<<"derived vx sp1 = "<<object->outer_points[0]->v->x << ",vy sp1=" <<object->outer_points[0]->v->y<<endl;
 	cout<<"==================================="<<endl<<endl;
 */
-  }
+}
 
 
 void Integrator::AccumulateForces()   // accumulate forces acted on 
@@ -71,7 +79,7 @@ void Integrator::AccumulateForces()   // accumulate forces acted on
 		// Pressure forces are not applicable in 1D
 		case DIM2D:
 		case DIM3D:
-			PressureForces();
+	//		PressureForces();
 			break;
 	}
 }
@@ -95,7 +103,7 @@ void Integrator::ExternalForces()
 	for(i = 0; i < object->GetNumberOfParticles(); i++)
 	{
 		object->inner_points[i]->f->x = 0;//40*sin(25*i);
-		object->inner_points[i]->f->y = MASS*GY;     
+		object->inner_points[i]->f->y = MASS * GY;     
 		object->inner_points[i]->f->z = 0;//(object->inner_points[i]->mass)*GY;     
 
 		object->outer_points[i]->f->x = 0;//40*sin(25*i);
@@ -108,7 +116,7 @@ void Integrator::ExternalForces()
 			{
 				outer_x1 = object->outer_points[ i ]->r->x;		// get points X-coord
 				outer_y1 = object->outer_points[ i ]->r->y;        // get points Y-coord
-				outer_z1 = 0;//object->outer_points[ i ]->r->z;        // get points Y-coord
+				outer_z1 = object->outer_points[ i ]->r->z;        // get points Y-coord
 
 				outer_x2 = mDragX;                      // get Mouse  X-coord
 				outer_y2 = mDragY;                      // get Mouse  Y-coord
@@ -138,9 +146,7 @@ void Integrator::ExternalForces()
 				object->outer_points[i]->f->z -= outer_Fz;
 			}
 		}
-
 	}
-
 }
 
 
@@ -150,19 +156,18 @@ void Integrator::SpringForces()
 
 
 	// Three parts for computing the spring forces on all the points
-	for(i=0; i<object->GetNumberOfSprings(); i++)  // Part #1, tangent spring force constribution 
+	for(i = 0; i<object->GetNumberOfSprings(); i++)  // Part #1, tangent spring force constribution 
 	{
-	
 		CalculateSpringForces(object->outer_springs, i);
 
 
 		switch(dim)
 		{
 			case DIM1D:
-		
+				// intentionally empty
 				break;
+
 			case DIM2D:
-			case DIM3D:
 			{
 		
 				CalculateSpringForces
@@ -173,7 +178,7 @@ void Integrator::SpringForces()
 				);
 			
 				CalculateSpringForces
-			(
+				(
 					((Object2D*)object)->radium_springs,
 					i
 				);
@@ -190,9 +195,15 @@ void Integrator::SpringForces()
 					((Object2D*)object)->shear_springs_right,
 					i
 				);
-			}
-		}
 
+				break;
+			}
+
+			case DIM3D:
+			{
+			}
+		
+		}
 	}
 }
 
@@ -213,39 +224,40 @@ void Integrator::CalculateSpringForces(vector<Spring *>springs, int i)
 
 	float rd12 = (*springs[i]->sp1->r - *springs[i]->sp2->r).getLength();
 
-
-	/* Calculate normal vectors to springs */
-	
-	springs[i]->normal.x =  -(y1 - y2) / rd12;  // Normal Y-vector
-	springs[i]->normal.y =  +(x1 - x2) / rd12;  // Normal X-vector 
-
-	//XXX
-//	springs[i]->normal.z = 0;// +(x1 - x2) / rd12;  // Normal Z-vector 
-
-
 	if(rd12 == 0)
 	{
+		cerr << "WARNING: rd12 is zero, ignoring the rest of the spring forces calculations... " << endl;
 		return;
 	}
+
+	/* Calculate normal vectors to springs */
+
+	switch(dim)
+	{
+		case DIM1D:
+		case DIM2D:
+			springs[i]->normal.x = -(y1 - y2) / rd12;  // Normal Y-vector
+			springs[i]->normal.y = +(x1 - x2) / rd12;  // Normal X-vector 
+			springs[i]->normal.z = 0;  // Normal Z-vector 
+			break;
+
+		case DIM3D:
+			cout << "computing 3D normal" << endl;
+			springs[i]->normal.x = -(x1 - x2) / rd12;  // Normal Y-vector
+			springs[i]->normal.y = +(z1 - z2) / rd12;  // Normal X-vector 
+			springs[i]->normal.z = +(y1 - y2) / rd12;  // Normal Z-vector 
+			break;
+	}
+
 
 	vx12 = springs[i]->sp1->v->x - springs[i]->sp2->v->x;
 	vy12 = springs[i]->sp1->v->y - springs[i]->sp2->v->y;
 	vz12 = springs[i]->sp1->v->z - springs[i]->sp2->v->z;
 
-//	fx = (rd12 - springs[i].restLen) * KS + vx12 * (x1 - x2)* KD / rd12;
-//	fy = (rd12 - springs[i].restLen) * KS + vy12 * (y1 - y2)* KD / rd12;
-
 	f = (rd12 - springs[i]->restLen) * KS
 	  + (vx12 * (x1 - x2)
-	   + vy12 * (y1 - y2)
-	   + vz12 * (z1 - z2)) * KD / rd12;
-
-	//cout << "fx=" << fx << ",fy = " << fy << ",f = " << f << endl;
-
-	//assert(fx == fy);
-
-	//Fx = ((x1 - x2) / rd12) * fx;
-	//Fy = ((y1 - y2) / rd12) * fy;
+	  +  vy12 * (y1 - y2)
+	  +  vz12 * (z1 - z2)) * KD / rd12;
 
 	Fx = ((x1 - x2) / rd12) * f;
 	Fy = ((y1 - y2) / rd12) * f;
@@ -254,7 +266,6 @@ void Integrator::CalculateSpringForces(vector<Spring *>springs, int i)
 //	cout<<"Fx-------------"<<Fx<<endl;
 //	cout<<"Fy-------------"<<Fy<<endl;
 
-
 	springs[i]->sp1->f->x -= Fx;
 	springs[i]->sp1->f->y -= Fy;
 	springs[i]->sp1->f->z -= Fz;
@@ -262,11 +273,9 @@ void Integrator::CalculateSpringForces(vector<Spring *>springs, int i)
 	springs[i]->sp2->f->x += Fx;
 	springs[i]->sp2->f->y += Fy;
 	springs[i]->sp2->f->z += Fz;
-
-
-
 }
 
+///*
 
 void Integrator::PressureForces()
 {
@@ -287,7 +296,7 @@ void Integrator::PressureForces()
 	float outer_p_accu;         	// pressure force accumulation
 
 
-	// pressure force for the inner circle 
+	// pressure force for the inner and outer circles
 	
 	for(i=0; i<object->GetNumberOfSprings(); i++) // calculation of inner circle volume
 	{
@@ -307,11 +316,12 @@ void Integrator::PressureForces()
 			   );
 
 		// XXX
-		inner_volume += 0.5 *
+		inner_volume += 10.5 *
 			fabs(inner_x1 - inner_x2) *
 			fabs(object->inner_springs[i]->normal.x) * 
 			(inner_rd12);
 
+//	
 		outer_x1 = object->outer_springs[i]->sp1->r->x;	
 		outer_y1 = object->outer_springs[i]->sp1->r->y;
 		outer_z1 = object->outer_springs[i]->sp1->r->z;
@@ -326,11 +336,20 @@ void Integrator::PressureForces()
 			   +(outer_y1-outer_y2)*(outer_y1-outer_y2)
 			   +(outer_z1-outer_z2)*(outer_z1-outer_z2)
 			   );	
-														
-		outer_volume += 0.5 * 
+
+//		outer_volume += 5.5 * 
+//		outer_volume += 1.05 * 
+		outer_volume +=	40.5 * 
 			fabs(outer_x1 - outer_x2) * 
-			fabs(object->outer_springs[i]->normal.x) * 
+//			fabs(outer_y1 - outer_y2) * 
+//			fabs(outer_z1 - outer_z2) * 
+			(
+			fabs(object->outer_springs[i]->normal.x)
+			+fabs(object->outer_springs[i]->normal.y)
+			+fabs(object->outer_springs[i]->normal.z)
+			) * 
 			(outer_rd12);
+//	
 	} 
 
 	
@@ -351,9 +370,8 @@ void Integrator::PressureForces()
 		+  (inner_y1-inner_y2)*(inner_y1-inner_y2)
 		+  (inner_z1-inner_z2)*(inner_z1-inner_z2)
 		);	
-													
 
-		inner_p_accu=inner_rd12*((Object2D*)object)->getPressure()*(1.0f/inner_volume);
+		inner_p_accu = inner_rd12 * ((Object2D*)object)->getPressure() * (1.0f / inner_volume);
 	
 		object->inner_springs[i]->sp1->f->x += object->inner_springs[i]->normal.x*inner_p_accu;
 		object->inner_springs[i]->sp1->f->y += object->inner_springs[i]->normal.y*inner_p_accu;
@@ -378,18 +396,110 @@ void Integrator::PressureForces()
 		);	
 													
 
-		outer_p_accu=outer_rd12*((Object2D*)object)->getPressure()*(1.0f/outer_volume);
+		outer_p_accu = outer_rd12 * ((Object2D*)object)->getPressure() * (1.0f / outer_volume);
 	
-		object->outer_springs[i]->sp1->f->x += object->outer_springs[i]->normal.x*outer_p_accu;
-		object->outer_springs[i]->sp1->f->y += object->outer_springs[i]->normal.y*outer_p_accu;
-		object->outer_springs[i]->sp1->f->z += object->outer_springs[i]->normal.z*outer_p_accu;
+		object->outer_springs[i]->sp1->f->x += object->outer_springs[i]->normal.x * outer_p_accu;
+		object->outer_springs[i]->sp1->f->y += object->outer_springs[i]->normal.y * outer_p_accu;
+		object->outer_springs[i]->sp1->f->z += object->outer_springs[i]->normal.z * outer_p_accu;
 
-		object->outer_springs[i]->sp2->f->x += object->outer_springs[i]->normal.x*outer_p_accu;
-		object->outer_springs[i]->sp2->f->y += object->outer_springs[i]->normal.y*outer_p_accu;
-		object->outer_springs[i]->sp2->f->z += object->outer_springs[i]->normal.z*outer_p_accu;
+		object->outer_springs[i]->sp2->f->x += object->outer_springs[i]->normal.x * outer_p_accu;
+		object->outer_springs[i]->sp2->f->y += object->outer_springs[i]->normal.y * outer_p_accu;
+		object->outer_springs[i]->sp2->f->z += object->outer_springs[i]->normal.z * outer_p_accu;
 	}
 }
+//*/
 
+/*
+/////////////////////////////////////////////////////////////////////
+void Integrator::PressureForces()
+{
+	int i;    // runing index
+
+   	float inner_x1,inner_x2,inner_y1,inner_y2,inner_z1,inner_z2;	// points inner_p1, inner_p2 on the inner circle
+    float outer_x1,outer_x2,outer_y1,outer_y2,outer_z1,outer_z2;	// points outer_p1, outer_p2 on the outer circle
+
+// 	float radium_rd12;                          // length of inner_p1, outer_p1 
+
+	float inner_rd12;			            	// length of inner_p1, inner_p2
+	float outer_rd12;			            	// length of outer_p1, outer_p2    
+
+	float inner_volume=0.0;           // inner circle inner_volume
+	float outer_volume=0.0;		    // outer circle outer_volume 
+
+	float inner_p_accu=0;;             // pressure force accumulation 
+	float outer_p_accu=0;;         	// pressure force accumulation
+
+	for(i=0;i<object->inner_faces.size();i++)
+	{
+		object->inner_faces[i]->CalNormalNField();
+		object->outer_faces[i]->CalNormalNField();
+		//		cout<<"outer_faces[i]->normal->x==="<<outer_faces[i]->normal->x<<"=== outer_faces[i]->normal->y==="<<outer_faces[i]->normal->y<<"===outer_faces[i]->normal->z===="<<outer_faces[i]->normal->z<<endl;
+	}
+
+	// pressure force for the inner circle 
+	
+	for(i=0; i<object->outer_faces.size(); i++) // calculation of inner circle volume
+	{
+		inner_volume += 0.5 * (object->inner_faces[i]->fp1->r->x +
+							   object->inner_faces[i]->fp2->r->x +
+							   object->inner_faces[i]->fp3->r->x)*
+						(object->inner_faces[i]->normal->x) * 
+						(object->inner_faces[i]->normal->getLength());
+
+		outer_volume += 0.5 * (object->outer_faces[i]->fp1->r->x +
+							   object->outer_faces[i]->fp2->r->x +
+							   object->outer_faces[i]->fp3->r->x)*
+						(object->outer_faces[i]->normal->x) * 
+						(object->outer_faces[i]->normal->getLength());
+	}
+
+	
+	for(i = 0; i < object->outer_faces.size(); i++)  // calculation inner pressure force 
+	{
+		inner_p_accu=(object->inner_faces[i]->normal->x) * 
+					 (object->inner_faces[i]->normal->getLength())*
+					 ((Object2D*)object)->getPressure()*(1.0f/inner_volume);
+
+		object->inner_faces[i]->fp1->f->x += 0.5 * inner_p_accu;
+		object->inner_faces[i]->fp1->f->y += 0.5 * inner_p_accu;
+		object->inner_faces[i]->fp1->f->z += 0.5 * inner_p_accu;
+
+		object->inner_faces[i]->fp2->f->x += 0.5 * inner_p_accu;
+		object->inner_faces[i]->fp2->f->y += 0.5 * inner_p_accu;
+		object->inner_faces[i]->fp2->f->z += 0.5 * inner_p_accu;
+
+		object->inner_faces[i]->fp3->f->x += 0.5 * inner_p_accu;
+		object->inner_faces[i]->fp3->f->y += 0.5 * inner_p_accu;
+		object->inner_faces[i]->fp3->f->z += 0.5 * inner_p_accu;
+
+				////////////////////////////////////////////
+	
+		outer_p_accu=(object->outer_faces[i]->normal->x) *
+				 (object->outer_faces[i]->normal->getLength()) *
+				 ((Object2D*)object)->getPressure() * (1.0f/outer_volume);
+
+		object->outer_faces[i]->fp1->f->x += 0.5 * outer_p_accu;
+		object->outer_faces[i]->fp1->f->y += 0.5 * outer_p_accu;
+		object->outer_faces[i]->fp1->f->z += 0.5 * outer_p_accu;
+
+		object->outer_faces[i]->fp2->f->x += 0.5 * outer_p_accu;
+		object->outer_faces[i]->fp2->f->y += 0.5 * outer_p_accu;
+		object->outer_faces[i]->fp2->f->z += 0.5 * outer_p_accu;
+
+		object->outer_faces[i]->fp3->f->x += 0.5 * outer_p_accu;
+		object->outer_faces[i]->fp3->f->y += 0.5 * outer_p_accu;
+		object->outer_faces[i]->fp3->f->z += 0.5 * outer_p_accu;
+	}
+
+}
+
+
+//*/
+
+
+
+
+//////////////////////////////////////////////////////////////////////
 void Integrator::CollisionDetection(int i)
 {
 	bool changed = false;

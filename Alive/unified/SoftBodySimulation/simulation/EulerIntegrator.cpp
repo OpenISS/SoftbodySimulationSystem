@@ -78,6 +78,7 @@ void EulerIntegrator::k1(int i, float k, float deltaT)
 void EulerIntegrator::ynew(int i, float k, float deltaT)
 {
 	k1(i, k, deltaT);
+
 	object->outer_points[i]->dv->x = temp_outer_points1[i]->dv->x;
 	object->outer_points[i]->dv->y = temp_outer_points1[i]->dv->y;
 	object->outer_points[i]->dv->z = temp_outer_points1[i]->dv->z;
@@ -113,7 +114,5 @@ void EulerIntegrator::ynew(int i, float k, float deltaT)
 	object->inner_points[i]->r->x = temp_inner_points0[i]->r->x + temp_inner_points1[i]->dr->x; 											// Change in position is velocity times the change in time
 	object->inner_points[i]->r->y = temp_inner_points0[i]->r->y + temp_inner_points1[i]->dr->y;
 	object->inner_points[i]->r->z = temp_inner_points0[i]->r->z + temp_inner_points1[i]->dr->z;
-
-	
-
 }
+

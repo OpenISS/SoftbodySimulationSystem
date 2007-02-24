@@ -10,7 +10,7 @@ Object::Object()
 	numParticles = 2;					//default particle number on the object
 	numSprings = 1;						//default spring number on the object
 	integrator = NULL;					//default integrator 
-	integratorType = MIDPOINT;				//default integrator tpye is Euler
+	integratorType = EULER;				//default integrator tpye is Euler
 	dim = DIM1D;						//default object is 1D
 	closest_i=0;			  		    // the point which is closest to mouse position
 }

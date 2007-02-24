@@ -35,7 +35,7 @@ int   wireframe = 0;
 int   segments = 8;
 
 
-Object1D object1D;
+//Object1D object1D;
 Object2D object2D;
 Object3D object3D;
 
@@ -94,17 +94,17 @@ Rotated();
 void Mouse(int button, int state, int x, int y)
 {
    
-			xMouse = (4 *  ((float)x/(float)Width)) -2 ;
-			yMouse = -((4 * ( (float)y/(float)Height))-2) ;
+	xMouse = (4 *  ((float)x/(float)Width)) -2 ;
+	yMouse = -((4 * ( (float)y/(float)Height))-2) ;
 
-		if (state == GLUT_DOWN)
-		{
-			mousedown = 1;
-		}
-		else if (state == GLUT_UP)
-		{
-			mousedown = 0;	
-		}
+	if (state == GLUT_DOWN)
+	{
+		mousedown = 1;
+	}
+	else if (state == GLUT_UP)
+	{
+		mousedown = 0;	
+	}
 	
 }
 
@@ -113,8 +113,8 @@ void Mouse(int button, int state, int x, int y)
 
 void Motion(int x, int y)
 {
-		xMouse = (4 *  ((float)x/(float)Width)) -2 ;
-		yMouse = -((4 * ( (float)y/(float)Height))-2 );
+	xMouse = (4 *  ((float)x/(float)Width)) -2 ;
+	yMouse = -((4 * ( (float)y/(float)Height))-2 );
 }
 
 
@@ -124,6 +124,9 @@ void Motion(int x, int y)
 void Keyboard(unsigned char key, int x, int y)
 {     
 //	ThreeDInner.Keyboard(key, x, y);		
+
+cout << "key = " << key << endl;
+
    	switch(key){
     case 'x':
     case 'X':

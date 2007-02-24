@@ -24,7 +24,7 @@ void MidpointIntegrator::k2(int i, float k, float deltaT)
 		temp_outer_points1[j]->f = temp_outer_points0[j]->f;
 		temp_outer_points1[j]->dr = temp_outer_points0[j]->dr;
 		temp_outer_points1[j]->dv = temp_outer_points0[j]->dv;
-		temp_outer_points1[j]->OneOverMass = temp_outer_points0[j]->OneOverMass;
+//		temp_outer_points1[j]->OneOverMass = temp_outer_points0[j]->OneOverMass;
 
 		temp_inner_points1[j]->mass = temp_inner_points0[j]->mass;
 		temp_inner_points1[j]->r = temp_inner_points0[j]->r;
@@ -32,7 +32,7 @@ void MidpointIntegrator::k2(int i, float k, float deltaT)
 		temp_inner_points1[j]->f = temp_inner_points0[j]->f;
 		temp_inner_points1[j]->dr = temp_inner_points0[j]->dr;
 		temp_inner_points1[j]->dv = temp_inner_points0[j]->dv;
-		temp_inner_points1[j]->OneOverMass = temp_inner_points0[j]->OneOverMass;
+//		temp_inner_points1[j]->OneOverMass = temp_inner_points0[j]->OneOverMass;
 	}
 
 

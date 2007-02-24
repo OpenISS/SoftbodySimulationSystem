@@ -10,7 +10,7 @@ public:
 
 	Particle(Vector* R, float Mass) : mass(Mass)		 // particle constructor with variables position and mass
 	{		
-		cout<<"call me now--------------"<<endl;
+//		cout<<"call me now--------------"<<endl;
 		r = R;
 	
 	
