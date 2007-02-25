@@ -162,9 +162,11 @@ cout << "key = " << key << endl;
 
 void Rotated(void)
 {  
+//	glPushMatrix();
    glRotated(RotateRegX, 1.0, 0.0, 0.0);  // Rotate 90 about X-axis 
    glRotated(RotateRegY, 0.0, 1.0, 0.0);  // Rotate 90 about X-axis 
    glRotated(RotateRegZ, 0.0, 0.0, 1.0);  // Rotate 90 about X-axis 
+	//glPopMatrix();
 } 
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

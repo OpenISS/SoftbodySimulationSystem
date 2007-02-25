@@ -35,9 +35,9 @@ public:
 	Particle	 *fp2;       // second vertex
 	Particle	 *fp3;       // third vertex*/
 /*
-	Spring	 *fp1;		 // first vertex 
-	Spring	 *fp2;       // second vertex
-	Spring	 *fp3;       // third vertex
+	Spring	 *fs1;		 // first vertex 
+	Spring	 *fs2;       // second vertex
+	Spring	 *fs3;       // third vertex
 */
 	
 //    float    field;		 // normal field

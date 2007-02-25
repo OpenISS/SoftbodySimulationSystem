@@ -165,7 +165,12 @@ void Object3D::Iteration()
 	   for(int i=0;i<initialFacesCount;i++)
 	   {
 
+
 		   // Here we subdivide the initial face into four faces by
+		   pa = new Particle();
+		   pb = new Particle();
+		   pc = new Particle();
+
 		   // first getting the midpoints on each edge of the original face
 		   pa->r->x=(outer_faces[i]->fp1->r->x + outer_faces[i]->fp2->r->x)/2;
 		   pa->r->y=(outer_faces[i]->fp1->r->y + outer_faces[i]->fp2->r->y)/2;
@@ -180,24 +185,27 @@ void Object3D::Iteration()
 		   pc->r->z=(outer_faces[i]->fp1->r->z + outer_faces[i]->fp3->r->z)/2;
 
 		  
-			///*
+			//
 		   cout<<"pa->x="<<pa->r->x<<"; pa->y="<<pa->r->y<<"; pa->z="<<pa->r->z<<endl;
 		   cout<<"pb->x="<<pb->r->x<<"; pb->y="<<pb->r->y<<"; pb->z="<<pb->r->z<<endl;
 		   cout<<"pc->x="<<pc->r->x<<"; pc->y="<<pc->r->y<<"; pc->z="<<pc->r->z<<endl;
-		   //*/
+		   //
+
 
 		   // Each new point's coordinates are normalized
 		   pa->r->Normalize();
 		   pb->r->Normalize();
 		   pc->r->Normalize();
 
-	/*	   cout<<"after normalization: "<<endl;
+		   cout<<"after normalization: "<<endl;
 
 		   cout<<"pa->x="<<pa->r->x<<"; pa->y="<<pa->r->y<<"; pa->z="<<pa->r->z<<endl;
 		   cout<<"pb->x="<<pb->r->x<<"; pb->y="<<pb->r->y<<"; pb->z="<<pb->r->z<<endl;
 		   cout<<"pc->x="<<pc->r->x<<"; pc->y="<<pc->r->y<<"; pc->z="<<pc->r->z<<endl;
-*/
-/**/
+
+
+
+
 		   // The new points are added to the general collection of points
            outer_points.push_back(new Particle(new Vector(pa->r->x, pa->r->y, pa->r->z), MASS)); 
 		   outer_points.push_back(new Particle(new Vector(pb->r->x, pb->r->y, pb->r->z), MASS)); 
@@ -211,29 +219,47 @@ void Object3D::Iteration()
 		   // Create three new faces; these represent the three outer triangles
 		   outer_faces.push_back(new Face(outer_faces[i]->fp1, pa, pc)); // Top
 		   outer_faces.push_back(new Face(pa, outer_faces[i]->fp2, pb)); // Bottom-left
-		   outer_faces.push_back(new Face(pb, outer_faces[i]->fp3, pc)); // Bottom-right
+		   outer_faces.push_back(new Face(pc, pb, outer_faces[i]->fp3)); // Bottom-right
+		   
+		   
+//		   outer_faces.push_back(new Face(pa, pb, pc));
 
 		   // Replace the original face's points with its new one in the middle
+
 	       outer_faces[i]->fp1 = pa;
 	       outer_faces[i]->fp2 = pb;
 	       outer_faces[i]->fp3 = pc;
-		   
-		   // New springs added after subdivision
-/*		   outer_springs.push_back(new Spring(outer_faces[i]->fp1, pa,KS,KD));     // row i with offset j
+			//outer_faces.erase(outer_faces.begin());
+
+
+///*		   
+		   // New outer springs added after subdivision
+		   outer_springs.push_back(new Spring(outer_faces[i]->fp1, pa,KS,KD));     // row i with offset j
 		   outer_springs.push_back(new Spring(pa, outer_faces[i]->fp2,KS,KD));
 		   outer_springs.push_back(new Spring(outer_faces[i]->fp2, pb,KS,KD));
 		   outer_springs.push_back(new Spring(pb, outer_faces[i]->fp3,KS,KD));
 		   outer_springs.push_back(new Spring(outer_faces[i]->fp3, pc,KS,KD));
 		   outer_springs.push_back(new Spring(pc, outer_faces[i]->fp1,KS,KD));
 
+//		   outer_springs.push_back(new Spring(pa, pb,KS,KD));
+//		   outer_springs.push_back(new Spring(pb, pc,KS,KD));
+//		   outer_springs.push_back(new Spring(pc, pa,KS,KD));
 
-		   inner_springs.push_back(new Spring(outer_faces[i]->fp1, pa,KS,KD));     // row i with offset j
-		   inner_springs.push_back(new Spring(pa, outer_faces[i]->fp2,KS,KD));
-		   inner_springs.push_back(new Spring(outer_faces[i]->fp2, pb,KS,KD));
-		   inner_springs.push_back(new Spring(pb, outer_faces[i]->fp3,KS,KD));
-		   inner_springs.push_back(new Spring(outer_faces[i]->fp3, pc,KS,KD));
-		   inner_springs.push_back(new Spring(pc, outer_faces[i]->fp1,KS,KD));
 
+		   inner_springs.push_back(new Spring(inner_faces[i]->fp1, pa,KS,KD));     // row i with offset j
+		   inner_springs.push_back(new Spring(pa, inner_faces[i]->fp2,KS,KD));
+		   inner_springs.push_back(new Spring(inner_faces[i]->fp2, pb,KS,KD));
+		   inner_springs.push_back(new Spring(pb, inner_faces[i]->fp3,KS,KD));
+		   inner_springs.push_back(new Spring(inner_faces[i]->fp3, pc,KS,KD));
+		   inner_springs.push_back(new Spring(pc, inner_faces[i]->fp1,KS,KD));
+
+//		   inner_springs.push_back(new Spring(pa, pb,KS,KD));
+//		   inner_springs.push_back(new Spring(pb, pc,KS,KD));
+//		   inner_springs.push_back(new Spring(pc, pa,KS,KD));
+
+//		   outer_springs.erase(outer_springs.begin(), outer_springs.begin() + 2);
+//		   inner_springs.erase(inner_springs.begin(), inner_springs.begin() + 2);
+///*
 		   // Replacement springs for the originals
 		   outer_springs[j]->sp1=pa;
 		   outer_springs[j]->sp2=pb;
@@ -245,13 +271,24 @@ void Object3D::Iteration()
 		   outer_springs[j]->sp2=pa;
 		   j++;
 
- */
+//*/
 	   }
 	}
 
 //	this->numParticles = this->outer_points.size();
 //	this->numSprings = this->outer_springs.size();
-	
+/*	
+int i;
+for(i=0; i<outer_points.size();i++)
+cout<<"outer_points"<<i<<"----="<<outer_points[i]->r->x<<";"<<outer_points[i]->r->y<<";"<<outer_points[i]->r->z<<endl;
+
+for(i=0; i<outer_faces.size();i++)
+{
+cout<<"outer_faces fp1: "<<i<<"----="<<outer_faces[i]->fp1->r->x<<";"<<outer_faces[i]->fp1->r->y<<";"<<outer_faces[i]->fp1->r->z<<endl;
+cout<<"outer_faces fp2: "<<i<<"----="<<outer_faces[i]->fp2->r->x<<";"<<outer_faces[i]->fp2->r->y<<";"<<outer_faces[i]->fp2->r->z<<endl;
+cout<<"outer_faces fp3: "<<i<<"----="<<outer_faces[i]->fp3->r->x<<";"<<outer_faces[i]->fp3->r->y<<";"<<outer_faces[i]->fp3->r->z<<endl;
+}
+*/
 }
 
 
@@ -261,8 +298,8 @@ void Object3D::Iteration()
 void Object3D::SetObject(void) // [M+2][N] array for M*N+2 Points 
 {
 		
-	float tix, tiy, tiz, tox,toy, toz;
-	float theta, phi;
+//	float tix, tiy, tiz, tox,toy, toz;
+//	float theta, phi;
 
 	int tempsp1, tempsp2;
 	
@@ -392,8 +429,11 @@ float dphi = 360/3;
 
 
 
-	//Pyramid3();
+
+//	Pyramid3();
+
 	//Pyramid4();
+
 	Tetrahedron();
 
 
@@ -429,8 +469,10 @@ float dphi = 360/3;
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
 void Object3D::Tetrahedron()
 {
+
 	double a;
 	int i;
 
@@ -441,6 +483,7 @@ void Object3D::Tetrahedron()
 	outer_points.push_back( new Particle(new Vector(2*RING_RADIUS,2*RING_RADIUS,0), MASS));
 	outer_points.push_back( new Particle(new Vector(-2*RING_RADIUS,2*RING_RADIUS,0), MASS));
 
+
 	inner_points.push_back( new Particle(new Vector(0,0,RING_RADIUS), MASS));
 	inner_points.push_back( new Particle(new Vector(0,0,-RING_RADIUS), MASS));
 	inner_points.push_back( new Particle(new Vector(-RING_RADIUS,-RING_RADIUS,0), MASS));
@@ -448,9 +491,8 @@ void Object3D::Tetrahedron()
 	inner_points.push_back( new Particle(new Vector(RING_RADIUS,RING_RADIUS,0), MASS));
 	inner_points.push_back( new Particle(new Vector(-RING_RADIUS,RING_RADIUS,0), MASS));
 
-	this->numParticles = outer_points.size();
-	
 
+	this->numParticles = outer_points.size();
 
 
 	a = 1 / sqrt(2.0);
@@ -465,11 +507,44 @@ void Object3D::Tetrahedron()
 		inner_points[i]->r->x *= a;
 		inner_points[i]->r->y *= a;
 		inner_points[i]->r->z *= a;
-
 	}
 
+
 	outer_faces.push_back(new Face(outer_points[0], outer_points[3], outer_points[4]));
-	
+	outer_faces.push_back(new Face(outer_points[0], outer_points[4], outer_points[5]));
+	outer_faces.push_back(new Face(outer_points[0], outer_points[5], outer_points[2]));
+	outer_faces.push_back(new Face(outer_points[0], outer_points[2], outer_points[3]));
+	outer_faces.push_back(new Face(outer_points[1], outer_points[4], outer_points[3]));
+	outer_faces.push_back(new Face(outer_points[1], outer_points[5], outer_points[4]));
+	outer_faces.push_back(new Face(outer_points[1], outer_points[2], outer_points[5]));
+	outer_faces.push_back(new Face(outer_points[1], outer_points[3], outer_points[2]));
+
+
+	inner_faces.push_back(new Face(inner_points[0], inner_points[3], inner_points[4]));
+	inner_faces.push_back(new Face(inner_points[0], inner_points[4], inner_points[5]));
+	inner_faces.push_back(new Face(inner_points[0], inner_points[5], inner_points[2]));
+	inner_faces.push_back(new Face(inner_points[0], inner_points[2], inner_points[3]));
+	inner_faces.push_back(new Face(inner_points[1], inner_points[4], inner_points[3]));
+	inner_faces.push_back(new Face(inner_points[1], inner_points[5], inner_points[4]));
+	inner_faces.push_back(new Face(inner_points[1], inner_points[2], inner_points[5]));
+	inner_faces.push_back(new Face(inner_points[1], inner_points[3], inner_points[2]));
+
+
+	for(i = 0; i < outer_faces.size(); i++)
+	{
+		outer_springs.push_back(new Spring(outer_faces[i]->fp1, outer_faces[i]->fp2, KS,KD));     // row i with offset j
+		outer_springs.push_back(new Spring(outer_faces[i]->fp2, outer_faces[i]->fp3, KS,KD));     // row i with offset j
+		outer_springs.push_back(new Spring(outer_faces[i]->fp3, outer_faces[i]->fp1, KS,KD));     // row i with offset j
+
+		inner_springs.push_back(new Spring(inner_faces[i]->fp1, inner_faces[i]->fp2, KS,KD));     // row i with offset j
+		inner_springs.push_back(new Spring(inner_faces[i]->fp2, inner_faces[i]->fp3, KS,KD));     // row i with offset j
+		inner_springs.push_back(new Spring(inner_faces[i]->fp3, inner_faces[i]->fp1, KS,KD));     // row i with offset j
+	}
+
+
+/*
+	outer_faces.push_back(new Face(outer_points[0], outer_points[3], outer_points[4]));
+
 	outer_springs.push_back(new Spring(outer_points[0], outer_points[3], KS,KD));     // row i with offset j
 	outer_springs.push_back(new Spring(outer_points[3], outer_points[4], KS,KD));     // row i with offset j
 	outer_springs.push_back(new Spring(outer_points[0], outer_points[4], KS,KD));     // row i with offset j
@@ -485,40 +560,41 @@ void Object3D::Tetrahedron()
 
 	outer_springs.push_back(new Spring(outer_points[0], outer_points[2], KS,KD));     // row i with offset j
 	outer_springs.push_back(new Spring(outer_points[5], outer_points[2], KS,KD));     // row i with offset j
-	
-	
-	outer_faces.push_back(new Face(outer_points[0], outer_points[2], outer_points[3]));
 
+
+	outer_faces.push_back(new Face(outer_points[0], outer_points[2], outer_points[3]));
+	
 	outer_springs.push_back(new Spring(outer_points[2], outer_points[3], KS,KD));     // row i with offset j
 
-	
-	outer_faces.push_back(new Face(outer_points[1], outer_points[4], outer_points[3]));
 
+	outer_faces.push_back(new Face(outer_points[1], outer_points[4], outer_points[3]));
 	outer_springs.push_back(new Spring(outer_points[1], outer_points[3], KS,KD));     // row i with offset j
 	outer_springs.push_back(new Spring(outer_points[1], outer_points[4], KS,KD));     // row i with offset j
 
-	
-	outer_faces.push_back(new Face(outer_points[1], outer_points[5], outer_points[4]));
-	
-	outer_springs.push_back(new Spring(outer_points[1], outer_points[5], KS,KD));     // row i with offset j
 
+	outer_faces.push_back(new Face(outer_points[1], outer_points[5], outer_points[4]));
+
+	outer_springs.push_back(new Spring(outer_points[1], outer_points[5], KS,KD));     // row i with offset j
 	
+
 	outer_faces.push_back(new Face(outer_points[1], outer_points[2], outer_points[5]));
-	
+
 	outer_springs.push_back(new Spring(outer_points[1], outer_points[2], KS,KD));     // row i with offset j
 
 
 	outer_faces.push_back(new Face(outer_points[1], outer_points[3], outer_points[2]));
 
 
+
 	//-----------------------------
+
 ///*
+
 	inner_faces.push_back(new Face(inner_points[0], inner_points[3], inner_points[4]));
-	
+
 	inner_springs.push_back(new Spring(inner_points[0], inner_points[3], KS,KD));     // row i with offset j
 	inner_springs.push_back(new Spring(inner_points[3], inner_points[4], KS,KD));     // row i with offset j
 	inner_springs.push_back(new Spring(inner_points[0], inner_points[4], KS,KD));     // row i with offset j
-
 
 	inner_faces.push_back(new Face(inner_points[0], inner_points[4], inner_points[5]));
 
@@ -530,168 +606,134 @@ void Object3D::Tetrahedron()
 
 	inner_springs.push_back(new Spring(inner_points[0], inner_points[2], KS,KD));     // row i with offset j
 	inner_springs.push_back(new Spring(inner_points[5], inner_points[2], KS,KD));     // row i with offset j
-	
-	
+
+
 	inner_faces.push_back(new Face(inner_points[0], inner_points[2], inner_points[3]));
 
 	inner_springs.push_back(new Spring(inner_points[2], inner_points[3], KS,KD));     // row i with offset j
-
 	
+
 	inner_faces.push_back(new Face(inner_points[1], inner_points[4], inner_points[3]));
+
 
 	inner_springs.push_back(new Spring(inner_points[1], inner_points[3], KS,KD));     // row i with offset j
 	inner_springs.push_back(new Spring(inner_points[1], inner_points[4], KS,KD));     // row i with offset j
 
-	
+
 	inner_faces.push_back(new Face(inner_points[1], inner_points[5], inner_points[4]));
-	
+
 	inner_springs.push_back(new Spring(inner_points[1], inner_points[5], KS,KD));     // row i with offset j
 
-	
+
 	inner_faces.push_back(new Face(inner_points[1], inner_points[2], inner_points[5]));
-	
+
 	inner_springs.push_back(new Spring(inner_points[1], inner_points[2], KS,KD));     // row i with offset j
 
 
 	inner_faces.push_back(new Face(inner_points[1], inner_points[3], inner_points[2]));
+
 //*/
 
-
-
 	this->numSprings = this->outer_springs.size();
+
 }
+
 
 void Object3D::Pyramid3()
 {
+
 	double a;
+
 	int i;
+
 
 	outer_points.push_back( new Particle(new Vector(-2 * RING_RADIUS, 0,  2 * RING_RADIUS), MASS));
 	outer_points.push_back( new Particle(new Vector(-2 * RING_RADIUS, 0, -2 * RING_RADIUS), MASS));
-
 	outer_points.push_back( new Particle(new Vector( 2 * RING_RADIUS, 0, 0), MASS));
-	outer_points.push_back( new Particle(new Vector( 2 * RING_RADIUS, 2 * RING_RADIUS,0), MASS));
-	outer_points.push_back( new Particle(new Vector(-2 * RING_RADIUS, 2 * RING_RADIUS,0), MASS));
+	outer_points.push_back( new Particle(new Vector( 0, 2 * RING_RADIUS,0), MASS));
 
+	// XXX: must match above
 	inner_points.push_back( new Particle(new Vector(0,0,RING_RADIUS), MASS));
 	inner_points.push_back( new Particle(new Vector(0,0,-RING_RADIUS), MASS));
 	inner_points.push_back( new Particle(new Vector(-RING_RADIUS,-RING_RADIUS,0), MASS));
 	inner_points.push_back( new Particle(new Vector(RING_RADIUS,-RING_RADIUS,0), MASS));
-	inner_points.push_back( new Particle(new Vector(RING_RADIUS,RING_RADIUS,0), MASS));
-	inner_points.push_back( new Particle(new Vector(-RING_RADIUS,RING_RADIUS,0), MASS));
+
 
 	this->numParticles = outer_points.size();
-	
-
 
 
 	a = 1 / sqrt(2.0);
 
+
+
 	for (i=0;i<outer_points.size();i++)
 	{
-		outer_points[i]->r->x *= a;
+	/*	outer_points[i]->r->x *= a;
 		outer_points[i]->r->y *= a;
 		outer_points[i]->r->z *= a;
 
-		
+
 		inner_points[i]->r->x *= a;
 		inner_points[i]->r->y *= a;
 		inner_points[i]->r->z *= a;
-
-	}
-
-	outer_faces.push_back(new Face(outer_points[0], outer_points[3], outer_points[4]));
-	
-	outer_springs.push_back(new Spring(outer_points[0], outer_points[3], KS,KD));     // row i with offset j
-	outer_springs.push_back(new Spring(outer_points[3], outer_points[4], KS,KD));     // row i with offset j
-	outer_springs.push_back(new Spring(outer_points[0], outer_points[4], KS,KD));     // row i with offset j
+	*/}
 
 
-	outer_faces.push_back(new Face(outer_points[0], outer_points[4], outer_points[5]));
+	// Bottom face
+	outer_faces.push_back(new Face(outer_points[0], outer_points[1], outer_points[2]));
 
-	outer_springs.push_back(new Spring(outer_points[0], outer_points[5], KS,KD));     // row i with offset j
-	outer_springs.push_back(new Spring(outer_points[4], outer_points[5], KS,KD));     // row i with offset j
+	outer_springs.push_back(new Spring(outer_points[0], outer_points[1], KS,KD));     // row i with offset j
+	outer_springs.push_back(new Spring(outer_points[1], outer_points[2], KS,KD));     // row i with offset j
+	outer_springs.push_back(new Spring(outer_points[2], outer_points[0], KS,KD));     // row i with offset j
 
-
-	outer_faces.push_back(new Face(outer_points[0], outer_points[5], outer_points[2]));
-
-	outer_springs.push_back(new Spring(outer_points[0], outer_points[2], KS,KD));     // row i with offset j
-	outer_springs.push_back(new Spring(outer_points[5], outer_points[2], KS,KD));     // row i with offset j
-	
-	
-	outer_faces.push_back(new Face(outer_points[0], outer_points[2], outer_points[3]));
-
-	outer_springs.push_back(new Spring(outer_points[2], outer_points[3], KS,KD));     // row i with offset j
-
-	
-	outer_faces.push_back(new Face(outer_points[1], outer_points[4], outer_points[3]));
+	// Left face
+	outer_faces.push_back(new Face(outer_points[0], outer_points[1], outer_points[3]));
 
 	outer_springs.push_back(new Spring(outer_points[1], outer_points[3], KS,KD));     // row i with offset j
-	outer_springs.push_back(new Spring(outer_points[1], outer_points[4], KS,KD));     // row i with offset j
+	outer_springs.push_back(new Spring(outer_points[3], outer_points[0], KS,KD));     // row i with offset j
 
-	
-	outer_faces.push_back(new Face(outer_points[1], outer_points[5], outer_points[4]));
-	
-	outer_springs.push_back(new Spring(outer_points[1], outer_points[5], KS,KD));     // row i with offset j
+	// Front face
+	outer_faces.push_back(new Face(outer_points[0], outer_points[2], outer_points[3]));
 
+//	outer_springs.push_back(new Spring(outer_points[0], outer_points[3], KS,KD));     // row i with offset j
+	outer_springs.push_back(new Spring(outer_points[3], outer_points[2], KS,KD));     // row i with offset j
 	
-	outer_faces.push_back(new Face(outer_points[1], outer_points[2], outer_points[5]));
-	
-	outer_springs.push_back(new Spring(outer_points[1], outer_points[2], KS,KD));     // row i with offset j
-
-
-	outer_faces.push_back(new Face(outer_points[1], outer_points[3], outer_points[2]));
+	// Back face
+	outer_faces.push_back(new Face(outer_points[1], outer_points[2], outer_points[3]));
 
 
 	//-----------------------------
+
 ///*
-	inner_faces.push_back(new Face(inner_points[0], inner_points[3], inner_points[4]));
-	
-	inner_springs.push_back(new Spring(inner_points[0], inner_points[3], KS,KD));     // row i with offset j
-	inner_springs.push_back(new Spring(inner_points[3], inner_points[4], KS,KD));     // row i with offset j
-	inner_springs.push_back(new Spring(inner_points[0], inner_points[4], KS,KD));     // row i with offset j
 
+	inner_faces.push_back(new Face(inner_points[0], inner_points[1], inner_points[2]));
 
-	inner_faces.push_back(new Face(inner_points[0], inner_points[4], inner_points[5]));
+	inner_springs.push_back(new Spring(inner_points[0], inner_points[1], KS,KD));     // row i with offset j
+	inner_springs.push_back(new Spring(inner_points[1], inner_points[2], KS,KD));     // row i with offset j
+	inner_springs.push_back(new Spring(inner_points[2], inner_points[0], KS,KD));     // row i with offset j
 
-	inner_springs.push_back(new Spring(inner_points[0], inner_points[5], KS,KD));     // row i with offset j
-	inner_springs.push_back(new Spring(inner_points[4], inner_points[5], KS,KD));     // row i with offset j
-
-
-	inner_faces.push_back(new Face(inner_points[0], inner_points[5], inner_points[2]));
-
-	inner_springs.push_back(new Spring(inner_points[0], inner_points[2], KS,KD));     // row i with offset j
-	inner_springs.push_back(new Spring(inner_points[5], inner_points[2], KS,KD));     // row i with offset j
-	
-	
-	inner_faces.push_back(new Face(inner_points[0], inner_points[2], inner_points[3]));
-
-	inner_springs.push_back(new Spring(inner_points[2], inner_points[3], KS,KD));     // row i with offset j
-
-	
-	inner_faces.push_back(new Face(inner_points[1], inner_points[4], inner_points[3]));
+	// Left face
+	inner_faces.push_back(new Face(inner_points[0], inner_points[1], inner_points[3]));
 
 	inner_springs.push_back(new Spring(inner_points[1], inner_points[3], KS,KD));     // row i with offset j
-	inner_springs.push_back(new Spring(inner_points[1], inner_points[4], KS,KD));     // row i with offset j
+	inner_springs.push_back(new Spring(inner_points[3], inner_points[0], KS,KD));     // row i with offset j
 
-	
-	inner_faces.push_back(new Face(inner_points[1], inner_points[5], inner_points[4]));
-	
-	inner_springs.push_back(new Spring(inner_points[1], inner_points[5], KS,KD));     // row i with offset j
+	// Front face
+	inner_faces.push_back(new Face(inner_points[0], inner_points[2], inner_points[3]));
 
+	inner_springs.push_back(new Spring(inner_points[0], inner_points[3], KS,KD));     // row i with offset j
+	inner_springs.push_back(new Spring(inner_points[3], inner_points[2], KS,KD));     // row i with offset j
 	
-	inner_faces.push_back(new Face(inner_points[1], inner_points[2], inner_points[5]));
-	
-	inner_springs.push_back(new Spring(inner_points[1], inner_points[2], KS,KD));     // row i with offset j
+	// Back face
+	inner_faces.push_back(new Face(inner_points[1], inner_points[2], inner_points[3]));
 
-
-	inner_faces.push_back(new Face(inner_points[1], inner_points[3], inner_points[2]));
 //*/
 
 
 
 	this->numSprings = this->outer_springs.size();
 }
+
 
 //================================================================================
 
@@ -705,7 +747,7 @@ void Object3D::Draw()
 	glColor4f(0,0,1,1);   // Blue color point distribution
 	glBegin(GL_POINTS); // Draw points which built the Object3D
 		glPointSize(10);
-		  cout<<"Object3D size is : "<<outer_points.size()<<endl;
+//		  cout<<"Object3D size is : "<<outer_points.size()<<endl;
 	    for(i=0; i<outer_points.size(); i++)
 		{
 	

@@ -63,12 +63,16 @@ private:
 	void Add_Shear_Spring(int index);		//add the left shear springs with inner point i and outer point i+1
 
 	
+
 	void Tetrahedron();
+
 	void Pyramid3();
+
 	void Pyramid4();
 
-	Particle *pa, *pb, *pc;
 
+Particle *pa, *pb, *pc;
+	//Particle pa, pb, pc;
    // vector<Spring*>  spring; 
 //	vector<Particle*> Object3DParticles;
 

@@ -226,7 +226,7 @@ void Integrator::CalculateSpringForces(vector<Spring *>springs, int i)
 
 	if(rd12 == 0)
 	{
-		cerr << "WARNING: rd12 is zero, ignoring the rest of the spring forces calculations... " << endl;
+	//	cerr << "WARNING: rd12 is zero, ignoring the rest of the spring forces calculations... " << endl;
 		return;
 	}
 
@@ -242,7 +242,7 @@ void Integrator::CalculateSpringForces(vector<Spring *>springs, int i)
 			break;
 
 		case DIM3D:
-			cout << "computing 3D normal" << endl;
+	//		cout << "computing 3D normal" << endl;
 			springs[i]->normal.x = -(x1 - x2) / rd12;  // Normal Y-vector
 			springs[i]->normal.y = +(z1 - z2) / rd12;  // Normal X-vector 
 			springs[i]->normal.z = +(y1 - y2) / rd12;  // Normal Z-vector 
