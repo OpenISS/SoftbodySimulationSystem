@@ -429,7 +429,7 @@ float dphi = 360/3;
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-void Object3D::Terrahedron()
+void Object3D::Tetrahedron()
 {
 	double a;
 	int i;
