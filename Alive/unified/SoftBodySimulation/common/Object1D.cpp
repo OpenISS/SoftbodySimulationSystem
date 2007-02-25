@@ -90,10 +90,9 @@ void Object1D::SetObject()
 
 	int PosX = 0;
 	int PosY = 0;
+	int i;
 //	cout<<"numParticles---1D------"<<numParticles<<endl;
-
-
-	for(int i=0; i<numParticles; i++)		// create NUMP points into 2D circle 
+	for(i=0; i<numParticles; i++)		// create NUMP points into 2D circle 
 	{
 	outer_points.push_back( new Particle(new Vector(PosX,PosY,0), MASS));
 	inner_points.push_back( new Particle());
