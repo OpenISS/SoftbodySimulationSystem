@@ -21,6 +21,7 @@ void EulerIntegrator::Derivatives(float deltaT, float k)
 
 	int NUMP = object->GetNumberOfParticles();
 
+//	cout<<"derivative,,,,,,,,,,,,,,,,,,object->GetNumberOfParticles======"<<object->GetNumberOfParticles()<<endl;
 	for(int i=0; i<NUMP; i++)	
 	{
 		ynew(i, k, deltaT);

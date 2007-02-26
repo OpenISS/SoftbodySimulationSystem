@@ -69,7 +69,7 @@ void Integrator::integrate(float deltaT, bool drag, float xDrag, float yDrag)
 void Integrator::AccumulateForces()   // accumulate forces acted on 
 {
 	ExternalForces();
-	SpringForces();	
+//	SpringForces();	
 
 	switch(dim)
 	{
@@ -153,7 +153,7 @@ void Integrator::ExternalForces()
 void Integrator::SpringForces()
 {
 	int i;    // runing index
-
+	cout<<"in iterator object->GetNumberOfSprings()==========================="<<object->GetNumberOfSprings()<<endl;
 
 	// Three parts for computing the spring forces on all the points
 	for(i = 0; i<object->GetNumberOfSprings(); i++)  // Part #1, tangent spring force constribution 

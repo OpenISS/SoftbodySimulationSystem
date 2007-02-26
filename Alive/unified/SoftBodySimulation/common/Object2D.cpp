@@ -264,6 +264,5 @@ void Object2D::SetObject(void)
 void Object2D::Add_Faces(int f1, int f2, int f3)
 {
 	inner_faces.push_back(new Face(inner_points[f1], inner_points[f2], inner_points[f3]));
-	
 	outer_faces.push_back(new Face(outer_points[f1], outer_points[f2], outer_points[f3]));
 } 

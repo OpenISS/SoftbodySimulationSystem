@@ -72,6 +72,7 @@ private:
 
 
 Particle *pa, *pb, *pc;
+//vector<Particle*> pa, pb, pc;
 	//Particle pa, pb, pc;
    // vector<Spring*>  spring; 
 //	vector<Particle*> Object3DParticles;

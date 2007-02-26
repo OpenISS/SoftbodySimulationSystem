@@ -15,6 +15,9 @@ void Face::CalNormalNField(void)
 
 
 	Vector N = (*fp1->r - *fp2->r) ^ (*fp1->r - *fp3->r);
+//	Vector N = (*fs1->sp1->r - *fs2->sp1->r) ^ (*fs1->sp1->r - *fs3->sp1->r);
+
+
 //	cout<<"N.x=="<<N.x<<"==N.y=="<<N.y<<"==N.z=="<<N.z<<endl;
 	//field = N.getLength();  	// triangle field, normal vector scalar 
 	//assert(false);

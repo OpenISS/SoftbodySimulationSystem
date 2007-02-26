@@ -19,6 +19,7 @@ public:
 		dv = new Vector(0,0,0);
 		f  = new Vector(0,0,0);
 		v  = new Vector(0,0,0);
+
 	}
 
 	Particle()											// particle constructor with variables position and mass
@@ -28,6 +29,7 @@ public:
 		dv = new Vector(0,0,0);
 		f  = new Vector(0,0,0);
 		v  = new Vector(0,0,0);
+		mass = MASS;
 	}
 
 	Particle(const Particle& p)											// particle constructor with variables position and mass

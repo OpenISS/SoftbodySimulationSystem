@@ -28,7 +28,7 @@ using namespace std;
 #define PI     3.1416f			// Circle = 2*PI*RADIUS
 	
 
-#define GY        0.0f		// Gravity
+#define GY       -10.0f		// Gravity
 #define WIND      10.0f			// External force, such as wind force
 #define PRESSURE 20.0f			// Pressure constant
 
