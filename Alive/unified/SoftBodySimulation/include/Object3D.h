@@ -48,6 +48,7 @@ public:
 
 	virtual void Draw();
 	void Iteration();
+	void nonunitsphere();
 //	void GetClosestParticle();   // the Particle on the Object3D, which is cloest to the mouse pos
 
 //void GetParticles ();

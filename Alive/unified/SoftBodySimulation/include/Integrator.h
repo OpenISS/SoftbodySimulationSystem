@@ -66,7 +66,7 @@ protected:
 
 private:
 	//void CalculateSpringForces(Spring springs[], int i/*, float rd12\, float x1, float y1, float x2, float y2*/);
-	void CalculateSpringForces(vector<Spring *>springs, int i/*, float rd12\, float x1, float y1, float x2, float y2*/);
+	void CalculateSpringForces(vector<Spring *>springs, int i, bool special = false/*, float rd12\, float x1, float y1, float x2, float y2*/);
 };
 
 #endif /* INTEGRATOR_H */

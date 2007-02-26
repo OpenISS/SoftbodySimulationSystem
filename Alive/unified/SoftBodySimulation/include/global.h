@@ -14,13 +14,13 @@ using namespace std;
 
 #define DT      0.003f			// Delta time in derivatives	
 
-#define KS 50.0f				// Hooke spring constant
-#define KD 30.0f				// Hooke spring damping constant
+#define KS 500.0f				// Hooke spring constant
+#define KD 15.0f				// Hooke spring damping constant
 
-#define RKS 50.0f				// radium spring constant
-#define RKD 15.0f				// radium spring damping constant
+#define RKS 500.0f				// radium spring constant
+#define RKD 5.0f				// radium spring damping constant
 
-#define MOUSE_KS 50.0f			// mouse spring constant
+#define MOUSE_KS 100.0f			// mouse spring constant
 #define MOUSE_KD 25.0f			// mouse damping constant
 #define MOUSE_REST 2.0f			// mouse rest lenth
 
@@ -30,9 +30,9 @@ using namespace std;
 
 #define GY       -10.0f		// Gravity
 #define WIND      10.0f			// External force, such as wind force
-#define PRESSURE 20.0f			// Pressure constant
+#define PRESSURE 40.0f			// Pressure constant
 
-#define LIMIT     2.0f			// Collision detection floor and wall screen size
+#define LIMIT     5.0f			// Collision detection floor and wall screen size
 #define Width     500			// Display window width
 #define Height    500		    // Display window Height
 
@@ -43,7 +43,7 @@ using namespace std;
 #define NUMSPRINGS  NUMPOINTS											//default number of springs on a object
 
 #define MASS 0.5f				// point mass on the rings = 5.0
-#define RING_RADIUS .5f		// default radius of the 2D and 3D object
+#define RING_RADIUS 0.5f		// default radius of the 2D and 3D object
 
 
 enum dimensionality {DIM1D, DIM2D, DIM3D};								//object type, 1D, 2D, and 3D

@@ -30,11 +30,50 @@ public:
 		fs2 = new Spring(Ap2, Ap3);
 		fs3 = new Spring(Ap3, Ap1);
 
-		springs.push_back(fs1);
-		springs.push_back(fs2);
-		springs.push_back(fs3);
 
-	
+		bool a = false, b = false, c = false;
+		for(int o = 0; o < springs.size(); o++)
+		{
+			if
+			(
+				   springs[o]->sp1 == Ap1
+				&& springs[o]->sp2 == Ap2
+			)
+			{
+				delete fs1;
+				fs1 = springs[o];
+				a = true;
+			}
+
+			if
+			(
+				   springs[o]->sp1 == Ap2
+				&& springs[o]->sp2 == Ap3
+			)
+			{
+				delete fs2;
+				fs2 = springs[o];
+				b = true;
+			}
+
+			if
+			(
+				   springs[o]->sp1 == Ap3
+				&& springs[o]->sp2 == Ap1
+			)
+			{
+				delete fs3;
+				fs3 = springs[o];
+				c = true;
+			}
+		}
+
+		// The new points are added to the general collection of points
+		if(!a) springs.push_back(fs1);
+		if(!b) springs.push_back(fs2);
+		if(!c) springs.push_back(fs3);
+
+
 	}
 
 	~Face()

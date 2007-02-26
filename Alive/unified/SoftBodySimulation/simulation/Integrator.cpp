@@ -69,7 +69,7 @@ void Integrator::integrate(float deltaT, bool drag, float xDrag, float yDrag)
 void Integrator::AccumulateForces()   // accumulate forces acted on 
 {
 	ExternalForces();
-//	SpringForces();	
+	SpringForces();	
 
 	switch(dim)
 	{
@@ -79,7 +79,7 @@ void Integrator::AccumulateForces()   // accumulate forces acted on
 		// Pressure forces are not applicable in 1D
 		case DIM2D:
 		case DIM3D:
-	//		PressureForces();
+			PressureForces();
 			break;
 	}
 }
@@ -153,7 +153,7 @@ void Integrator::ExternalForces()
 void Integrator::SpringForces()
 {
 	int i;    // runing index
-	cout<<"in iterator object->GetNumberOfSprings()==========================="<<object->GetNumberOfSprings()<<endl;
+//	cout<<"in iterator object->GetNumberOfSprings()==========================="<<object->GetNumberOfSprings()<<endl;
 
 	// Three parts for computing the spring forces on all the points
 	for(i = 0; i<object->GetNumberOfSprings(); i++)  // Part #1, tangent spring force constribution 
@@ -168,6 +168,7 @@ void Integrator::SpringForces()
 				break;
 
 			case DIM2D:
+			case DIM3D:
 			{
 		
 				CalculateSpringForces
@@ -176,11 +177,12 @@ void Integrator::SpringForces()
 					((Object2D*)object)->inner_springs,
 					i
 				);
-			
+
 				CalculateSpringForces
 				(
 					((Object2D*)object)->radium_springs,
-					i
+					i,
+					false
 				);
 
 				//  Part #3 shear spring constribution
@@ -195,19 +197,17 @@ void Integrator::SpringForces()
 					((Object2D*)object)->shear_springs_right,
 					i
 				);
-
 				break;
 			}
 
-			case DIM3D:
-			{
-			}
+			
+		
 		
 		}
 	}
 }
 
-void Integrator::CalculateSpringForces(vector<Spring *>springs, int i)
+void Integrator::CalculateSpringForces(vector<Spring *>springs, int i, bool special)
 {
 	float vx12, vy12, vz12;
 	float Fx, Fy, Fz;
@@ -231,6 +231,9 @@ void Integrator::CalculateSpringForces(vector<Spring *>springs, int i)
 	}
 
 	/* Calculate normal vectors to springs */
+
+	if(special)
+		dim = DIM2D;
 
 	switch(dim)
 	{
@@ -316,9 +319,13 @@ void Integrator::PressureForces()
 			   );
 
 		// XXX
-		inner_volume += 10.5 *
+		inner_volume += 40.5 *
 			fabs(inner_x1 - inner_x2) *
-			fabs(object->inner_springs[i]->normal.x) * 
+			(
+			fabs(object->inner_springs[i]->normal.x)
+			+fabs(object->inner_springs[i]->normal.y)
+			+fabs(object->inner_springs[i]->normal.z)
+			) * 
 			(inner_rd12);
 
 //	

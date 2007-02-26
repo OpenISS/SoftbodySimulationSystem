@@ -36,7 +36,7 @@ int   segments = 8;
 
 
 //Object1D object1D;
-Object2D object2D;
+//Object2D object2D;
 Object3D object3D;
 
 
@@ -65,7 +65,7 @@ void Display(void)
 	gluPerspective(50,float(Width)/float(Height), 1, 100.);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
- 	gluLookAt(2,0,5,0,0,0,0,1,0);  // Camera difinition
+ 	gluLookAt(2,0,10,0,0,0,0,1,0);  // Camera difinition
 
 
 	glPointSize(8);
