@@ -19,7 +19,7 @@ void Particle::ClearForce(void)					// reset forces at a Particle
 } 
 
 
-ostream& operator<<(ostream& os, const Particle& c)
+ostream& operator<<(ostream& os, const Particle& c)		// output operator
 {
  
   //os<<c.mass;
@@ -29,23 +29,23 @@ ostream& operator<<(ostream& os, const Particle& c)
 	os<<c.f->z;
 
 	os<<c.mass;
-	os<<c.OneOverMass;  // for computation
+	os<<c.OneOverMass;  						// for computation
 	
-	os<<c.r->x;		    // Particle space position
+	os<<c.r->x;		    						// Particle space position
 	os<<c.r->y;
 	os<<c.r->z;
 	
-	os<<c.v->x;
+	os<<c.v->x;								// Particle space velocity
 	os<<c.v->y;
-	os<<c.v->z;  // Particle space velocity
+	os<<c.v->z;  			
 
-    os<<c.dr->x;
+    	os<<c.dr->x;							// small change of position in derivatives
 	os<<c.dr->y;
-	os<<c.dr->z; // small change of position in derivatives
+	os<<c.dr->z; 			
 	
-	os<<c.dv->x;	
-	os<<c.dv->y;  // small change of velocity in derivatives
+	os<<c.dv->x;							// small change of velocity in derivatives
+	os<<c.dv->y;  			
 	os<<c.dv->z;
 
-	return os; //Always return stream object.
+	return os; 								// Always return stream object.
 }

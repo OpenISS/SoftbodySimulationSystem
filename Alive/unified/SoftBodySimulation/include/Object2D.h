@@ -7,43 +7,27 @@
 class Object2D : public Object1D
 {
 protected:
-	float    pressure;							// pressure at each Particles on Object2D along its normal
+	float    pressure;					// pressure at each Particles on Object2D along its normal
+public:
+	vector<Spring*>  radium_springs;				// for radium springs between two circles 
+	vector<Spring*>  shear_springs_left;			// for shear spring toward left
+	vector<Spring*>  shear_springs_right;			// for right spring toward right
 
 public:
 
-/*	Spring radium_springs[NUMSPRINGS];			// for radium springs between two circles 
-	Spring shear_springs_left[NUMSPRINGS];		// for shear spring toward left
-	Spring shear_springs_right[NUMSPRINGS];		// for right spring toward right
-*/
+	Object2D();								// constructor object2D
+	virtual ~Object2D();						// destructor object2D
 
-
-
-	vector<Spring*>  radium_springs;
-	vector<Spring*>  shear_springs_left;
-	vector<Spring*>	 shear_springs_right;
-
-public:
-
-	Object2D();
-	virtual ~Object2D();
-
-	virtual void Draw();						//display the object 2D
-
-
-	inline void setPressure(float pre){pressure = pre;}		// Set Pressure                                                                     
-	inline float getPressure() {return(pressure);}			// Get Pressure   
-
+	virtual void Draw();						// display the object 2D
+	inline void setPressure(float pre){pressure = pre;}	// Set Pressure                                                                     
+	inline float getPressure() {return(pressure);}		// Get Pressure   
 
 private:
-	virtual void SetObject(void);							//model the object
-
-	void Add_Structural_Spring(int index, int h, int t);	//model the inner or outer cirle with structural springs
-
-	void Add_Radium_Spring(int index);						//add the radium springs with inner point i and outer point i 
-	void Add_Shear_Spring(int index, int h, int t );		//add the left shear springs with inner point i and outer point i+1
-															//add the right shear springs with inner point i+1 and outer point i
-
-	virtual void Add_Faces(int i, int i1, int imid);
+	virtual void SetObject(void);					// model the object2D
+	void Add_Structural_Spring(int index, int h, int t);	// model the inner or outer cirle with structural springs
+	void Add_Radium_Spring(int index);				// add the radium springs with inner point i and outer point i 
+	void Add_Shear_Spring(int index, int h, int t );	// add the left shear springs with inner point i and outer point i+1										//add the right shear springs with inner point i+1 and outer point i
+	virtual void Add_Faces(int i, int i1, int imid);	// add the triangle surface to object2D
 	
 };
 

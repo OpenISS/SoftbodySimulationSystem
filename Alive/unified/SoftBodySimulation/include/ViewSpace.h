@@ -6,7 +6,7 @@
 // A 3D space containing the balls
 
 
-class ViewSpace       // constructor
+class ViewSpace       					// constructor
 {
 public:
 	ViewSpace()
@@ -22,7 +22,7 @@ public:
 		spaceVertex[7]= new Vector(-LIMIT,  LIMIT,  LIMIT);           
 	}
 
-	~ViewSpace()
+	~ViewSpace()					// destructor
 	{
 		for(int i = 0; i < 8; i++)
 		{

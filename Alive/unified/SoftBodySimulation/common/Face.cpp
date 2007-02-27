@@ -22,8 +22,8 @@ void Face::CalNormalNField(void)
 	//field = N.getLength();  	// triangle field, normal vector scalar 
 	//assert(false);
 
-	N.Normalize();              // normalize the vector
+	N.Normalize();              					 // normalize the vector
 
 //	cout<<"after normalize==="<<"N.x=="<<N.x<<"==N.y=="<<N.y<<"==N.z=="<<N.z<<endl;
-	*normal = N;                 // as the triangle face normal vector
+	*normal = N;                					 // as the triangle face normal vector
 }
