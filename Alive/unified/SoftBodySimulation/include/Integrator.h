@@ -10,63 +10,47 @@ class Integrator
 protected:
 	Object* object;
 
-/*	Particle temp_inner_points0[MAX_POINTS_SPRINGS];		//temp inner particle container for integrator computation
-	Particle temp_inner_points1[MAX_POINTS_SPRINGS];
-	Particle temp_inner_points2[MAX_POINTS_SPRINGS];
-	Particle temp_inner_points3[MAX_POINTS_SPRINGS];
-	Particle temp_inner_points4[MAX_POINTS_SPRINGS];
-
-	Particle temp_outer_points0[MAX_POINTS_SPRINGS];		//temp outer particle container for integrator computation
-	Particle temp_outer_points1[MAX_POINTS_SPRINGS];
-	Particle temp_outer_points2[MAX_POINTS_SPRINGS];
-	Particle temp_outer_points3[MAX_POINTS_SPRINGS];
-	Particle temp_outer_points4[MAX_POINTS_SPRINGS];
-*/
-
-
-	vector<Particle*> temp_inner_points0;		//temp inner vector<Particle*> container for integrator computation
+	vector<Particle*> temp_inner_points0; // temp inner vector<Particle*> container for integrator computation
 	vector<Particle*> temp_inner_points1;
 	vector<Particle*> temp_inner_points2;
 	vector<Particle*> temp_inner_points3;
 	vector<Particle*> temp_inner_points4;
 
-	vector<Particle*> temp_outer_points0;		//temp outer vector<Particle*> container for integrator computation
+	vector<Particle*> temp_outer_points0; // temp outer vector<Particle*> container for integrator computation
 	vector<Particle*> temp_outer_points1;
 	vector<Particle*> temp_outer_points2;
 	vector<Particle*> temp_outer_points3;
 	vector<Particle*> temp_outer_points4;
 
-
-
 	dimensionality dim;
 
 public:
-	bool dragExists;										//if there is user interaction
-	float mDragX;											//mouse position
-	float mDragY;
+	bool dragExists;				  //if there is user interaction
+	float mDragX;				  // mouse position x axis
+	float mDragY;				  // mouse position y axis
 
 public:
-	Integrator(Object&);									//integrator constructor
-	virtual ~Integrator();
+	Integrator(Object&);			  // integrator constructor with the computed object
+	virtual ~Integrator();			  // integrator destructor
 
+	// the calculation of the integration with/without external dragging force
 	virtual void integrate(float, bool drag = false, float xDrag = 0, float yDrag = 0);
 
-
-	dimensionality getDimension() {return dim;}
-	void setDimension(dimensionality dim) {this->dim = dim;}
+	dimensionality getDimension() {return dim;}   		    // get the object type, 1D, 2D, or 3D
+	void setDimension(dimensionality dim) {this->dim = dim;}  // set the object type, 1D, 2D, or 3D
 
 protected:
-	virtual void ExternalForces();     // gravity force
-	virtual void SpringForces();       // spring forces 
-	virtual void PressureForces();     // pressure  
+	virtual void ExternalForces();     				   // accumulate gravity and dragging force
+	virtual void SpringForces();       				   // accumulate all type of springs forces 
+	virtual void PressureForces();     				   // accumulate pressure  
  
-	virtual void AccumulateForces();   // accumulate forces acted on 
-	virtual void Derivatives(float, float) = 0;   // Differential computation
-	virtual void CollisionDetection(int);
+	virtual void AccumulateForces();   				   // accumulate all forces acted on object 
+	virtual void Derivatives(float, float) = 0;   		   // Differential computation
+	virtual void CollisionDetection(int);			   // calculate the collision detection 
 
 private:
-	//void CalculateSpringForces(Spring springs[], int i/*, float rd12\, float x1, float y1, float x2, float y2*/);
-	void CalculateSpringForces(vector<Spring *>springs, int i, bool special = false/*, float rd12\, float x1, float y1, float x2, float y2*/);
+	// general spring calculation function 
+	void CalculateSpringForces(vector<Spring *>springs, int i, bool special = false);
 };
 
 #endif /* INTEGRATOR_H */

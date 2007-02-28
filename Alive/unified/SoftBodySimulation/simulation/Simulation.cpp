@@ -24,10 +24,10 @@ float xMouse, yMouse, zMouse;    // for mouse point r(x,y,z)
 int closest_i, closest_j;        // Closest point index i, j 
 
 // Keyboard variables
-int   GoDir;           // for GLUT_KEY_LEFT,GLUT_KEY_RIGHT,GLUT_KEY_UP,GLUT_KEY_DOWN
-float RotateRegX=0;    // for glRotatef() rotating direction
-float RotateRegY=0;    // for glRotatef() rotating direction
-float RotateRegZ=0;    // for glRotatef() rotating direction
+int   GoDir;           		   // for GLUT_KEY_LEFT,GLUT_KEY_RIGHT,GLUT_KEY_UP,GLUT_KEY_DOWN
+float RotateRegX=0;              // for glRotatef() rotating direction
+float RotateRegY=0;              // for glRotatef() rotating direction
+float RotateRegZ=0;    		   // for glRotatef() rotating direction
 
 
 int   main_window;
@@ -35,22 +35,22 @@ int   wireframe = 0;
 int   segments = 8;
 
 
-//Object1D object1D;
-//Object2D object2D;
-Object3D object3D;
+//Object1D object1D;		  // initial the object1D
+//Object2D object2D;		  // initial the object2D
+Object3D object3D;		  // initial the object3D
 
 
-ViewSpace  box;                              // Creat a viewer space
+ViewSpace  box;                 // Creat a viewer space
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 void Reshape(int width, int height)
 {
-	glViewport(0, 0, width, height);  // Define GL View Port rectangle
+	glViewport(0, 0, width, height);  			// Define GL View Port rectangle
 	glMatrixMode(GL_PROJECTION);
 	gluPerspective(50.,float(Width)/float(Height), 1., 100.);
 	glLoadIdentity();
-    glMatrixMode(GL_MODELVIEW);
+    	glMatrixMode(GL_MODELVIEW);
 	glutPostRedisplay(); 
 }
 		
@@ -67,7 +67,6 @@ void Display(void)
 	glLoadIdentity();
  	gluLookAt(2,0,10,0,0,0,0,1,0);  // Camera difinition
 
-
 	glPointSize(8);
 
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -75,14 +74,10 @@ void Display(void)
 
 //	object1D.Draw();
 
-Rotated();
+	Rotated();
 
 //	object2D.Draw();
 	object3D.Draw();
-
- 
-
-
 	glutSwapBuffers(); 
 }
 
@@ -90,7 +85,6 @@ Rotated();
 
 
 // when mouse is clicked 
-
 void Mouse(int button, int state, int x, int y)
 {
    
@@ -105,12 +99,9 @@ void Mouse(int button, int state, int x, int y)
 	{
 		mousedown = 0;	
 	}
-	
 }
 
-
 // when mouse is moving
-
 void Motion(int x, int y)
 {
 	xMouse = (4 *  ((float)x/(float)Width)) -2 ;
@@ -125,117 +116,102 @@ void Keyboard(unsigned char key, int x, int y)
 {     
 //	ThreeDInner.Keyboard(key, x, y);		
 
-cout << "key = " << key << endl;
+	cout << "key = " << key << endl;
 
    	switch(key){
-    case 'x':
-    case 'X':
-		RotateRegX+=10;			
-        glutPostRedisplay();
-		break;
+    		case 'x':
+    		case 'X':
+			RotateRegX+=10;			
+        		glutPostRedisplay();
+			break;
 
-    case 'y':
-    case 'Y':
-		RotateRegY+=10;	
-        glutPostRedisplay();
-		break;
+    		case 'y':
+   		case 'Y':
+			RotateRegY+=10;	
+        		glutPostRedisplay();
+			break;
 
+		case 'z':
+    		case 'Z':
+			RotateRegZ+=10;	
+        		glutPostRedisplay();
+			break;
 
-	case 'z':
-    case 'Z':
-		RotateRegZ+=10;	
-        glutPostRedisplay();
-		break;
-
-    case 'r':
-    case 'R':
-		RotateRegX+=5;
-       	RotateRegY+=5;
-       	RotateRegZ+=5;
-        glutPostRedisplay();
-		break;
+		case 'r':
+    		case 'R':
+			RotateRegX+=5;
+       		RotateRegY+=5;
+       		RotateRegZ+=5;
+        		glutPostRedisplay();
+			break;
    
-        default:                             
-		break;                           // do nothing
+        	default:                             
+			break;              // do nothing
 	}
 }
 
 void Rotated(void)
 {  
-//	glPushMatrix();
+// glPushMatrix();
    glRotated(RotateRegX, 1.0, 0.0, 0.0);  // Rotate 90 about X-axis 
    glRotated(RotateRegY, 0.0, 1.0, 0.0);  // Rotate 90 about X-axis 
    glRotated(RotateRegZ, 0.0, 0.0, 1.0);  // Rotate 90 about X-axis 
-	//glPopMatrix();
+// glPopMatrix();
 } 
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-
-
 // when a moving direction Key is pressed
-
 void SpecialKeys(int key, int x, int y)
 {
 //	ThreeDInner.SpecialKeys(key, x, y);	
 	switch (key){
-
-	case GLUT_KEY_UP:
-		 GoDir = 1;
-         break;
-	case GLUT_KEY_DOWN:
-		 GoDir = 2;
-		 break;
-	case GLUT_KEY_LEFT:
-		 GoDir = 3;
-		 break;
-	case GLUT_KEY_RIGHT:
-		 GoDir = 4;
-		 break;
-	default:
-		 GoDir = 0;
-		 break; 	
+		case GLUT_KEY_UP:
+			 GoDir = 1;
+         		 break;
+		case GLUT_KEY_DOWN:
+		 	 GoDir = 2;
+		 	 break;
+		case GLUT_KEY_LEFT:
+		 	 GoDir = 3;
+		 	 break;
+		case GLUT_KEY_RIGHT:
+			 GoDir = 4;
+		 	 break;
+		default:
+		 	 GoDir = 0;
+		 	 break; 	
 	}
 }
 
 
-
-
 void Idle()
 {
-	
 //	object1D.Update(DT, mousedown != 0, xMouse, yMouse);
 //	object2D.Update(DT, mousedown != 0, xMouse, yMouse);
 	object3D.Update(DT, mousedown != 0, xMouse, yMouse);
-
 	glutPostRedisplay();
 }
 
- /*void motion (int mx, int my)
+/*void motion (int mx, int my)
 {
-   // Normalize mouse coordinates.
-  xMouse = double(mx) ;
+// Normalize mouse coordinates.
+   xMouse = double(mx) ;
    yMouse = double(my) ;
    glutPostRedisplay();
 }
 */
 //======================================================================================
-
-//	Function main()
- 
-
 int main(void)
-{
-    
+{    
 	glutInitWindowPosition(200, 200); 
 	glutInitWindowSize( Width, Height);
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
 
 //	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
-    main_window = glutCreateWindow("A Simulation Ball - Miao Song"); 
+ 	main_window = glutCreateWindow("A Simulation Ball - Miao Song"); 
 
- 
 	glutReshapeFunc(Reshape);
     
 	glEnable(GL_BLEND);                                // transparent
@@ -243,8 +219,6 @@ int main(void)
 	glEnable(GL_DEPTH_TEST);
 
 //	glutPassiveMotionFunc(motion);
-    
-
 
 	glutMouseFunc(Mouse);
 	glutMotionFunc(Motion);
@@ -262,9 +236,7 @@ int main(void)
    
 	glui->set_main_gfx_window( main_window );
 	GLUI_Master.set_glutIdleFunc( Idle ); 
-*/
-
+	*/
 	glutMainLoop(); 	
-
 	return 0;
 }
