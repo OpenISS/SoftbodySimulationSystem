@@ -85,12 +85,12 @@ void Integrator::ExternalForces()
 	for(i = 0; i < object->GetNumberOfParticles(); i++)			// contribute gravity force
 	{
 		// for the inner layer
-		object->inner_points[i]->f->x = 0;//40*sin(25*i);		// initial force on x axis
-		object->inner_points[i]->f->y = MASS * GY;     			// set the gravity along y axix
+		object->inner_points[i]->f->x = 0;//80*sin(90*i);		// initial force on x axis
+		object->inner_points[i]->f->y = 2.5* MASS * GY;     			// set the gravity along y axix
 		object->inner_points[i]->f->z = 0; 					// set to 0    
 
 		// for the outer layer
-		object->outer_points[i]->f->x = 0;//40*sin(25*i);		// initial force on x axis
+		object->outer_points[i]->f->x = 0;//80* cos(25*i);		// initial force on x axis
 		object->outer_points[i]->f->y = MASS * GY;			// set the gravity along y axix
 		object->outer_points[i]->f->z = 0;					// set to 0    
 		

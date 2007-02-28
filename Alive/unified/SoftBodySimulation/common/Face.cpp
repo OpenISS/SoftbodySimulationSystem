@@ -3,7 +3,17 @@
 
 // Class triface function definition
 // Calculate normal vector to a triangle and its field 
-	 
+/**
+ * This does that. But it also does that too.
+ * @param fooo dfdjfh d
+ * @param vla fjhdjfdj
+ * @return true if succes
+ * @author
+ * @version
+ * @since
+ * @note ffd
+ * @see
+ */	 
 void Face::CalNormalNField(void)
 {
 	// the normal can be calculated by vector cross multiply

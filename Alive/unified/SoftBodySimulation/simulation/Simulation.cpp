@@ -35,8 +35,8 @@ int   wireframe = 0;
 int   segments = 8;
 
 
-//Object1D object1D;		  // initial the object1D
-//Object2D object2D;		  // initial the object2D
+Object1D object1D;		  // initial the object1D
+Object2D object2D;		  // initial the object2D
 Object3D object3D;		  // initial the object3D
 
 
@@ -65,19 +65,19 @@ void Display(void)
 	gluPerspective(50,float(Width)/float(Height), 1, 100.);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
- 	gluLookAt(2,0,10,0,0,0,0,1,0);  // Camera difinition
+ 	gluLookAt(2,0,12,0,0,0,0,1,0);  // Camera difinition
 
 	glPointSize(8);
 
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 	box.Draw();        // Draw the view box space 	
 
-//	object1D.Draw();
+	object1D.Draw();
 
 	Rotated();
 
 //	object2D.Draw();
-	object3D.Draw();
+//	object3D.Draw();
 	glutSwapBuffers(); 
 }
 
@@ -188,8 +188,8 @@ void SpecialKeys(int key, int x, int y)
 
 void Idle()
 {
-//	object1D.Update(DT, mousedown != 0, xMouse, yMouse);
-//	object2D.Update(DT, mousedown != 0, xMouse, yMouse);
+	object1D.Update(DT, mousedown != 0, xMouse, yMouse);
+	object2D.Update(DT, mousedown != 0, xMouse, yMouse);
 	object3D.Update(DT, mousedown != 0, xMouse, yMouse);
 	glutPostRedisplay();
 }

@@ -87,6 +87,11 @@ public:
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 	void CalNormalNField(void);						// Calculate normal vector to a triangle and its field 	
 public:	
+
+	Particle	 *fp1;		 // first vertex 
+	Particle	 *fp2;       // second vertex
+	Particle	 *fp3;       // third vertex*/
+
 	Spring	 *fs1;		 					// first spring on the face 
 	Spring	 *fs2;       						// second spring on the face
 	Spring	 *fs3;   							// third spring on the face 
