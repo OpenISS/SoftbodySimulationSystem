@@ -94,6 +94,10 @@ void Object1D::SetObject()
 //	cout<<"numParticles---1D------"<<numParticles<<endl;
 	for(i=0; i<numParticles; i++)		// create NUMP points into 2D circle 
 	{
+/*		if (i==0)
+	outer_points.push_back( new Particle(new Vector(0,0,0), MASS));
+		else
+*/
 	outer_points.push_back( new Particle(new Vector(PosX,PosY,0), MASS));
 	inner_points.push_back( new Particle());
 	/*	outer_points[i].r->x += PosX ;   // outer X coordiation

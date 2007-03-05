@@ -91,7 +91,10 @@ void Integrator::ExternalForces()
 
 		// for the outer layer
 		object->outer_points[i]->f->x = 0;//80* cos(25*i);		// initial force on x axis
-		object->outer_points[i]->f->y = MASS * GY;			// set the gravity along y axix
+	/*	if (i==1) 
+		object->outer_points[i]->f->y = 0;//MASS * GY;			// set the gravity along y axix
+		else
+	*/	object->outer_points[i]->f->y = MASS * GY;			// set the gravity along y axix
 		object->outer_points[i]->f->z = 0;					// set to 0    
 		
 		if(i == object->closest_i)						// if is the nearest particle to mouse 
@@ -505,6 +508,15 @@ void Integrator::CollisionDetection(int i)
 		object->outer_points[i]->v->y =  0.5 * object->outer_points[i]->v->y;
 		object->outer_points[i]->v->z =  0.5 * object->outer_points[i]->v->z;
 
+	/*	if(object->dim == 1){
+			if(i==1){
+			object->outer_points[i]->r->x = 0;//object->outer_points[i]->r->x + object->outer_points[i]->dr->x;
+			}
+		
+		}
+		else{
+		object->outer_points[i]->r->x = object->outer_points[i]->r->x + object->outer_points[i]->dr->x;
+		}*/
 		object->outer_points[i]->r->x = object->outer_points[i]->r->x + object->outer_points[i]->dr->x;
 		changed = false;
 	}
@@ -552,7 +564,7 @@ void Integrator::CollisionDetection(int i)
 		object->outer_points[i]->v->y =    0.5 * object->outer_points[i]->v->y;
 		object->outer_points[i]->v->z = - decay * object->outer_points[i]->v->z;   
 		
-	    	object->outer_points[i]->r->z  = object->outer_points[i]->r->z + object->outer_points[i]->dr->z;
+	    object->outer_points[i]->r->z  = object->outer_points[i]->r->z + object->outer_points[i]->dr->z;
 		changed = false;
 	}
 

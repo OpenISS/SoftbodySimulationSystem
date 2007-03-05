@@ -16,7 +16,6 @@ protected:
 	int numSprings;							// number of springs of the object
 	Integrator* integrator;						// integrator object
 	integrator_type integratorType;				// different type of integrator, Euler, Midpoint, RK4
-	dimensionality dim;						// dimension type to specify the object is 1D, 2D, or 3D
 
 public:
 	vector<Spring*>  inner_springs;				// the springs on the inner layer of the object
@@ -25,6 +24,7 @@ public:
 	vector<Particle*>  outer_points;				// the particles on the outer layer of the object
 	vector<Face*> inner_faces;					// the surfaces on the inner layer of the object
 	vector<Face*> outer_faces;					// the surfaces on the outer layer of the object
+	dimensionality dim;						// dimension type to specify the object is 1D, 2D, or 3D
 
 	int   closest_i ;  		    				// the closest point on the outer layer to mouse position
 

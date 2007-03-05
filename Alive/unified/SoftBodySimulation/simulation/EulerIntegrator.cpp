@@ -80,6 +80,84 @@ void EulerIntegrator::ynew(int i, float k, float deltaT)
 {
 	k1(i, k, deltaT);
 
+	/*if(object->dim==1){
+		if (i==0){
+	object->outer_points[i]->dv->x = 0;//temp_outer_points1[i]->dv->x;
+	object->outer_points[i]->dv->y = 0;//temp_outer_points1[i]->dv->y;
+	object->outer_points[i]->dv->z = 0;//temp_outer_points1[i]->dv->z;
+
+	object->outer_points[i]->dr->x = 0;//temp_outer_points1[i]->dr->x; 											// Change in position is velocity times the change in time
+	object->outer_points[i]->dr->y = 0;//temp_outer_points1[i]->dr->y;
+	object->outer_points[i]->dr->z = 0;//temp_outer_points1[i]->dr->z;
+
+	object->outer_points[i]->v->x = 0;//temp_outer_points0[i]->v->x + temp_outer_points1[i]->dv->x;				// Change in velocity is added to the velocity->
+	object->outer_points[i]->v->y = 0;//temp_outer_points0[i]->v->y + temp_outer_points1[i]->dv->y;		
+	object->outer_points[i]->v->z = 0;//temp_outer_points0[i]->v->z + temp_outer_points1[i]->dv->z;		
+
+	object->outer_points[i]->r->x = 0;//temp_outer_points0[i]->r->x + temp_outer_points1[i]->dr->x; 											// Change in position is velocity times the change in time
+	object->outer_points[i]->r->y = 0;//temp_outer_points0[i]->r->y + temp_outer_points1[i]->dr->y;
+	object->outer_points[i]->r->z = 0;//temp_outer_points0[i]->r->z + temp_outer_points1[i]->dr->z;
+
+	
+
+	object->inner_points[i]->dv->x = 0;//temp_inner_points1[i]->dv->x; 											// Change in position is velocity times the change in time
+	object->inner_points[i]->dv->y = 0;//temp_inner_points1[i]->dv->y;
+	object->inner_points[i]->dv->z = 0;//temp_inner_points1[i]->dv->z;
+
+	object->inner_points[i]->dr->x = 0;//temp_inner_points1[i]->dr->x; 											// Change in position is velocity times the change in time
+	object->inner_points[i]->dr->y = 0;//temp_inner_points1[i]->dr->y;
+	object->inner_points[i]->dr->z = 0;//temp_inner_points1[i]->dr->z;
+
+
+	
+	object->inner_points[i]->v->x = 0;//temp_inner_points0[i]->v->x + temp_inner_points1[i]->dv->x;				// Change in velocity is added to the velocity->
+	object->inner_points[i]->v->y = 0;//temp_inner_points0[i]->v->y + temp_inner_points1[i]->dv->y;		
+	object->inner_points[i]->v->z = 0;//temp_inner_points0[i]->v->z + temp_inner_points1[i]->dv->z;		
+
+	object->inner_points[i]->r->x = 0;//temp_inner_points0[i]->r->x + temp_inner_points1[i]->dr->x; 											// Change in position is velocity times the change in time
+	object->inner_points[i]->r->y = 0;//temp_inner_points0[i]->r->y + temp_inner_points1[i]->dr->y;
+	object->inner_points[i]->r->z = 0;//temp_inner_points0[i]->r->z + temp_inner_points1[i]->dr->z;
+	}
+		else{
+		object->outer_points[i]->dv->x = temp_outer_points1[i]->dv->x;
+	object->outer_points[i]->dv->y = temp_outer_points1[i]->dv->y;
+	object->outer_points[i]->dv->z = temp_outer_points1[i]->dv->z;
+
+	object->outer_points[i]->dr->x = temp_outer_points1[i]->dr->x; 											// Change in position is velocity times the change in time
+	object->outer_points[i]->dr->y = temp_outer_points1[i]->dr->y;
+	object->outer_points[i]->dr->z = temp_outer_points1[i]->dr->z;
+
+	object->outer_points[i]->v->x = temp_outer_points0[i]->v->x + temp_outer_points1[i]->dv->x;				// Change in velocity is added to the velocity->
+	object->outer_points[i]->v->y = temp_outer_points0[i]->v->y + temp_outer_points1[i]->dv->y;		
+	object->outer_points[i]->v->z = temp_outer_points0[i]->v->z + temp_outer_points1[i]->dv->z;		
+
+	object->outer_points[i]->r->x = temp_outer_points0[i]->r->x + temp_outer_points1[i]->dr->x; 											// Change in position is velocity times the change in time
+	object->outer_points[i]->r->y = temp_outer_points0[i]->r->y + temp_outer_points1[i]->dr->y;
+	object->outer_points[i]->r->z = temp_outer_points0[i]->r->z + temp_outer_points1[i]->dr->z;
+
+	
+
+	object->inner_points[i]->dv->x = temp_inner_points1[i]->dv->x; 											// Change in position is velocity times the change in time
+	object->inner_points[i]->dv->y = temp_inner_points1[i]->dv->y;
+	object->inner_points[i]->dv->z = temp_inner_points1[i]->dv->z;
+
+	object->inner_points[i]->dr->x = temp_inner_points1[i]->dr->x; 											// Change in position is velocity times the change in time
+	object->inner_points[i]->dr->y = temp_inner_points1[i]->dr->y;
+	object->inner_points[i]->dr->z = temp_inner_points1[i]->dr->z;
+
+
+	
+	object->inner_points[i]->v->x = temp_inner_points0[i]->v->x + temp_inner_points1[i]->dv->x;				// Change in velocity is added to the velocity->
+	object->inner_points[i]->v->y = temp_inner_points0[i]->v->y + temp_inner_points1[i]->dv->y;		
+	object->inner_points[i]->v->z = temp_inner_points0[i]->v->z + temp_inner_points1[i]->dv->z;		
+
+	object->inner_points[i]->r->x = temp_inner_points0[i]->r->x + temp_inner_points1[i]->dr->x; 											// Change in position is velocity times the change in time
+	object->inner_points[i]->r->y = temp_inner_points0[i]->r->y + temp_inner_points1[i]->dr->y;
+	object->inner_points[i]->r->z = temp_inner_points0[i]->r->z + temp_inner_points1[i]->dr->z;
+		}
+	}
+
+	else{*/
 	object->outer_points[i]->dv->x = temp_outer_points1[i]->dv->x;
 	object->outer_points[i]->dv->y = temp_outer_points1[i]->dv->y;
 	object->outer_points[i]->dv->z = temp_outer_points1[i]->dv->z;
@@ -115,5 +193,6 @@ void EulerIntegrator::ynew(int i, float k, float deltaT)
 	object->inner_points[i]->r->x = temp_inner_points0[i]->r->x + temp_inner_points1[i]->dr->x; 											// Change in position is velocity times the change in time
 	object->inner_points[i]->r->y = temp_inner_points0[i]->r->y + temp_inner_points1[i]->dr->y;
 	object->inner_points[i]->r->z = temp_inner_points0[i]->r->z + temp_inner_points1[i]->dr->z;
+//	}
 }
 
