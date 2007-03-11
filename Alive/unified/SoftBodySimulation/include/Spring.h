@@ -26,7 +26,7 @@ public:
 	float ks;											// Spring constant
 	float kd;											// spring damping factor	
 	Vector normal;										// normal vector at the spring of a object  
-	spring_type type;										// different types of springs to construct the object, structural, radium,  
+	spring_type type;										// different types of springs to construct the object, structural, radium  
 };
 
 
