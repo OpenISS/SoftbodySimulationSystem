@@ -1,5 +1,6 @@
 #include "Object1D.h"
 #include <vector>
+//##ModelId=45F4D79701B9
 Object1D::Object1D()
 {
 	SetObject();
@@ -7,10 +8,12 @@ Object1D::Object1D()
 }
 
 
+//##ModelId=45F4D79701BA
 Object1D::~Object1D()
 {
 }
 
+//##ModelId=45F4D79701C7
 void Object1D::Draw()
 {
 	static bool findOnce = false;
@@ -64,6 +67,7 @@ void Object1D::Draw()
 
 //====================================================================
 
+//##ModelId=45F4D79701C9
 void Object1D::Add_Structural_Spring(int index, int head, int tail)
 {
 
@@ -84,6 +88,7 @@ void Object1D::Add_Structural_Spring(int index, int head, int tail)
 
 
 //================================================================
+//##ModelId=45F4D79701CD
 void Object1D::SetObject()
 {
 

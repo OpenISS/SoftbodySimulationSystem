@@ -3,6 +3,7 @@
 
 
 
+//##ModelId=45F4D79602F5
 void ViewSpace::Draw(void)    // Draw the view space
 {
     int j;

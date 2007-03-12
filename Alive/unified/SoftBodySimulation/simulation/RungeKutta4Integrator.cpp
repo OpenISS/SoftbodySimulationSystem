@@ -1,14 +1,17 @@
 #include "RungeKutta4Integrator.h"
 
+//##ModelId=45F4D7970041
 RungeKutta4Integrator::RungeKutta4Integrator(Object& object) : MidpointIntegrator(object)
 {
 }
 
+//##ModelId=45F4D7970043
 RungeKutta4Integrator::~RungeKutta4Integrator()
 {
 }
 
 
+//##ModelId=45F4D7970044
 void RungeKutta4Integrator::k4(int i, float k, float deltaT)
 {
 	k3(i, k, deltaT);
@@ -57,6 +60,7 @@ void RungeKutta4Integrator::k4(int i, float k, float deltaT)
 
 }
 
+//##ModelId=45F4D7970050
 void RungeKutta4Integrator::k3(int i, float k, float deltaT)
 {
 	k2(i, k, deltaT);
@@ -121,6 +125,7 @@ void RungeKutta4Integrator::k2(int i, float k, float deltaT)
 }
 */
 
+//##ModelId=45F4D7970054
 void RungeKutta4Integrator::ynew(int i, float k, float deltaT)
 {
 	k4(i, k, deltaT);

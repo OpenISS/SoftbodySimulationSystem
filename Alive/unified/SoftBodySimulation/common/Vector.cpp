@@ -61,6 +61,7 @@ Vector operator* (const Vector &K, const Vector &N)		   		 // #3 fcn - Vector mu
 	return Vector(K.x * N.x, K.y * N.y, K.z * N.z);
 }
 
+//##ModelId=45F4D7960332
 Vector& Vector::operator* (Vector const &K)				    	// #3 fcn - Vector multiplication with a vector to itself
 {
 	//cout<<"call this one 2"<<endl;
@@ -71,6 +72,7 @@ Vector& Vector::operator* (Vector const &K)				    	// #3 fcn - Vector multiplic
 	return *this;
 }
 
+//##ModelId=45F4D7960334
 Vector& Vector::operator* (float s)							// #3 fcn - Vector multiplication for a vector and a float
 {
 	//cout<<"call this one 1"<<endl;
@@ -119,6 +121,7 @@ Vector operator^ (Vector const &R, Vector const &K)				// #6 fcn - Vector dot pr
 }*/
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+//##ModelId=45F4D796033E
 Vector& Vector::operator=(Vector const &K)					// #7 fcn - Vector assign operator	
 {
 	x = K.x;
@@ -128,6 +131,7 @@ Vector& Vector::operator=(Vector const &K)					// #7 fcn - Vector assign operato
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  
+//##ModelId=45F4D7960340
 bool Vector::operator==(Vector const &K)    					// fcn #7 - Vector equalization operator
 {
 	if(x == K.x)

@@ -4,10 +4,12 @@
 #include "Vector.h"
 
 // Class Particle declaration
+//##ModelId=45F4D797006F
 class Particle
 {
   public:
 
+	//##ModelId=45F4D7970070
 	Particle(Vector* R, float Mass) : mass(Mass)		 		// particle constructor with variables position and mass
 	{		
 		r = R;									// initialize Particle space position
@@ -18,6 +20,7 @@ class Particle
 		v  = new Vector(0,0,0);							// initialize Particle space velocity
 	}
 
+	//##ModelId=45F4D7970073
 	Particle()										// particle constructor with no variables
 	{
 		r  = new Vector(0,0,0);							// initialize Particle space position
@@ -28,6 +31,7 @@ class Particle
 		mass = MASS;
 	}
 
+	//##ModelId=45F4D7970074
 	Particle(const Particle& p)							// particle constructor with variables position
 	{
 		mass = p.mass;
@@ -59,6 +63,7 @@ class Particle
 	}
 
 
+	//##ModelId=45F4D797007F
 	~Particle()										// particle destructor			
 	{
 		/*
@@ -70,19 +75,28 @@ class Particle
 		*/
 	}
 	
+	//##ModelId=45F4D7970080
 	void ClearForce(void);								// reset forces at a Particle 		
 //	void AccumuForce(Vector const &);
+	//##ModelId=45F4D79700B2
 	friend ostream& operator<<(ostream& os, const Particle& c);		//output operator
 
 
 public:
 
+	//##ModelId=45F4D7970082
 	float mass;										// space Particle with mass 
+	//##ModelId=45F4D797008E
 	float OneOverMass;								// for computation
+	//##ModelId=45F4D7970090
 	Vector* r;										// Particle space position
+	//##ModelId=45F4D7970095
 	Vector* f;										// Particle space force
+	//##ModelId=45F4D797009F
 	Vector* v;										// Particle space velocity
+	//##ModelId=45F4D79700A4
       Vector* dr;										// small change of position in derivatives
+	//##ModelId=45F4D79700AE
 	Vector* dv;										// small change of velocity in derivatives	
 };
 

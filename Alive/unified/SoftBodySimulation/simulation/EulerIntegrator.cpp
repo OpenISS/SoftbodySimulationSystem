@@ -1,9 +1,11 @@
 #include "EulerIntegrator.h"
 
+//##ModelId=45F4D79800AE
 EulerIntegrator::EulerIntegrator(Object& object) : Integrator(object)
 {
 }
 
+//##ModelId=45F4D79800B0
 EulerIntegrator::~EulerIntegrator()
 {
 }
@@ -16,6 +18,7 @@ EulerIntegrator::~EulerIntegrator()
 //void EulerIntegrator::Derivatives(Particle[] points, int NUMP, float DT)
 //void EulerIntegrator::integrate(Object object, int NUMP)
 
+//##ModelId=45F4D79800B2
 void EulerIntegrator::Derivatives(float deltaT, float k)
 {
 
@@ -30,6 +33,7 @@ void EulerIntegrator::Derivatives(float deltaT, float k)
 }
 
 
+//##ModelId=45F4D79800BE
 void EulerIntegrator::k1(int i, float k, float deltaT)
 {
 
@@ -76,6 +80,7 @@ void EulerIntegrator::k1(int i, float k, float deltaT)
 
 }
 
+//##ModelId=45F4D79800C2
 void EulerIntegrator::ynew(int i, float k, float deltaT)
 {
 	k1(i, k, deltaT);

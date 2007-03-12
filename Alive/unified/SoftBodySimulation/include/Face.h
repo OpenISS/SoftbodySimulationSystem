@@ -5,11 +5,13 @@
 #include "Spring.h"
 
 // Class Face is an element cell of 3D ball entire surface
+//##ModelId=45F4D7980050
 class Face
 {
 public:
 
 	//face constructor with three particles point to the three points on each face, for 2D
+	//##ModelId=45F4D7980051
 	Face(Particle *Ap1, Particle *Ap2, Particle *Ap3) :
            fp1(Ap1), fp2(Ap2), fp3(Ap3)
 	{
@@ -20,6 +22,7 @@ public:
 
 	// face constructor with three particles point to the three points on each face, 
 	// and store the spring information into the spring vector for 3D
+	//##ModelId=45F4D7980060
 	Face(Particle *Ap1, Particle *Ap2, Particle *Ap3, vector<Spring*> &springs) :   
 	    fp1(Ap1), fp2(Ap2), fp3(Ap3)
 	{
@@ -76,6 +79,7 @@ public:
 	}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+	//##ModelId=45F4D7980065
 	~Face()									// face destructor 
 	{
 //		delete fp1;
@@ -85,17 +89,25 @@ public:
 //		delete force;
 	}
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+	//##ModelId=45F4D7980066
 	void CalNormalNField(void);						// Calculate normal vector to a triangle and its field 	
 public:	
 
+	//##ModelId=45F4D7980070
 	Particle	 *fp1;		 // first vertex 
+	//##ModelId=45F4D7980075
 	Particle	 *fp2;       // second vertex
+	//##ModelId=45F4D798007F
 	Particle	 *fp3;       // third vertex*/
 
+	//##ModelId=45F4D7980084
 	Spring	 *fs1;		 					// first spring on the face 
+	//##ModelId=45F4D7980089
 	Spring	 *fs2;       						// second spring on the face
+	//##ModelId=45F4D798008F
 	Spring	 *fs3;   							// third spring on the face 
 //    float    	field;							// normal field
+	//##ModelId=45F4D7980094
 	Vector* 	normal;							// triangle normal Vector
 //	Vector* 	force;							// force on the triangle
 };

@@ -1,14 +1,17 @@
 #include "MidpointIntegrator.h"
 #include "Object2D.h"
 
+//##ModelId=45F4D79702B3
 MidpointIntegrator::MidpointIntegrator(Object& object) : EulerIntegrator(object)
 {
 }
 
+//##ModelId=45F4D79702B5
 MidpointIntegrator::~MidpointIntegrator()
 {
 }
 
+//##ModelId=45F4D79702B6
 void MidpointIntegrator::k2(int i, float k, float deltaT)
 {
 	k1(i, k, deltaT);
@@ -53,6 +56,7 @@ void MidpointIntegrator::k2(int i, float k, float deltaT)
 	temp_outer_points2[i]->dr->z = temp_outer_points0[i]->dr->z + k * 0.5 * temp_outer_points1[i]->dv->z * deltaT;
 }
 
+//##ModelId=45F4D79702C4
 void MidpointIntegrator::ynew(int i, float k, float deltaT)
 {
 	k2(i, k, deltaT);

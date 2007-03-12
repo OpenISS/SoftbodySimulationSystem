@@ -2,6 +2,7 @@
 
 #include <assert.h>
 
+//##ModelId=45F4D79700EE
 Object3D::Object3D() 
 {	//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 /*	pa = new Particle(new Vector(0,0,0), MASS);
@@ -27,6 +28,7 @@ Object3D::Object3D()
 
 
 
+//##ModelId=45F4D79700FB
 Object3D::~Object3D()
 {
 /*	delete pa;
@@ -37,6 +39,7 @@ Object3D::~Object3D()
 
 
 
+//##ModelId=45F4D797010B
 void Object3D::Add_Structural_Spring(int index, int h, int t)
 {
 	// making sure nobody actuall calls it
@@ -60,6 +63,7 @@ void Object3D::Add_Structural_Spring(int index, int h, int t)
 
 
 
+//##ModelId=45F4D797010F
 void Object3D::Add_Radium_Spring(int index)
 {
 	radium_springs.push_back( new Spring(inner_springs[index]->sp1,outer_springs[index]->sp1));
@@ -67,6 +71,7 @@ void Object3D::Add_Radium_Spring(int index)
 } 
 
 
+//##ModelId=45F4D797011B
 void Object3D::Add_Shear_Spring(int index )
 {
 	shear_springs_left.push_back(new Spring(inner_springs[index]->sp1,outer_springs[index]->sp2));
@@ -81,6 +86,7 @@ void Object3D::Add_Shear_Spring(int index )
 
 
 //==============================================================================
+//##ModelId=45F4D79700FF
 void Object3D::Iteration()
 {
 	// Spring triplets counter for older springs particle replacements
@@ -351,6 +357,7 @@ cout<<"inner_faces fp3: "<<i<<"----="<<inner_faces[i]->fp3->r->x<<";"<<inner_fac
 
 
 
+//##ModelId=45F4D7970100
 void Object3D::nonunitsphere()
 {
 
@@ -467,6 +474,7 @@ float dphi = 360/3;
 }
 
 ///////////////==================================================================
+//##ModelId=45F4D7970101
 void Object3D::SetObject(void) // [M+2][N] array for M*N+2 Points 
 {
 		
@@ -532,6 +540,7 @@ void Object3D::SetObject(void) // [M+2][N] array for M*N+2 Points
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
+//##ModelId=45F4D797011D
 void Object3D::Tetrahedron()
 {
 
@@ -596,6 +605,7 @@ void Object3D::Tetrahedron()
 }
 
 
+//##ModelId=45F4D797011E
 void Object3D::Pyramid3()
 {
 
@@ -675,6 +685,7 @@ void Object3D::Pyramid3()
 
 //================================================================================
 
+//##ModelId=45F4D79700FD
 void Object3D::Draw()
 {
 	

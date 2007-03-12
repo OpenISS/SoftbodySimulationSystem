@@ -5,6 +5,7 @@
 #include "MidpointIntegrator.h"
 #include "RungeKutta4Integrator.h"
 
+//##ModelId=45F4D7970263
 Object::Object()
 {
 	numParticles = 2;					//default particle number on the object
@@ -15,6 +16,7 @@ Object::Object()
 	closest_i=0;			  		    // the point which is closest to mouse position
 }
 
+//##ModelId=45F4D7970264
 Object::~Object()
 {
 
@@ -23,12 +25,14 @@ Object::~Object()
 
 //==========================================================================  
 
+//##ModelId=45F4D7970293
 void Object::SetParticles()				//model the particles on the object
 {
 
 	assert(false);
 }
 
+//##ModelId=45F4D7970297
 void Object::Add_Structural_Spring(int index, int head, int tail)
 {
 	assert(false);
@@ -37,6 +41,7 @@ void Object::Add_Structural_Spring(int index, int head, int tail)
 
 //##############################################################################
 
+//##ModelId=45F4D7970295
 void Object::SetObject()				//model the object
 {
 	
@@ -46,6 +51,7 @@ void Object::SetObject()				//model the object
 
 //#############################################################################
 
+//##ModelId=45F4D7970268
 void Object::setIntegratorType(integrator_type type)		//set the integrator tpye as user selects from the GUI
 {
 	
@@ -55,6 +61,7 @@ void Object::setIntegratorType(integrator_type type)		//set the integrator tpye 
 //#############################################################################
 //update the forces, velocity, and position of the particle on the object
 
+//##ModelId=45F4D7970274
 void Object::Update(float deltaT, bool drag, float xDrag, float yDrag)  
 {
 
@@ -89,6 +96,7 @@ void Object::Update(float deltaT, bool drag, float xDrag, float yDrag)
 
 ///////////////////////////////////////////////////////////
 
+//##ModelId=45F4D7970286
 void Object::FindClosestPoint(void)
 {
 	float dmin = 0;

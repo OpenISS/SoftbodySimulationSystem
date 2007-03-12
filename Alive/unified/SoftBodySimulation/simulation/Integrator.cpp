@@ -5,6 +5,7 @@
 
 
 //////////////// integrator constructor///////////////////////////////////////////////////////
+//##ModelId=45F4D797039C
 Integrator::Integrator(Object& objectToIntegrate) : dragExists(false)
 {
 	this->object = &objectToIntegrate;
@@ -29,6 +30,7 @@ Integrator::Integrator(Object& objectToIntegrate) : dragExists(false)
 
 //////////////// integrator destructor///////////////////////////////////////////////////////
 
+//##ModelId=45F4D79703AB
 Integrator::~Integrator()
 {
 	temp_outer_points0.clear();	// clear up the vector and free the memory
@@ -45,6 +47,7 @@ Integrator::~Integrator()
 }
 
 /////the calculation of the integration with/without external dragging force//////////////////
+//##ModelId=45F4D79703AD
 void Integrator::integrate(float deltaT, bool drag, float xDrag, float yDrag)
 {
 	dragExists = drag;			// if the mouse drag exist
@@ -55,6 +58,7 @@ void Integrator::integrate(float deltaT, bool drag, float xDrag, float yDrag)
 }
 
 //////////////////////// accumulate all forces ////////////////////////////////////////////////
+//##ModelId=45F4D79703DA
 void Integrator::AccumulateForces()   // accumulate forces acted on 
 {
 	ExternalForces();			  // accumulate gravity and dragging force
@@ -74,6 +78,7 @@ void Integrator::AccumulateForces()   // accumulate forces acted on
 }
 
 ////////////////////// accumulate gravity and dragging force////////////////////////////////////////
+//##ModelId=45F4D79703CA
 void Integrator::ExternalForces()
 {
 	int i;    										// runing index
@@ -137,6 +142,7 @@ void Integrator::ExternalForces()
 }
 
 /////// general spring calculation function //////////////////////////////////////////////////
+//##ModelId=45F4D79703CC
 void Integrator::SpringForces()
 {
 	int i;    // runing index
@@ -194,6 +200,7 @@ void Integrator::SpringForces()
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//##ModelId=45F4D7980004
 void Integrator::CalculateSpringForces(vector<Spring *>springs, int i, bool special)
 {
 	float vx12, vy12, vz12;
@@ -265,6 +272,7 @@ void Integrator::CalculateSpringForces(vector<Spring *>springs, int i, bool spec
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+//##ModelId=45F4D79703CE
 void Integrator::PressureForces()
 {
 	int i;    										// runing index
@@ -483,6 +491,7 @@ void Integrator::PressureForces()
 
 
 ///////// calculate the collision detection //////////////////////////////////////////////////
+//##ModelId=45F4D7980001
 void Integrator::CollisionDetection(int i)
 {
 	bool changed = false;

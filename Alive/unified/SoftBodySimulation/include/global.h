@@ -72,8 +72,11 @@ using namespace std;
 #define RING_RADIUS 0.5f		// default radius of the 2D and 3D object
 
 
+//##ModelId=45F4D7980021
 enum dimensionality {DIM1D, DIM2D, DIM3D};					//object type, 1D, 2D, and 3D
+//##ModelId=45F4D7980023
 enum integrator_type {EULER, MIDPOINT, RK4};					//integrator type, EULER, MIDPOINT, RK4
+//##ModelId=45F4D7980031
 enum spring_type { SPRING_STRUCTURAL, SPRING_RADIUM, SPRING_SHEAR};	//spring type, structrual, radium, shear
 
 #endif /* _GLOBAL_H */

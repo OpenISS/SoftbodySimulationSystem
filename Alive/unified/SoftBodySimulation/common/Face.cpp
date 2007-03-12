@@ -14,6 +14,7 @@
  * @note ffd
  * @see
  */	 
+//##ModelId=45F4D7980066
 void Face::CalNormalNField(void)
 {
 	// the normal can be calculated by vector cross multiply
