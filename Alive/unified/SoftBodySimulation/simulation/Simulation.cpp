@@ -48,7 +48,7 @@ void Reshape(int width, int height)
 {
 	glViewport(0, 0, width, height);  			// Define GL View Port rectangle
 	glMatrixMode(GL_PROJECTION);
-	gluPerspective(50.,float(Width)/float(Height), 1., 100.);
+	gluPerspective(20.,float(Width)/float(Height), 1., 100.);
 	glLoadIdentity();
     	glMatrixMode(GL_MODELVIEW);
 	glutPostRedisplay(); 
@@ -57,27 +57,37 @@ void Reshape(int width, int height)
 void Display(void)
 {
 	glClearColor(0.0, 0.0, 0.0, 0.0);  // Initialize
+	//	glClearColor(.8, 0.8, 0.8, 0.0);  // Initialize
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 	
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 
-	gluPerspective(50,float(Width)/float(Height), 1, 100.);
+///*
+	gluPerspective(40,float(Width)/float(Height), 1, 100.);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
- 	gluLookAt(2,0,12,0,0,0,0,1,0);  // Camera difinition
+ 	gluLookAt(2,0,10,1,-1,6,0,1,0);  // Camera difinition
+//*/
 
+/*
+	gluPerspective(40,float(Width)/float(Height), 1, 100.);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+ 	gluLookAt(2,0,7,1,0,5,0,1,0);  // Camera difinition
+*/
 	glPointSize(8);
 
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-	box.Draw();        // Draw the view box space 	
+//	box.Draw();        // Draw the view box space 	
 
-	object1D.Draw();
+//	object1D.Draw();
 
 	Rotated();
 
 //	object2D.Draw();
-//	object3D.Draw();
+
+	object3D.Draw();
 	glutSwapBuffers(); 
 }
 

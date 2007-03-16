@@ -66,7 +66,7 @@ void Object3D::Add_Structural_Spring(int index, int h, int t)
 //##ModelId=45F4D797010F
 void Object3D::Add_Radium_Spring(int index)
 {
-	radium_springs.push_back( new Spring(inner_springs[index]->sp1,outer_springs[index]->sp1));
+	radium_springs.push_back( new Spring(inner_springs[index]->sp1,outer_springs[index]->sp1, 5*KS, 2*KD));
 	radium_springs[index]->setRestLen();						//set the radium spring's length
 } 
 
@@ -74,8 +74,8 @@ void Object3D::Add_Radium_Spring(int index)
 //##ModelId=45F4D797011B
 void Object3D::Add_Shear_Spring(int index )
 {
-	shear_springs_left.push_back(new Spring(inner_springs[index]->sp1,outer_springs[index]->sp2));
-	shear_springs_right.push_back(new Spring(inner_springs[index]->sp2, outer_springs[index]->sp1));
+	shear_springs_left.push_back(new Spring(inner_springs[index]->sp1,outer_springs[index]->sp2, 5*KS, 2*KD));
+	shear_springs_right.push_back(new Spring(inner_springs[index]->sp2, outer_springs[index]->sp1,5*KS, 2*KD));
 
 	shear_springs_left[index]->setRestLen();					//set the shear left spring's length
 	shear_springs_right[index]->setRestLen();				//set the shear right spring's length
@@ -241,11 +241,11 @@ void Object3D::Iteration()
 			pc->r->z=(inner_faces[i]->fp1->r->z + inner_faces[i]->fp3->r->z)/2;
 			//
 
-			 cout<<"inner iteration before normalization: "<<endl;
+	/*		 cout<<"inner iteration before normalization: "<<endl;
 			  cout<<"pa->x="<<pa->r->x<<"; pa->y="<<pa->r->y<<"; pa->z="<<pa->r->z<<endl;
 		   cout<<"pb->x="<<pb->r->x<<"; pb->y="<<pb->r->y<<"; pb->z="<<pb->r->z<<endl;
 		   cout<<"pc->x="<<pc->r->x<<"; pc->y="<<pc->r->y<<"; pc->z="<<pc->r->z<<endl;
-		   //
+	*/	   //
 
 
 		 
@@ -257,12 +257,12 @@ void Object3D::Iteration()
 			pb->r->Normalize();
 			pc->r->Normalize();
 
-			 cout<<"inner iteration after normalization: "<<endl;
+/*			 cout<<"inner iteration after normalization: "<<endl;
 
 		   cout<<"pa->x="<<pa->r->x<<"; pa->y="<<pa->r->y<<"; pa->z="<<pa->r->z<<endl;
 		   cout<<"pb->x="<<pb->r->x<<"; pb->y="<<pb->r->y<<"; pb->z="<<pb->r->z<<endl;
 		   cout<<"pc->x="<<pc->r->x<<"; pc->y="<<pc->r->y<<"; pc->z="<<pc->r->z<<endl;
-
+*/
 
 
 			bool a = false, b = false, c = false;
@@ -344,14 +344,14 @@ void Object3D::Iteration()
 
 	int i;
 for(i=0; i<inner_points.size();i++)
-cout<<"inner_points"<<i<<"----="<<inner_points[i]->r->x<<";"<<inner_points[i]->r->y<<";"<<inner_points[i]->r->z<<endl;
+//cout<<"inner_points"<<i<<"----="<<inner_points[i]->r->x<<";"<<inner_points[i]->r->y<<";"<<inner_points[i]->r->z<<endl;
 
 for(i=0; i<inner_faces.size();i++)
 {
-cout<<"inner_faces fp1: "<<i<<"----="<<inner_faces[i]->fp1->r->x<<";"<<inner_faces[i]->fp1->r->y<<";"<<inner_faces[i]->fp1->r->z<<endl;
+/*cout<<"inner_faces fp1: "<<i<<"----="<<inner_faces[i]->fp1->r->x<<";"<<inner_faces[i]->fp1->r->y<<";"<<inner_faces[i]->fp1->r->z<<endl;
 cout<<"inner_faces fp2: "<<i<<"----="<<inner_faces[i]->fp2->r->x<<";"<<inner_faces[i]->fp2->r->y<<";"<<inner_faces[i]->fp2->r->z<<endl;
 cout<<"inner_faces fp3: "<<i<<"----="<<inner_faces[i]->fp3->r->x<<";"<<inner_faces[i]->fp3->r->y<<";"<<inner_faces[i]->fp3->r->z<<endl;
-}
+*/}
 
 }
 
@@ -505,14 +505,14 @@ void Object3D::SetObject(void) // [M+2][N] array for M*N+2 Points
 
 	Tetrahedron();
 
-	cout<<"outer_spring size ======="<<outer_springs.size()<<endl;
+//	cout<<"outer_spring size ======="<<outer_springs.size()<<endl;
 	Iteration();
-		cout<<"interation after outer_spring size ======="<<outer_springs.size()<<endl;
+//		cout<<"interation after outer_spring size ======="<<outer_springs.size()<<endl;
 
 	this->numParticles = this->outer_points.size();
 	this->numSprings = this->outer_springs.size();
 
-	cout<<"this->numParticles ==="<<this->numParticles<<"-----this->numSprings===="<<this->numSprings<<"-------this->numFaces===="<<this->outer_faces.size()<<endl;
+//	cout<<"this->numParticles ==="<<this->numParticles<<"-----this->numSprings===="<<this->numSprings<<"-------this->numFaces===="<<this->outer_faces.size()<<endl;
 	//	assert(false);
 	for(i=0; i<numSprings ;i++)						//add the springs for outer & inner
 	{  
@@ -547,19 +547,19 @@ void Object3D::Tetrahedron()
 	double a;
 	int i;
 
-	outer_points.push_back( new Particle(new Vector(0,0,2*RING_RADIUS), MASS));
-	outer_points.push_back( new Particle(new Vector(0,0,-2*RING_RADIUS), MASS));
-	outer_points.push_back( new Particle(new Vector(-2*RING_RADIUS,-2*RING_RADIUS,0), MASS));
-	outer_points.push_back( new Particle(new Vector(2*RING_RADIUS,-2*RING_RADIUS,0), MASS));
-	outer_points.push_back( new Particle(new Vector(2*RING_RADIUS,2*RING_RADIUS,0), MASS));
-	outer_points.push_back( new Particle(new Vector(-2*RING_RADIUS,2*RING_RADIUS,0), MASS));
+	outer_points.push_back( new Particle(new Vector(0,0,1.5*RING_RADIUS), MASS));
+	outer_points.push_back( new Particle(new Vector(0,0,-1.5*RING_RADIUS), MASS));
+	outer_points.push_back( new Particle(new Vector(-1.5*RING_RADIUS,-1.5*RING_RADIUS,0), MASS));
+	outer_points.push_back( new Particle(new Vector(1.5*RING_RADIUS,-1.5*RING_RADIUS,0), MASS));
+	outer_points.push_back( new Particle(new Vector(1.5*RING_RADIUS,1.5*RING_RADIUS,0), MASS));
+	outer_points.push_back( new Particle(new Vector(-1.5*RING_RADIUS,1.5*RING_RADIUS,0), MASS));
 
-		inner_points.push_back( new Particle(new Vector(0,0,RING_RADIUS), MASS));
-	inner_points.push_back( new Particle(new Vector(0,0,-RING_RADIUS), MASS));
-	inner_points.push_back( new Particle(new Vector(-RING_RADIUS,-RING_RADIUS,0), MASS));
-	inner_points.push_back( new Particle(new Vector(RING_RADIUS,-RING_RADIUS,0), MASS));
-	inner_points.push_back( new Particle(new Vector(RING_RADIUS,RING_RADIUS,0), MASS));
-	inner_points.push_back( new Particle(new Vector(-RING_RADIUS,RING_RADIUS,0), MASS));
+	inner_points.push_back( new Particle(new Vector(0,0,1.3*RING_RADIUS), MASS));
+	inner_points.push_back( new Particle(new Vector(0,0,-1.3*RING_RADIUS), MASS));
+	inner_points.push_back( new Particle(new Vector(-1.3*RING_RADIUS,-1.3*RING_RADIUS,0), MASS));
+	inner_points.push_back( new Particle(new Vector(1.3*RING_RADIUS,-1.3*RING_RADIUS,0), MASS));
+	inner_points.push_back( new Particle(new Vector(1.3*RING_RADIUS,1.3*RING_RADIUS,0), MASS));
+	inner_points.push_back( new Particle(new Vector(-1.3*RING_RADIUS,1.3*RING_RADIUS,0), MASS));
 
 	
 
@@ -705,15 +705,15 @@ void Object3D::Draw()
 
  	glEnd();
 
-	glColor4f(0,0,0,1); 
+	glColor4f(0,0,1,1); 
 	
-/*	glBegin(GL_POINTS); // Draw inner points which built the Object3D
+	glBegin(GL_POINTS); // Draw inner points which built the Object3D
 		glPointSize(10);
 	    for(i=0; i<inner_points.size(); i++)
 		{
 		glVertex3f(inner_points[i]->r->x, inner_points[i]->r->y, inner_points[i]->r->z);		
 		}
- 	glEnd();		*/
+ 	glEnd();		
 	
 	glPopMatrix();
 //===================================================================================
@@ -748,7 +748,7 @@ void Object3D::Draw()
 	glPopMatrix();
 */	  
 ///========================================draw radium springs==========================================
-	glPushMatrix();
+/*	glPushMatrix();
 		glBegin(GL_LINES);				// the draw of radium lines from inner to outer
 			glLineWidth(10);
 			for(i=0 ; i<radium_springs.size(); i++)
@@ -758,7 +758,7 @@ void Object3D::Draw()
 				glVertex3f(radium_springs[i]->sp2->r->x, radium_springs[i]->sp2->r->y, radium_springs[i]->sp2->r->z);
 			}
 		glEnd();
-	glPopMatrix();
+	glPopMatrix();*/
 	
 ///========================================draw shear left springs==========================================
 /*	glPushMatrix();
@@ -794,7 +794,7 @@ void Object3D::Draw()
 	glBegin(GL_TRIANGLES);  	  
 			for(i=0; i<inner_faces.size(); i++)
 			{
-				glColor4f(1.0,1.0,1.0,.5);     	    // Yellow color face distribution
+				glColor4f(1.0,0.0,0.0,.6);     	    // Yellow color face distribution
 		 //     glNormal3f(inner_faces[i]->normal->x,inner_faces[i]->normal->y,inner_faces[i]->normal->z);
 				glVertex3f(inner_faces[i]->fp1->r->x, inner_faces[i]->fp1->r->y, inner_faces[i]->fp1->r->z);
 				glVertex3f(inner_faces[i]->fp2->r->x, inner_faces[i]->fp2->r->y, inner_faces[i]->fp2->r->z);
@@ -825,7 +825,7 @@ void Object3D::Draw()
 			for(i=0; i<outer_faces.size(); i++)
 			{
 			//	break;
-				glColor4f(1.0,1.0,1.0,.5);     	    // Yellow color face distribution
+				glColor4f(1.0,1.0,1.0,.2);     	    // Yellow color face distribution
 				//     glNormal3f(outer_faces[i]->normal->x,outer_faces[i]->normal->y,outer_faces[i]->normal->z);
 				glVertex3f(outer_faces[i]->fp1->r->x, outer_faces[i]->fp1->r->y, outer_faces[i]->fp1->r->z);
 				glVertex3f(outer_faces[i]->fp2->r->x, outer_faces[i]->fp2->r->y, outer_faces[i]->fp2->r->z);
@@ -836,7 +836,7 @@ void Object3D::Draw()
 /////----------------------------------------- Draw outer faces normals----------------------------------------------
 
 
-		glColor3f(1,0,0);
+		glColor3f(0,0,1);
 		glBegin(GL_LINES);
 			for(i=0 ; i<outer_faces.size(); i++)
 			{
