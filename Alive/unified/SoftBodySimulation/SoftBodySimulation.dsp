@@ -64,7 +64,7 @@ LINK32=link.exe
 # PROP Intermediate_Dir "Debug"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /GZ /c
-# ADD CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /GZ /c
+# ADD CPP /nologo /W3 /Gm /GX /ZI /Od /I "include" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /GZ /c
 # ADD BASE RSC /l 0x1009 /d "_DEBUG"
 # ADD RSC /l 0x1009 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -134,6 +134,15 @@ SOURCE=.\common\Spring.cpp
 # Begin Source File
 
 SOURCE=.\common\Vector.cpp
+
+!IF  "$(CFG)" == "SoftBodySimulation - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "SoftBodySimulation - Win32 Debug"
+
+# ADD CPP /I "\include"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 

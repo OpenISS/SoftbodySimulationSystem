@@ -39,7 +39,7 @@ using namespace std;
 #define MAX_POINTS_SPRINGS 40		//reserve temp space particle and spring
 #define NUMPOINTS   10			//default number of particles on a object
 #define NUMSPRINGS  NUMPOINTS		//default number of springs on a object
-#define MASS 4.0f				// point mass on the rings = 5.0
+#define MASS 2.0f				// point mass on the rings = 5.0
 #define RING_RADIUS 1.0f		// default radius of the 2D and 3D object
 //*/
 /*

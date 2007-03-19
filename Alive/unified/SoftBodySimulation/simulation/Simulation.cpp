@@ -64,10 +64,11 @@ void Display(void)
 	glLoadIdentity();
 
 ///*
-	gluPerspective(40,float(Width)/float(Height), 1, 100.);
+	gluPerspective(50,float(Width)/float(Height), 1, 100.);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
- 	gluLookAt(2,0,10,1,-1,6,0,1,0);  // Camera difinition
+ //	gluLookAt(2,0,10,1,-1,6,0,1,0);  // Camera difinition
+		gluLookAt(2,0,10,1,-1,6,0,1,0);  // Camera difinition
 //*/
 
 /*
@@ -79,7 +80,7 @@ void Display(void)
 	glPointSize(8);
 
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-//	box.Draw();        // Draw the view box space 	
+	box.Draw();        // Draw the view box space 	
 
 //	object1D.Draw();
 
