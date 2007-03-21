@@ -3,23 +3,23 @@
 
 #include "Integrator.h"
 
-//##ModelId=45F4D798009E
+
 class EulerIntegrator : public Integrator
 {
 public:
-	//##ModelId=45F4D79800AE
-	EulerIntegrator(Object&);
-	//##ModelId=45F4D79800B0
-	virtual ~EulerIntegrator();
+	
+	EulerIntegrator(Object&);        // constructor
+	
+	virtual ~EulerIntegrator();      // destructor
 
-	//##ModelId=45F4D79800B2
-	virtual void Derivatives(float, float);
+	
+	virtual void Derivatives(float, float); // integrate all the particles on the object
 
 protected:
-	//##ModelId=45F4D79800BE
-	void k1(int, float, float);
-	//##ModelId=45F4D79800C2
-	void ynew(int, float, float);
+	
+	void k1(int, float, float);     // get the derivatives of velocity and position
+	
+	void ynew(int, float, float);   // get the new velocity and position
 
 };
 

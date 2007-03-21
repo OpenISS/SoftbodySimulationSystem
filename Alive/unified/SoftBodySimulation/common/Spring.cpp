@@ -45,6 +45,7 @@ Spring::~Spring()										//spring destructor
 }
   
 //##ModelId=45F4D79603E0
+//set the springs resting length
 void Spring::setRestLen()
 {
 	restLen = (*sp1->r - *sp2->r).getLength(); 				// static length

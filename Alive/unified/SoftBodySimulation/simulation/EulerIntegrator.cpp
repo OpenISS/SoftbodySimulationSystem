@@ -1,19 +1,19 @@
 #include "EulerIntegrator.h"
 
 //##ModelId=45F4D79800AE
-EulerIntegrator::EulerIntegrator(Object& object) : Integrator(object)
+EulerIntegrator::EulerIntegrator(Object& object) : Integrator(object)// constructor
 {
 }
 
 //##ModelId=45F4D79800B0
-EulerIntegrator::~EulerIntegrator()
+EulerIntegrator::~EulerIntegrator() // destructor
 {
 }
 
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /***********************
- * Euler Integrator *
+ * Euler Integrator integrate all the particles on the object *
  ***********************/
 //void EulerIntegrator::Derivatives(Particle[] points, int NUMP, float DT)
 //void EulerIntegrator::integrate(Object object, int NUMP)
